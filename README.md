@@ -1,0 +1,1 @@
+# NextJS_AZ_Foreign_Language_Center
