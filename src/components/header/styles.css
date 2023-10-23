@@ -20,8 +20,9 @@ p {
 
 .NavigationMenuRoot {
   position: relative;
+  background-color: #fdf8ee;
   display: flex;
-  justify-content: center;
+  justify-content: right;
   width: 100vw;
   z-index: 1;
 }
@@ -29,12 +30,12 @@ p {
 .NavigationMenuList {
   display: flex;
   justify-content: center;
-  background-color: white; /* the color of the main box */
+  background-color: #fdf8ee; /* the color of the main box */
   padding: 4px;
   border-radius: 6px;
   gap: 30px;
   list-style: none;
-  box-shadow: 0 2px 10px white; /* the shadow of the main box */
+  box-shadow: 0 2px 10px #fdf8ee; /* the shadow of the main box */
   margin: 0;
 }
 

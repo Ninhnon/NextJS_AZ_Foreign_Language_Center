@@ -8,19 +8,54 @@ import Image from 'next/image';
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
   return (
-    <div className="mt-10 flex h-full w-full flex-col">
-      <Image
-        src={
-          'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_974,c_limit/79cf6b2d-1216-4d22-a3cd-e9fca50ddebe/nike-just-do-it.png'
-        }
-        className="relative"
-        width={windowWidth.current}
-        height={windowWidth.current / 2}
-        priority
-        quality={100}
-        objectFit="cover"
-        alt="hero image"
-      />
+    <div className="flex flex-col h-full w-full">
+      <div
+        className="flex flex-col lg:flex-row space-between
+       h-[700px] w-full bg-no-repeat bg-cover bg-hero-pattern"
+      >
+        <div className="flex flex-1 flex-col space-between items-center px-5">
+          <p className=" text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium">
+            <span className="text-[#050C26]">Lựa Chọn </span>
+            <span className="text-[#FF7426]">Đúng</span>
+            <br className="lg:flex hidden" />
+            <span className="text-[#050C26]">Cho </span>
+            <span className="text-[#FF7426]">Tương Lai</span>
+            <br className="lg:flex hidden" />
+          </p>
+          <p className="text-sm sm:text-base lg:text-lg text-black p-4">
+            Tại A&Z, học viên học tập và phát triển theo phương
+            <br className="lg:flex hidden" />
+            pháp riêng phù hợp với sự khác biệt của bản thân, tài
+            <br className="lg:flex hidden" />
+            nguyên học tập cá nhân hoá, bài giảng trọng tâm dễ
+            <br className="lg:flex hidden" />
+            hiểu và đạt mục tiêu trong thời gian mong muốn.
+          </p>
+        </div>
+        <Image
+          alt="hero banner"
+          src={`/hero-banner.png`}
+          width={windowWidth.current / 2}
+          height={windowWidth.current / 4}
+          loading="lazy"
+        />
+      </div>
+      <div>TT</div>
+      <div className="bg-[#FDF8EE]">
+        <Image
+          src={
+            'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_974,c_limit/79cf6b2d-1216-4d22-a3cd-e9fca50ddebe/nike-just-do-it.png'
+          }
+          className="relative"
+          width={windowWidth.current}
+          height={windowWidth.current / 2}
+          priority
+          quality={100}
+          objectFit="cover"
+          alt="hero image"
+        />
+        <div>TT</div>
+      </div>
 
       <Image
         src={

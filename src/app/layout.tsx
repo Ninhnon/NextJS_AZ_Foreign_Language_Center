@@ -5,46 +5,29 @@ import { Poppins } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import { QueryProvider } from '@/components/providers/query-provider';
 
-import Link from 'next/link';
+import AuthProvider from '../../context/AuthProvider';
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 });
 
 const metadata: Metadata = {
-  title: 'Just Do It',
-  description: 'Just Do It By UIT',
-  openGraph: {
-    images: [
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/16b3442b-cfbb-4be0-8541-682a26631f15/nike-just-do-it.png',
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/b3e44fd7-df8f-449a-a2c7-48bb948518ab/men-s-shoes-clothing-accessories.png',
-      'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/481ae448-c295-48cb-b593-fbb80821d102/jordan.png',
-    ],
-  },
+  title: 'A&Z',
+  description: 'A&Z Language Center',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ReduxProvider>
-          <QueryProvider>
-            <Toaster />
-            <header className="py-8">
-              <nav className="container">
-                <ul className="flex space-x-6">
-                  <li>
-                    <Link href="/">Home</Link>
-                  </li>
-                  <li>
-                    <Link href="/products">Products</Link>
-                  </li>
-                </ul>
-              </nav>
-            </header>
-            {children}
-          </QueryProvider>
-        </ReduxProvider>
+        <AuthProvider>
+          <ReduxProvider>
+            <QueryProvider>
+              <Toaster />
+              {children}
+            </QueryProvider>
+          </ReduxProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -45,6 +45,9 @@ const config: Config = {
           foreground: '#09090b',
         },
       },
+      backgroundImage: {
+        'hero-pattern': "url('.././assets/bg-hero.png')",
+      },
       borderRadius: {
         xl: `12px`,
         lg: `8px`,

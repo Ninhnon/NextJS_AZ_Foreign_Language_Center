@@ -7,14 +7,17 @@ function Logo() {
     <Link className="w-[200px]" href={'/'}>
       <div className="items-center w-full flex flex-row gap-2">
         <Image
+          alt="logo"
           src={
-            'https://utfs.io/f/2d7566c9-a715-4a1e-8d05-140479024390_shoes%20(1).png'
+            'https://utfs.io/f/d48f1a6d-433c-428e-96d8-2f0ee6c7f0b0-8l81zi.png'
           }
-          width={40}
-          height={40}
+          width={80}
+          height={80}
         />
 
-        <div className="text-lg w-full font-bold tracking-tight">UITSport</div>
+        {/* <div className="text-lg w-full font-bold tracking-tight">
+          A&Z Center
+        </div> */}
       </div>
     </Link>
   );
