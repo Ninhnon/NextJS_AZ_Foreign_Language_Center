@@ -1,12 +1,56 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { Balancer } from 'react-wrap-balancer';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
+import ProfileSwiper from '@/components/swipers/ProfileSwiper';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
+  const teacherData = [
+    {
+      id: 1,
+      image: '/teacher_1.png',
+      bandScore: '7.5 IELTS',
+      name: 'Nguyễn Văn A',
+    },
+    {
+      id: 2,
+      image: '/teacher_2.png',
+      bandScore: '7.0 IELTS',
+      name: 'Nguyễn Văn B',
+    },
+    {
+      id: 3,
+      image: '/teacher_3.png',
+      bandScore: '7.5 IELTS',
+      name: 'Nguyễn Văn C',
+    },
+    {
+      id: 4,
+      image: '/teacher_4.png',
+      bandScore: '8 IELTS',
+      name: 'Nguyễn Văn D',
+    },
+    {
+      id: 5,
+      image: '/teacher_4.png',
+      bandScore: '8 IELTS',
+      name: 'Nguyễn Văn D',
+    },
+    {
+      id: 6,
+      image: '/teacher_4.png',
+      bandScore: '8 IELTS',
+      name: 'Nguyễn Văn D',
+    },
+    {
+      id: 7,
+      image: '/teacher_4.png',
+      bandScore: '8 IELTS',
+      name: 'Nguyễn Văn D',
+    },
+  ];
   return (
     <div className="flex flex-col h-full w-full">
       <div
@@ -70,16 +114,29 @@ const page = () => {
         alt="hero image"
       />
       <section
-        id="hero"
-        aria-labelledby="hero-heading"
+        id="teacher"
+        aria-labelledby="teacher-heading"
         className="mx-auto flex w-full max-w-[64rem] flex-col items-center justify-center gap-4 pb-8 pt-6 text-center md:pb-12 md:pt-10 lg:py-28"
       >
-        <h1 className="px-1 text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
+        {/* <h1 className="px-1 text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
           NEVER DONE RISING
         </h1>
         <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
           Keep it classic in timeless, easy-to-wear kicks.
-        </Balancer>
+        </Balancer> */}
+
+        {/* <ProfileCard
+          data={{
+            id: 1,
+            image: '/teacher_1.png',
+            bandScore: '7.5 IELTS',
+            name: 'Nguyễn Văn A',
+          }}
+        /> */}
+
+        <div className="h-fit w-full">
+          <ProfileSwiper data={teacherData} />
+        </div>
       </section>
     </div>
   );
