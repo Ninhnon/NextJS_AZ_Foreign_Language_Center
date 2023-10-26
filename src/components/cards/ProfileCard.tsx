@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardBody, Image } from '@nextui-org/react';
 
 const ProfileCard = ({ data }) => {
-  console.log('===> : ' + data.image);
   return (
     <div>
       <Card className="w-full h-fit" shadow="none">

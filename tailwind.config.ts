@@ -47,6 +47,7 @@ const config: Config = {
       },
       backgroundImage: {
         'hero-pattern': "url('.././assets/bg-hero.png')",
+        'ellipse-pattern': "url('/bg-ellipse.png')",
       },
       borderRadius: {
         xl: `12px`,
