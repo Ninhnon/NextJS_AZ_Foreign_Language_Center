@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { Balancer } from 'react-wrap-balancer';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
+import CourseCard from '@/components/CourseCard';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
@@ -41,6 +42,8 @@ const page = () => {
         />
       </div>
       <div>TT</div>
+      <CourseCard />
+
       <div className="bg-[#FDF8EE]">
         <Image
           src={

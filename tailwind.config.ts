@@ -16,6 +16,8 @@ const config: Config = {
         ring: '#18181b',
         background: '#ffffff',
         foreground: '#0a0a0a',
+        orange: '#FF7426',
+        silver_chalice: '#ACACAC',
         primary: {
           DEFAULT: '#18181b',
           foreground: '#fafafa',
@@ -45,9 +47,6 @@ const config: Config = {
           foreground: '#09090b',
         },
       },
-      backgroundImage: {
-        'hero-pattern': "url('.././assets/bg-hero.png')",
-      },
       borderRadius: {
         xl: `12px`,
         lg: `8px`,
@@ -70,8 +69,6 @@ const config: Config = {
       },
     },
   },
-  darkMode: 'class',
-
   plugins: [
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
