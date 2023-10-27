@@ -26,40 +26,25 @@ const page = () => {
           loading="lazy"
         />
       </div>
-      <div className="w-[60%] h-[300px] relative flex flex-col lg:flex-row justify-evenly font-bold bg-cyan-300 ">
-        <div>
-          <Image
-            className="w-1/3 h-[300px]"
-            alt="số liệu trung tâm"
-            src={`/teacher_1.png`}
-            fill
-            loading="lazy"
-          />
-        </div>
-        <div>
-          <Image
-            className="w-1/3 h-[300px]"
-            alt="số liệu trung tâm"
-            src={`/teacher_1.png`}
-            fill
-            loading="lazy"
-          />
-        </div>
-        <div>
-          <Image
-            className="w-1/3 h-[300px]"
-            alt="số liệu trung tâm"
-            src={`/teacher_1.png`}
-            fill
-            loading="lazy"
-          />
-        </div>
-      </div>
       <div className="w-[60%] h-[300px] relative justify-center items-center ">
-        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold bg-cyan-300">
+        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-1xl">
           <p>Cơ sở vật chất hiện đại</p>
           <p>Thu hút nhiều học viên</p>
           <p>Tài liệu đa dạng</p>
+        </div>
+
+        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-[#DD9438] text-7xl">
+          <p>10+</p>
+          <p>200+</p>
+          <p>40+</p>
+        </div>
+
+        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-1xl">
+          <p>phòng học trang bị đầy đủ</p>
+          <p>Học viên mới hàng năm</p>
+          <p className="break-words">
+            Bộ đề mới hàng năm, cập nhật theo từng thời kì
+          </p>
         </div>
       </div>
       <div className="flex flex-col w-full lg:flex-row space-between">
