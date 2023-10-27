@@ -16,6 +16,8 @@ const config: Config = {
         ring: '#18181b',
         background: '#ffffff',
         foreground: '#0a0a0a',
+        orange: '#FF7426',
+        silver_chalice: '#ACACAC',
         primary: {
           DEFAULT: '#18181b',
           foreground: '#fafafa',
@@ -45,10 +47,6 @@ const config: Config = {
           foreground: '#09090b',
         },
       },
-      backgroundImage: {
-        'hero-pattern': "url('.././assets/bg-hero.png')",
-        'ellipse-pattern': "url('/bg-ellipse.png')",
-      },
       borderRadius: {
         xl: `12px`,
         lg: `8px`,
@@ -57,12 +55,12 @@ const config: Config = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0px' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0px' },
         },
       },
       animation: {
@@ -71,8 +69,6 @@ const config: Config = {
       },
     },
   },
-  darkMode: 'class',
-
   plugins: [
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),

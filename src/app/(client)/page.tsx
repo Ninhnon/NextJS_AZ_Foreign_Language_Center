@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
+import CourseCard from '@/components/CourseCard';
 
 import ReviewSwiper from '@/components/swipers/ReviewSwiper';
 
@@ -160,6 +161,24 @@ const page = () => {
           height={windowWidth.current / 4}
           loading="lazy"
         />
+      </div>
+      <div>TT</div>
+      <CourseCard />
+
+      <div className="bg-[#FDF8EE]">
+        <Image
+          src={
+            'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_974,c_limit/79cf6b2d-1216-4d22-a3cd-e9fca50ddebe/nike-just-do-it.png'
+          }
+          className="relative"
+          width={windowWidth.current}
+          height={windowWidth.current / 2}
+          priority
+          quality={100}
+          objectFit="cover"
+          alt="hero image"
+        />
+        <div>TT</div>
       </div>
 
       <div
