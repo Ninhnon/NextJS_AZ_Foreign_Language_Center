@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
 import { Tabs, Tab } from '@nextui-org/react';
-
+import { Button } from '@/components/ui/button';
 const page = () => {
   const [selected, setSelected] = useState('photos');
   return (
@@ -18,40 +18,57 @@ const page = () => {
           loading="lazy"
         />
       </div>
-      <div className="w-[60%] h-[300px] relative">
-        <Image
-          alt="số liệu trung tâm"
-          src={`/solieu.png`}
-          fill
-          loading="lazy"
-        />
-      </div>
-      <div className="w-[60%] h-[300px] relative justify-center items-center ">
-        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-1xl">
-          <p>Cơ sở vật chất hiện đại</p>
-          <p>Thu hút nhiều học viên</p>
-          <p>Tài liệu đa dạng</p>
+      <div className="w-[60%] grid grid-cols-3 gap-4">
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={`/p1.png`}
+            height={300}
+            width={500}
+          />
+          <span className="font-bold text-2xl">Cơ sở vật chất hiện đại</span>
+          <span className="font-bold text-[#DD9438] text-7xl">10+</span>
+          <span className="text-lg mb-5 text-clip font-medium">
+            phòng học trang bị đầy đủ
+          </span>
         </div>
 
-        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-[#DD9438] text-7xl">
-          <p>10+</p>
-          <p>200+</p>
-          <p>40+</p>
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={`/p2.png`}
+            height={300}
+            width={500}
+          />
+          <span className="font-bold text-2xl">Thu hút nhiều học viên</span>
+          <span className="font-bold text-[#DD9438] text-7xl">200+</span>
+          <span className="text-lg mb-5 text-clip font-medium">
+            Học viên mới hàng năm
+          </span>
         </div>
 
-        <div className="flex flex-col w-full lg:flex-row justify-evenly font-bold text-1xl">
-          <p>phòng học trang bị đầy đủ</p>
-          <p>Học viên mới hàng năm</p>
-          <p className="break-words">
-            Bộ đề mới hàng năm, cập nhật theo từng thời kì
-          </p>
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={`/p3.png`}
+            height={300}
+            width={500}
+          />
+          <span className="font-bold text-2xl">Tài liệu đa dạng</span>
+          <span className="font-bold text-[#DD9438] text-7xl">40+</span>
+          <span className="text-lg mb-5 text-clip font-medium">
+            Bộ đề mới hàng năm
+          </span>
         </div>
       </div>
       <div className="flex flex-col w-full lg:flex-row space-between">
         <Image
           alt="cam kết"
           src={`/camket.png`}
-          width={500}
+          width={700}
           height={300}
           loading="lazy"
         />
@@ -66,7 +83,7 @@ const page = () => {
             size="lg"
             classNames={{
               tabList:
-                'gap-12 space-between text-6xl relative rounded-none p-0 font-bold',
+                'gap-12 space-between text-8xl relative rounded-none p-0 font-bold',
               cursor: 'w-full bg-[#FAAF3A]',
               tab: 'max-w-fit px-0 h-12',
               tabContent: 'group-data-[selected=true]:text-[#000]',
@@ -74,7 +91,7 @@ const page = () => {
           >
             <Tab key="quality" title="Chất lượng học tập">
               <div className="pl-20">
-                <p className="text-sm sm:text-base lg:text-lg text-black">
+                <p className="text-sm sm:text-base lg:text-lg text-black font-medium">
                   <span className="text-[#050C26]">A&Z cam kết </span>
                   <span className="text-[#FF7426] font-bold">100%</span>
                   <span className="text-[#050C26]">
@@ -125,6 +142,44 @@ const page = () => {
             </Tab>
           </Tabs>
         </div>
+      </div>
+      <div className="flex flex-col lg:flex-row justify-stretch w-full relative">
+        <div className="flex flex-1 flex-col pl-20 ">
+          <p className=" text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium">
+            Đăng Ký Ngay
+          </p>
+          <p className=" text-1xl sm:text-2xl md:text-3xl lg:text-4xl font-medium">
+            Trở thành một học viên của A&Z
+          </p>
+          <p className="text-sm sm:text-base lg:text-lg text-black p-4">
+            Chúng tôi tin tưởng và cùng lan toả giá trị cốt lõi của giáo dục:
+            <span className="text-[#FF7426]"> Phát triển con</span>
+            <br className="lg:flex hidden" />
+            <span className="text-[#FF7426]">người</span>
+            . A&Z cá nhân hoá học tập và cũng cá nhân hoá con đường phát triển
+            của
+            <br className="lg:flex hidden" />
+            từng học viên. Mỗi học viên được tạo điều kiện và môi trường học tập
+            phù hợp tối
+            <br className="lg:flex hidden" />
+            đa với năng lực, phát huy sở trường của bản thân. Tại A&Z, mỗi cá
+            nhân sẽ phát
+            <br className="lg:flex hidden" />
+            triển theo cách và màu sắc riêng.
+          </p>
+          <div className="justify-items-center justify-self-center">
+            <Button className="w-[150px] ml-8 h-4 text-white hover:bg-pink-700 bg-[#FF7426]">
+              Đặt lịch thi thử
+            </Button>
+          </div>
+        </div>
+        <Image
+          alt="Đăng ký ngay"
+          src={`/bo.png`}
+          width={400}
+          height={200}
+          loading="lazy"
+        />
       </div>
     </div>
   );
