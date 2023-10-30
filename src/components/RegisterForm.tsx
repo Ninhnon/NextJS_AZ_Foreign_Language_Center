@@ -10,7 +10,7 @@ const RegisterForm = () => {
   });
   return (
     <div
-      className="relative rounded-3xl p-4 bg-white w-full min-h-0 m-8 mx-auto
+      className="relative rounded-3xl p-4 bg-white w-full min-h-0 mx-auto
         drop-shadow-xl overflow-visible grid-rows-2 break-words space-y-4 lg:h-auto sm:h-[330px]"
     >
       <div className="flex w-full flex-col flex-wrap md:flex-nowrap gap-1">

@@ -63,35 +63,42 @@ const page = () => {
     },
   ];
   return (
-    <div className="h-full w-full grid-rows-3">
-      {/* Start top page */}
-      <div
-        className="flex bg-[url('/background_course_details.png')] 
-      bg-cover bg-no-repeat min-h-full overflow-hidden p-4 space-x-4"
-      >
-        {/* Start Text */}
+    <div className="h-full w-full">
+      <div>
+        <div className="md:block hidden sticky top-10">
+          <div className="w-2/5 ml-auto mr-2 max-h-0">
+            <RegisterForm />
+          </div>
+        </div>
+        {/* Start top page */}
         <div
-          className="flex flex-col flex-initial p-4 space-y-10
-        md:w-3/5"
+          className="flex bg-[url('/background_course_details.png')] 
+      bg-cover bg-no-repeat min-h-full overflow-hidden p-4 space-x-4"
         >
-          <span className="text-5xl font-bold ml-20 mt-20">
-            Ielts Junior English Foundation
-          </span>
+          {/* Start Text */}
+          <div
+            className="flex flex-col flex-initial p-4 space-y-10
+        md:w-3/5"
+          >
+            <span className="text-5xl font-bold ml-20 mt-20">
+              Ielts Junior English Foundation
+            </span>
 
-          <span className="text-base font-normal ml-20">
-            Khóa học IELTS Junior English Foundation dành cho học sinh đang theo
-            học cấp Trung học cơ sở có mong muốn chinh phục bài thi IELTS, phát
-            triển kiến thức xã hội và tự tin sử dụng tiếng Anh. Chương trình
-            được xây dựng dựa trên sự phối hợp của 4 khía cạnh: Ngôn ngữ - Tư
-            duy - Kiến thức - Chiến lược.
-          </span>
+            <span className="text-base font-normal ml-20">
+              Khóa học IELTS Junior English Foundation dành cho học sinh đang
+              theo học cấp Trung học cơ sở có mong muốn chinh phục bài thi
+              IELTS, phát triển kiến thức xã hội và tự tin sử dụng tiếng Anh.
+              Chương trình được xây dựng dựa trên sự phối hợp của 4 khía cạnh:
+              Ngôn ngữ - Tư duy - Kiến thức - Chiến lược.
+            </span>
+          </div>
+          {/* End Text */}
+          {/* <div className="flex flex-1 md:block hidden">
+            <RegisterForm />
+          </div> */}
         </div>
-        {/* End Text */}
-        <div className="flex flex-1 md:block hidden">
-          <RegisterForm />
-        </div>
+        {/* End top page*/}
       </div>
-      {/* End top page*/}
 
       {/* Start course info */}
       <div className="min-h-full bg-white grid-rows-6 p-4 ml-20 lg:w-1/2">
@@ -150,7 +157,7 @@ const page = () => {
       {/* End course info */}
 
       {/* Start teacher info */}
-      <div className="min-h-full bg-old-lace p-4">Phần teacher của em Quân</div>
+      <div className="mt-auto bg-old-lace p-4">Phần teacher của em Quân</div>
       {/* End teacher info */}
 
       {/* Start review info & explaination*/}
