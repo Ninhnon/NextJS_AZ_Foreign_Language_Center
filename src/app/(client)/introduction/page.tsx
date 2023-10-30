@@ -5,8 +5,66 @@ import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
 import { Tabs, Tab } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
+import ProfileCard from '@/components/cards/ProfileCard';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Name is required',
+  }),
+  email: z.string().min(1, {
+    message: 'Email is required',
+  }),
+  phone: z.string().min(1, {
+    message: 'Phone is required',
+  }),
+});
 const page = () => {
-  const [selected, setSelected] = useState('photos');
+  const [selected, setSelected] = useState('quality');
+  const teacherData = [
+    {
+      id: 1,
+      image: '/teacher_1.png',
+      name: 'Nguyễn Văn A',
+    },
+    {
+      id: 2,
+      image: '/teacher_2.png',
+      name: 'Nguyễn Văn B',
+    },
+    {
+      id: 3,
+      image: '/teacher_3.png',
+      name: 'Nguyễn Văn C',
+    },
+    {
+      id: 4,
+      image: '/teacher_4.png',
+      name: 'Nguyễn Văn D',
+    },
+  ];
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+    },
+  });
+
   return (
     <div className="flex flex-col justify-center items-center ">
       Trang giới thiệu
@@ -180,6 +238,87 @@ const page = () => {
           height={200}
           loading="lazy"
         />
+      </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {teacherData?.map((teacher) => (
+          <ProfileCard data={teacher} key={teacher.id} />
+        ))}
+      </div>
+      <div
+        className="          py-2
+          px-4
+          bg-neutral-100 
+          w-auto 
+          rounded-40
+          focus:outline-none"
+      >
+        <Form {...form}>
+          <form>
+            <div className="grid gap-6">
+              <div className="gap-4 flex flex-col">
+                <div className="flex flex-col gap-1 ">
+                  <Label>Họ và tên</Label>
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Nhập tên" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col gap-1 ">
+                  <Label>Email</Label>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Nhập email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col gap-1 ">
+                  <Label>Số điện thoại</Label>
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Nhập số điện thoại" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="w-full flex gap-6">
+                <Button
+                  className="text-white hover:bg-yellow-500 bg-orange border border-red-400"
+                  type="submit"
+                >
+                  Đăng ký thi thử
+                </Button>
+                <Button
+                  className="hover:bg-yellow-500 bg-white text-orange border border-red-400"
+                  type="submit"
+                >
+                  Tư vấn
+                </Button>
+              </div>
+            </div>
+          </form>
+        </Form>
       </div>
     </div>
   );

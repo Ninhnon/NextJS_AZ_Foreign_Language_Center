@@ -13,7 +13,7 @@ const ProfileCard = ({ data }) => {
               src={data.image}
               width={200}
             />
-            <span className="text-base">{data.bandScore}</span>
+            <span className="text-base">{data?.bandScore}</span>
             <span className="font-bold text-lg mb-5 text-clip">
               {data.name}
             </span>
