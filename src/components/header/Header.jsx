@@ -18,8 +18,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { Badge } from '../ui/badge';
+import { CommonSvg } from '@/assets/CommonSvg';
+
 import Logo from '../logo';
 const NavigationMenuDemo = ({ session }) => {
   const [user] = useState(session?.user);
@@ -53,7 +53,55 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
       <div className="hidden lg:flex py-5  ">
-        {' '}
+        {user ? (
+          <div className="flex flex-row gap-5 items-center justify-center">
+            <DropdownMenu className="bg-[#FDF8EE]">
+              <DropdownMenuTrigger>
+                {' '}
+                <Button
+                  variant="ghost"
+                  className="mr-2 px-0 pt-0 text-base hover:bg-transparent
+           focus-visible:bg-transparent focus-visible:ring-0 
+           focus-visible:ring-offset-0"
+                >
+                  {CommonSvg.menuBurger()}
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
+                >
+                  <div className="">{AuthSvg.book()}</div>
+                  Danh sách khóa học
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
+                >
+                  <div className="">{AuthSvg.exercise()}</div>
+                  Bài tập
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
+                >
+                  <div className="">{AuthSvg.chat()}</div>
+                  Hỏi đáp
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
+                >
+                  <div className="">{AuthSvg.date()}</div>
+                  Thời khóa biểu
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : null}{' '}
+        <div className="m-2" />
         <Logo />
         <NavigationMenu.Root className="NavigationMenuRoot">
           <NavigationMenu.List className="NavigationMenuList">
@@ -113,21 +161,6 @@ const NavigationMenuDemo = ({ session }) => {
         </NavigationMenu.Root>
         {user ? (
           <div className="flex flex-row gap-5 items-center justify-center">
-            <Link href={'/favorite'}>
-              <Button variant="outline" size="icon" className="relative">
-                {1 > 0 && (
-                  <Badge
-                    variant="secondary"
-                    className="absolute -right-2 -top-2 h-6 w-6 justify-center rounded-full p-2.5"
-                  >
-                    7
-                  </Badge>
-                )}
-                {
-                  <AiOutlineHeart className="text-slate-600 stroke-zinc-950 w-4 h-4 " />
-                }
-              </Button>
-            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 {' '}
@@ -140,9 +173,6 @@ const NavigationMenuDemo = ({ session }) => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href={'/admin/add-product'}>Add Product</Link>
-                </DropdownMenuItem>
                 <DropdownMenuItem>Team</DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => signOut({ callbackUrl: '/auth/login' })}
