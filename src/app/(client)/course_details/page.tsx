@@ -65,7 +65,7 @@ const page = () => {
   return (
     <div className="h-full w-full">
       <div>
-        <div className="md:block hidden sticky top-10">
+        <div className="md:block hidden sticky top-10 translate-y-20">
           <div className="w-2/5 ml-auto mr-2 max-h-0">
             <RegisterForm />
           </div>
