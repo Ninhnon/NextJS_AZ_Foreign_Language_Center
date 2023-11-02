@@ -6,6 +6,8 @@ import Image from 'next/image';
 import CourseCard from '@/components/CourseCard';
 
 import ReviewSwiper from '@/components/swipers/ReviewSwiper';
+import ProfileSwiper from '@/components/swipers/ProfileSwiper';
+import SummaryCard from '@/components/cards/SummaryCard';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
@@ -71,7 +73,7 @@ const page = () => {
       name: 'Nguyễn Văn D',
     },
   ];
-  console.log(teacherData);
+
   const userData = [
     {
       id: 1,
@@ -129,6 +131,29 @@ const page = () => {
         'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
     },
   ];
+  const summaryData = [
+    {
+      id: 1,
+      image: '/test.png',
+      title: 'Phương pháp học tập',
+      content:
+        'Học tập cá nhân hoá, lộ trình và giáo trình riêng. Luôn cập nhật theo từng năm.',
+    },
+    {
+      id: 2,
+      image: '/exam.png',
+      title: 'Kiến thức',
+      content:
+        'Ngân hàng giáo trình và tài liệu do A&Z biên soạn hoàn thiện và cập nhập mới nhất theo cấu trúc đề thi IELTS 2023',
+    },
+    {
+      id: 3,
+      image: '/money.png',
+      title: 'Cam kết đầu ra',
+      content:
+        'Bảo vệ tối đa quyền lợi của học viên, A&Z cam kết tài trợ học lại và phí thi lại nếu học viên không đạt kết quả mong muốn.',
+    },
+  ];
   return (
     <div className="flex flex-col h-full w-full">
       <div
@@ -162,7 +187,7 @@ const page = () => {
           loading="lazy"
         />
       </div>
-      <div>TT</div>
+
       <CourseCard />
 
       <div className="bg-[#FDF8EE]">
@@ -181,26 +206,45 @@ const page = () => {
         <div>TT</div>
       </div>
 
+      <div className="w-full h-[50rem]  overflow-hidden bg-gray-50 relative flex flex-col items-center justify-center">
+        <div className="w-fit h-fit flex flex-col md:flex-row rounded-md bg-[#4D2C5E] m-16 p-16 items-center gap-y-6 md:gap-x-6">
+          <SummaryCard data={summaryData[0]} />
+          <SummaryCard data={summaryData[1]} />
+          <SummaryCard data={summaryData[2]} />
+        </div>
+      </div>
       <div
         className="w-full h-[80rem] bg-[url(/bg-ellipse-left.png),_url(/bg-ellipse-right.png)] 
         bg-[length:20rem,_20rem] bg-[repeat:no-repeat,_no-repeat] 
-      bg-[position:left__top_,_right_bottom]  bg-no-repeat px-4"
+      bg-[position:left__top_,_right_bottom]  bg-no-repeat overflow-hidden bg-gray-50 relative flex flex-col items-center justify-center"
       >
-        <div className="flex flex-row my-10 items-center justify-center font-semibold text-2xl">
+        <div className="flex flex-row my-10 items-center justify-center font-semibold text-2xl font-PlaypenSans">
           <span>Những câu chuyện thành công cùng &nbsp;</span>
           <span className="text-[#FF7426]"> IELTS Tại A&Z</span>
         </div>
 
-        <div className="h-fit w-full flex items-center">
-          <ReviewSwiper data={userData} />
+        <div className="w-full h-fit">
+          <div className="h-fit w-full flex items-center">
+            <ReviewSwiper data={userData} reverseDirection={true} />
+          </div>
+          <div className="h-fit w-full flex items-center mx-10">
+            <ReviewSwiper data={userData} reverseDirection={false} />
+          </div>
+        </div>
+        <div className="w-full h-fit flex flex-row justify-around items-center mt-8">
+          <Image
+            alt="curved arrow"
+            src="/curved-arrow.png"
+            width={150}
+            height={150}
+          />
+          <span className="font-semibold text-2xl">Giảng Viên</span>
+          <Image alt="planet" src="/planet.png" width={120} height={120} />
+        </div>
+        <div className="w-[75%] flex flex-row items-center justify-center">
+          <ProfileSwiper data={teacherData} />
         </div>
       </div>
-      {/* <h1 className="px-1 text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
-          NEVER DONE RISING
-        </h1>
-        <Balancer className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-          Keep it classic in timeless, easy-to-wear kicks.
-        </Balancer> */}
 
       {/* <ProfileCard
           data={{
@@ -210,11 +254,6 @@ const page = () => {
             name: 'Nguyễn Văn A',
           }}
         /> */}
-
-      {/* <div className="h-fit w-full">
-          <ProfileSwiper data={teacherData} />
-        </div> */}
-      {/* <ReviewCard data={userData[0]} /> */}
     </div>
   );
 };

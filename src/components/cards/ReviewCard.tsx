@@ -4,7 +4,7 @@ import React from 'react';
 const ReviewCard = ({ data }) => {
   return (
     <div>
-      <Card className="w-fit h-fit bg-transparent shadow-inner">
+      <Card className="w-fit h-fit bg-transparent shadow-md bg-white m-4">
         <CardBody className="overflow-visible">
           <div className="w-fit flex flex-col gap-2 sm:gap-3">
             <div className="text-[#ACACAC] text-sm break-normal max-w-[35ch]">

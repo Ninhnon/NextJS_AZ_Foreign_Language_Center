@@ -4,7 +4,7 @@ import { Card, CardBody, Image } from '@nextui-org/react';
 const ProfileCard = ({ data }) => {
   return (
     <div>
-      <Card className="w-full h-fit" shadow="none">
+      <Card className="w-full h-fit bg-transparent" shadow="none">
         <CardBody className="overflow-visible">
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-3">
             <Image
