@@ -3,11 +3,11 @@
 import React, { useRef } from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
-import CourseCard from '@/components/CourseCard';
 
 import ReviewSwiper from '@/components/swipers/ReviewSwiper';
 import ProfileSwiper from '@/components/swipers/ProfileSwiper';
 import SummaryCard from '@/components/cards/SummaryCard';
+import CourseSwiper from '@/components/swipers/CourseSwiper';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
@@ -153,12 +153,55 @@ const page = () => {
       content:
         'Bảo vệ tối đa quyền lợi của học viên, A&Z cam kết tài trợ học lại và phí thi lại nếu học viên không đạt kết quả mong muốn.',
     },
+    {
+      id: 4,
+      image: '/heart.png',
+      title: 'Đội ngũ giảng viên chuyên môn sâu',
+      content: 'Giảng viên tại A&Z có trình độ IELTS 7.5 -> 8.5.',
+    },
+    {
+      id: 5,
+      image: '/puzzle.png',
+      title: 'Hệ thống bài thi đánh giá chính xác trình độ',
+      content:
+        'Học viên luôn có thể biết chính xác trình độ bản thân thông qua hệ thống bài thi thử IELTS do A&Z tổ chức.',
+    },
+  ];
+
+  const courseData = [
+    {
+      id: 1,
+      image: '/course_writing.png',
+      level: 'Beginner',
+      title: 'Luyện thi Ielts 4.5',
+      enrolled: '250.000+',
+      length: '1h30p/buổi',
+      duration: '34 buổi',
+    },
+    {
+      id: 2,
+      image: '/course_group.png',
+      level: 'Intermediate',
+      title: 'Luyện thi Ielts 5.5',
+      enrolled: '250.000+',
+      length: '1h30p/buổi',
+      duration: '34 buổi',
+    },
+    {
+      id: 3,
+      image: '/course_learn.png',
+      level: 'Advanced',
+      title: 'Luyện thi Ielts 6.5',
+      enrolled: '250.000+',
+      length: '1h30p/buổi',
+      duration: '34 buổi',
+    },
   ];
   return (
     <div className="flex flex-col h-full w-full">
       <div
         className="flex flex-col lg:flex-row space-between
-       h-[700px] w-full bg-no-repeat bg-cover bg-hero-pattern"
+      h-fit w-full bg-no-repeat bg-cover bg-hero-pattern bg-[#FDF8EE]"
       >
         <div className="flex flex-1 flex-col space-between items-center px-5">
           <p className=" text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium">
@@ -188,31 +231,61 @@ const page = () => {
         />
       </div>
 
-      <CourseCard />
-
-      <div className="bg-[#FDF8EE]">
-        <Image
-          src={
-            'https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_974,c_limit/79cf6b2d-1216-4d22-a3cd-e9fca50ddebe/nike-just-do-it.png'
-          }
-          className="relative"
-          width={windowWidth.current}
-          height={windowWidth.current / 2}
-          priority
-          quality={100}
-          objectFit="cover"
-          alt="hero image"
-        />
-        <div>TT</div>
-      </div>
-
-      <div className="w-full h-[50rem]  overflow-hidden bg-gray-50 relative flex flex-col items-center justify-center">
-        <div className="w-fit h-fit flex flex-col md:flex-row rounded-md bg-[#4D2C5E] m-16 p-16 items-center gap-y-6 md:gap-x-6">
+      <div className="w-full h-fit overflow-hidden bg-transparent relative flex flex-col items-center">
+        <div className="w-fit h-fit flex flex-col md:flex-row rounded-md bg-[#4D2C5E] m-16 p-10 items-center gap-y-6 md:gap-x-6">
           <SummaryCard data={summaryData[0]} />
           <SummaryCard data={summaryData[1]} />
           <SummaryCard data={summaryData[2]} />
         </div>
       </div>
+
+      <div
+        className="w-full h-fit flex flex-col justify-center items-center bg-[url(/lightbulb.png),_url(/curved-arrow.png)] 
+        bg-[length:6rem,_6rem] bg-[repeat:no-repeat,_no-repeat] 
+      bg-[position:left_5rem_top,_right_3rem_top]  bg-no-repeat"
+      >
+        <div className="text-3xl font-bold">Các Khóa Học Nổi Bật</div>
+        <div className="text-sm text-gray-500">
+          Top 3 khóa học được đăng ký nhiều nhất tại A&Z{' '}
+        </div>
+        <CourseSwiper data={courseData} />
+      </div>
+
+      <div className="w-full h-[20rem] flex flex-col lg:flex-row bg-[#FDF8EE] p-4">
+        <div
+          className="w-full h-full bg-[#FDF8EE]"
+          style={{ position: 'relative', width: '50%', paddingBottom: '20%' }}
+        >
+          <Image
+            alt="Image Alt"
+            src={'/studying_girl.png'}
+            layout="fill"
+            objectFit="contain" // Scale your image down to fit into the container
+          />
+        </div>
+        <div className="flex flex-col justify-center items-start gap-y-4">
+          <div className="text-3xl font-bold gap-y-2">
+            <div>Cam kết</div>
+            <div>
+              {' '}
+              <span className="text-orange">chất lượng</span>
+              <span>&nbsp;học</span>
+            </div>
+          </div>
+
+          <SummaryCard
+            data={summaryData[3]}
+            iconBg="bg-[#4D2C5E]"
+            titleColor="text-[#000000]"
+          />
+          <SummaryCard
+            data={summaryData[4]}
+            iconBg="bg-[#4D2C5E]"
+            titleColor="text-[#000000]"
+          />
+        </div>
+      </div>
+
       <div
         className="w-full h-[80rem] bg-[url(/bg-ellipse-left.png),_url(/bg-ellipse-right.png)] 
         bg-[length:20rem,_20rem] bg-[repeat:no-repeat,_no-repeat] 

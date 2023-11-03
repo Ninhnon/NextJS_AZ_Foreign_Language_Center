@@ -1,8 +1,17 @@
 import Image from 'next/image';
 import React from 'react';
 
-const SummaryCard = ({ data, iconBg }: { data: any; iconBg?: string }) => {
+const SummaryCard = ({
+  data,
+  titleColor,
+  iconBg,
+}: {
+  data: any;
+  iconBg?: string;
+  titleColor?: string;
+}) => {
   const iconBgColor = iconBg ? iconBg : 'bg-purple-400';
+  const titleTextColor = titleColor ? titleColor : 'text-white';
   return (
     <div>
       <div className="w-fit h-fit bg-transparent border-none rounded-sm text-white">
@@ -14,8 +23,10 @@ const SummaryCard = ({ data, iconBg }: { data: any; iconBg?: string }) => {
               <Image alt="image" src={data.image} width={40} height={40} />
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-lg font-bold">{data.title}</span>
-              <span className="text-xs break-normal max-w-[30ch]">
+              <span className={`text-lg font-bold ${titleTextColor}`}>
+                {data.title}
+              </span>
+              <span className="text-xs break-normal max-w-[35ch] text-gray-400">
                 {data.content}
               </span>
             </div>
