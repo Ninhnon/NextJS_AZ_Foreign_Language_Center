@@ -10,7 +10,7 @@ import CourseCard from '../cards/CourseCard';
 
 const CourseSwiper = ({ data }) => {
   return (
-    <div className="h-full w-[75%] flex justify-center items-center">
+    <div className="h-full w-[75%] flex justify-center items-center shadow-none">
       <Swiper
         style={
           {

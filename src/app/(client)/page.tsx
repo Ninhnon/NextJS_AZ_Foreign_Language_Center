@@ -8,6 +8,7 @@ import ReviewSwiper from '@/components/swipers/ReviewSwiper';
 import ProfileSwiper from '@/components/swipers/ProfileSwiper';
 import SummaryCard from '@/components/cards/SummaryCard';
 import CourseSwiper from '@/components/swipers/CourseSwiper';
+import QuestionBox from '@/components/ui/QuestionBox';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
@@ -240,9 +241,9 @@ const page = () => {
       </div>
 
       <div
-        className="w-full h-fit flex flex-col justify-center items-center bg-[url(/lightbulb.png),_url(/curved-arrow.png)] 
+        className="w-full h-fit flex flex-col justify-center items-center bg-[url(/lightbulb.png),_url(/curved_arrow.png)] 
         bg-[length:6rem,_6rem] bg-[repeat:no-repeat,_no-repeat] 
-      bg-[position:left_5rem_top,_right_3rem_top]  bg-no-repeat"
+      bg-[position:left_5rem_top,_right_3rem_top]  bg-no-repeat mb-32"
       >
         <div className="text-3xl font-bold">Các Khóa Học Nổi Bật</div>
         <div className="text-sm text-gray-500">
@@ -251,7 +252,7 @@ const page = () => {
         <CourseSwiper data={courseData} />
       </div>
 
-      <div className="w-full h-[20rem] flex flex-col lg:flex-row bg-[#FDF8EE] p-4">
+      <div className="w-full h-fit flex flex-col lg:flex-row bg-[#FDF8EE] p-8 items-center">
         <div
           className="w-full h-full bg-[#FDF8EE]"
           style={{ position: 'relative', width: '50%', paddingBottom: '20%' }}
@@ -264,7 +265,7 @@ const page = () => {
           />
         </div>
         <div className="flex flex-col justify-center items-start gap-y-4">
-          <div className="text-3xl font-bold gap-y-2">
+          <div className="text-3xl font-bold gap-y-2 flex flex-col justify-center items-start">
             <div>Cam kết</div>
             <div>
               {' '}
@@ -287,11 +288,11 @@ const page = () => {
       </div>
 
       <div
-        className="w-full h-[80rem] bg-[url(/bg-ellipse-left.png),_url(/bg-ellipse-right.png)] 
+        className="w-full h-[80rem] bg-[url(/bg_ellipse_left.png),_url(/bg_ellipse_right.png)] 
         bg-[length:20rem,_20rem] bg-[repeat:no-repeat,_no-repeat] 
       bg-[position:left__top_,_right_bottom]  bg-no-repeat overflow-hidden bg-gray-50 relative flex flex-col items-center justify-center"
       >
-        <div className="flex flex-row my-10 items-center justify-center font-semibold text-2xl font-PlaypenSans">
+        <div className="flex flex-col md:flex-row my-10 items-center justify-center font-semibold text-2xl font-PlaypenSans">
           <span>Những câu chuyện thành công cùng &nbsp;</span>
           <span className="text-[#FF7426]"> IELTS Tại A&Z</span>
         </div>
@@ -319,14 +320,9 @@ const page = () => {
         </div>
       </div>
 
-      {/* <ProfileCard
-          data={{
-            id: 1,
-            image: '/teacher_1.png',
-            bandScore: '7.5 IELTS',
-            name: 'Nguyễn Văn A',
-          }}
-        /> */}
+      <div className="w-full h-fit flex justify-center items-center mb-32 bg-gray-50">
+        <QuestionBox handleSubmit={() => {}} />
+      </div>
     </div>
   );
 };
