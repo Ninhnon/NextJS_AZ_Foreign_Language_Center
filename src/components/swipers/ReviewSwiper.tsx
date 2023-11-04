@@ -8,7 +8,13 @@ import 'swiper/css/autoplay';
 import ReviewCard from '../cards/ReviewCard';
 import Loader from '../Loader';
 
-const ReviewSwiper = ({ data }) => {
+const ReviewSwiper = ({
+  data,
+  reverseDirection,
+}: {
+  data: any;
+  reverseDirection: boolean;
+}) => {
   return (
     <div className="h-full w-full">
       <Swiper
@@ -29,7 +35,7 @@ const ReviewSwiper = ({ data }) => {
         }}
         spaceBetween={10}
         loop={true}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 3000, reverseDirection: reverseDirection }}
         modules={[Pagination, Autoplay]}
         breakpoints={{
           450: {

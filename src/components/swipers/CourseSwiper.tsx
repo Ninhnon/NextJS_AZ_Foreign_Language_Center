@@ -1,16 +1,16 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import React from 'react';
-import ProfileCard from '../cards/ProfileCard';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import Loader from '../Loader';
+import CourseCard from '../cards/CourseCard';
 
-const ProfileSwiper = ({ data }) => {
+const CourseSwiper = ({ data }) => {
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="h-full w-[75%] flex justify-center items-center shadow-none">
       <Swiper
         style={
           {
@@ -32,27 +32,23 @@ const ProfileSwiper = ({ data }) => {
         breakpoints={{
           450: {
             slidesPerView: 1,
-            spaceBetween: 10,
+            spaceBetween: 0,
           },
           700: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 0,
           },
           900: {
             slidesPerView: 3,
-            spaceBetween: 10,
-          },
-          1100: {
-            slidesPerView: 4,
-            spaceBetween: 10,
+            spaceBetween: 0,
           },
         }}
-        className="w-full h-auto overflow-visible relative flex items-center justify-center"
+        className="w-full h-auto overflow-visible relative flex"
       >
         {data ? (
-          data?.map((teacher) => (
-            <SwiperSlide key={teacher.id}>
-              <ProfileCard data={teacher} />
+          data?.map((course) => (
+            <SwiperSlide key={course.id}>
+              <CourseCard data={course} />
             </SwiperSlide>
           ))
         ) : (
@@ -63,4 +59,4 @@ const ProfileSwiper = ({ data }) => {
   );
 };
 
-export default ProfileSwiper;
+export default CourseSwiper;
