@@ -28,7 +28,7 @@ const CourseCard = () => {
       <div className="row-span-1">
         <div>
           <p>
-            <span className="text-silver_chalice text-sm font-medium">
+            <span className="text-silver-chalice text-sm font-medium">
               Beginner
             </span>
             <br />
@@ -52,14 +52,14 @@ const CourseCard = () => {
         <div className="flex mb-4 sm:space-x-2 flex-wrap">
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineClockCircle />
-            <span className=" text-silver_chalice text-sm font-light">
+            <span className=" text-silver-chalice text-sm font-light">
               1h30p/buổi
             </span>
           </div>
 
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineCalendar />
-            <span className="text-silver_chalice text-sm font-light">
+            <span className="text-silver-chalice text-sm font-light">
               34 buổi
             </span>
           </div>

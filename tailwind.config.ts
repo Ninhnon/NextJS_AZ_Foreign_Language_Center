@@ -17,7 +17,10 @@ const config: Config = {
         background: '#ffffff',
         foreground: '#0a0a0a',
         orange: '#FF7426',
-        silver_chalice: '#ACACAC',
+        'yellow-orange': '#FFAE42',
+        'silver-chalice': '#ACACAC',
+        'old-lace': '#FDF8EE',
+        bossanova: '#4D2C5E',
         primary: {
           DEFAULT: '#18181b',
           foreground: '#fafafa',
