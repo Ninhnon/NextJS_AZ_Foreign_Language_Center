@@ -4,10 +4,10 @@ import { HiUserGroup } from 'react-icons/hi';
 import { AiOutlineClockCircle, AiOutlineCalendar } from 'react-icons/ai';
 import { Button } from '@nextui-org/react';
 
-const CourseCard = () => {
+const CourseCard = ({ data }) => {
   return (
     <div
-      className="relative rounded-xl p-4 bg-white max-w-[30%] min-h-0 m-8 mx-auto
+      className="relative rounded-xl p-4 bg-white w-fit min-h-0 m-8 mx-auto
     drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words"
     >
       {/* Start Description Image */}
@@ -15,10 +15,10 @@ const CourseCard = () => {
       <div className=" rounded-xl bg-neutral-400 max-h-[50%] row-span-1">
         <Image
           className="object-cover rounded-xl"
-          src={`/writing.png`}
+          src={data.image}
           alt="hero banner"
-          width={window.innerWidth / 2}
-          height={window.innerWidth / 4}
+          width={300}
+          height={300}
           loading="lazy"
         />
       </div>
@@ -29,21 +29,23 @@ const CourseCard = () => {
         <div>
           <p>
             <span className="text-silver-chalice text-sm font-medium">
-              Beginner
+              {data.level}
             </span>
             <br />
           </p>
 
           <p>
             <span className="text-black text-base font-medium">
-              Luyện thi Ielts 4.5
+              {data.title}
             </span>
             <br />
           </p>
 
           <div className="flex items-center space-x-1">
             <HiUserGroup className="fill-orange" />
-            <span className="text-orange font-medium text-sm">250.000+</span>
+            <span className="text-orange font-medium text-sm">
+              {data.enrolled}
+            </span>
           </div>
         </div>
 
@@ -53,14 +55,14 @@ const CourseCard = () => {
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineClockCircle />
             <span className=" text-silver-chalice text-sm font-light">
-              1h30p/buổi
+              {data.length}
             </span>
           </div>
 
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineCalendar />
             <span className="text-silver-chalice text-sm font-light">
-              34 buổi
+              {data.duration}
             </span>
           </div>
         </div>
