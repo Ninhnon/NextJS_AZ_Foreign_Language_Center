@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
-
+import Link from 'next/link';
 const Footer = () => {
   return (
     <footer className="bg-[#FDF8EE] text-[#606060] pt-14 pb-3">
@@ -15,15 +15,21 @@ const Footer = () => {
             <div className="font-oswald font-bold uppercase text-sm cursor-pointer">
               A&Z
             </div>
-            <div className="font-oswald font-medium text-sm cursor-pointer">
-              Giới thiệu
-            </div>
-            <div className="font-oswald font-medium text-sm cursor-pointer">
-              Cách để đăng ký
-            </div>
-            <div className="font-oswald font-medium text-sm cursor-pointer">
-              Các khóa học nổi bật
-            </div>
+            <Link aria-label="Products" href="/introduction">
+              <div className="font-oswald font-medium text-sm cursor-pointer">
+                Giới thiệu
+              </div>
+            </Link>
+            <Link aria-label="Products" href="/entrance_examination">
+              <div className="font-oswald font-medium text-sm cursor-pointer">
+                Cách để đăng ký
+              </div>
+            </Link>
+            <Link aria-label="Products" href="/course_details">
+              <div className="font-oswald font-medium text-sm cursor-pointer">
+                Các khóa học nổi bật
+              </div>
+            </Link>
           </div>
           {/* MENU END */}
 
@@ -48,15 +54,21 @@ const Footer = () => {
 
             {/* MENU START */}
             <div className="flex flex-col gap-3">
-              <div className="font-oswald font-bold uppercase text-sm">
-                Hỗ trợ
-              </div>
-              <div className="text-sm text-black hover:text-white cursor-pointer">
-                Trung tâm trợ giúp
-              </div>
-              <div className="text-sm text-black hover:text-white cursor-pointer">
-                FAQ
-              </div>
+              <Link aria-label="Products" href="/contact">
+                <div className="font-oswald font-bold uppercase text-sm">
+                  Hỗ trợ
+                </div>
+              </Link>
+              <Link aria-label="Products" href="/contact">
+                <div className="text-sm text-black hover:text-white cursor-pointer">
+                  Trung tâm trợ giúp
+                </div>
+              </Link>
+              <Link aria-label="Products" href="/contact">
+                <div className="text-sm text-black hover:text-white cursor-pointer">
+                  FAQ
+                </div>
+              </Link>
             </div>
             {/* MENU END */}
           </div>

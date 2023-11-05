@@ -106,10 +106,7 @@ const NavigationMenuDemo = ({ session }) => {
         <NavigationMenu.Root className="NavigationMenuRoot">
           <NavigationMenu.List className="NavigationMenuList">
             <NavigationMenu.Item>
-              <NavigationMenu.Link
-                className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
-              >
+              <NavigationMenu.Link className="NavigationMenuLink" href={'/'}>
                 Trang Chủ
               </NavigationMenu.Link>
             </NavigationMenu.Item>
@@ -117,7 +114,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
+                href={'/introduction'}
               >
                 Giới thiệu
               </NavigationMenu.Link>
@@ -126,7 +123,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
+                href={'/course_details'}
               >
                 Khóa học
               </NavigationMenu.Link>
@@ -135,7 +132,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
+                href={'/entrance_examination'}
               >
                 Thi thử
               </NavigationMenu.Link>
@@ -144,7 +141,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href="https://github.com/radix-ui"
+                href={'/contact'}
               >
                 Liên hệ
               </NavigationMenu.Link>

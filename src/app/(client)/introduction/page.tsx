@@ -67,7 +67,6 @@ const page = () => {
 
   return (
     <div className="flex flex-col justify-center items-center ">
-      Trang giới thiệu
       <div className="w-full h-[800px] relative">
         <Image
           alt="introduction"
