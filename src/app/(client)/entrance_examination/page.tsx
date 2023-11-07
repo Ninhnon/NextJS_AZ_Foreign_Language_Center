@@ -3,14 +3,14 @@ import EntranceExaminationCard from '@/components/EntranceExaminationCard';
 
 const page = () => {
   return (
-    <div className="grid grid-cols-3 gap-4 w-full h-full bg-slate-50">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full h-full bg-slate-50">
       <EntranceExaminationCard
         text="Luyện thi Ielts"
         src={`/writing.png`}
         backgroundColor="#FFAE42"
       />
       <EntranceExaminationCard
-        text="Chương trình Ielts Junior"
+        text="Chương trình Ielts Juniorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
         src={`/writing.png`}
         backgroundColor="#FF7426"
       />

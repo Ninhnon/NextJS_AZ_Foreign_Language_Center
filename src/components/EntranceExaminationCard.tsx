@@ -9,15 +9,18 @@ const EntranceExaminationCard = ({
   return (
     <div
       style={{ backgroundColor: backgroundColor }}
-      className="relative rounded-xl w-[70%] md:h-[200px] sm:h-[150px]
+      className="relative rounded-xl w-[35%] sm:w-[70%] h-[150px] md:h-[200px]
  m-8 mx-auto drop-shadow-xl overflow-hidden grid-rows-3 cursor-pointer"
     >
-      <div className="row-span-1 font-bold text-normal text-white mx-4 my-2 max-h-[33.33%] overflow-auto">
+      <div
+        className="row-span-1 font-bold text-normal text-white
+       mx-4 my-2 h-1/3 truncate"
+      >
         {text}
       </div>
       {/* Start Description Image */}
 
-      <div id="hello" className="rounded-b-xl bg-neutral-400 row-span-2">
+      <div id="hello" className="rounded-b-xl row-span-2">
         <Image
           className="object-cover rounded-b-xl absolute bottom-0"
           src={src}
