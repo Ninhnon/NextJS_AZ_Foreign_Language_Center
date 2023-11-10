@@ -1,5 +1,4 @@
-import React from 'react';
-
 export default function page() {
-  return <div>admin</div>;
+  //Set default page as course-list
+  return <div></div>;
 }
