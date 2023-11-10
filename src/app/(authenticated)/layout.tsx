@@ -1,15 +1,19 @@
-import { mustBeLoggedIn } from '@/lib/auth';
+import AdminHeader from '@/components/header/AdminHeader';
+// import { mustBeLoggedIn } from '@/lib/auth';
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await mustBeLoggedIn();
+  // await mustBeLoggedIn();
 
   return (
-    <div className="">
-      <div className="w-full h-full">{children}</div>
+    <div className={`w-full h-full`}>
+      <AdminHeader
+        session={{ user: { avatar: '/teacher_1.png', name: 'ADMIN' } }}
+      />
+      {children}
     </div>
   );
 }
