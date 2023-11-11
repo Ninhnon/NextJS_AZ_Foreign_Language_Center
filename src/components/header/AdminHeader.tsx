@@ -2,7 +2,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import './styles.css';
 
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -86,7 +85,7 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'/admin/course-list'}>
+                <Link href={'/admin/assignment'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaBookOpen />
                     <div className="ml-2">Bài tập</div>
