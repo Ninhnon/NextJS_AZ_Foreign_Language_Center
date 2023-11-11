@@ -36,7 +36,7 @@ const AssignmentFilter = () => {
   console.log(Array.from(band)[0]);
 
   return (
-    <div className="w-full h-full flex flex-row gap-16 justify-center items-end">
+    <div className="w-full h-full flex md:flex-row flex-col gap-16 justify-center md:justify-between items-center md:items-end">
       <div className="w-[15rem] h-fit flex flex-col gap-3">
         <div className="font-bold">Module</div>
         <Select
@@ -102,7 +102,7 @@ const AssignmentFilter = () => {
             ))}
         </Select>
       </div>
-      <Button className="w-[10rem] h-[3rem] rounded-sm bg-orange text-white">
+      <Button className="w-fit h-[3rem] rounded-sm bg-orange text-white">
         Lọc dữ liệu
       </Button>
     </div>

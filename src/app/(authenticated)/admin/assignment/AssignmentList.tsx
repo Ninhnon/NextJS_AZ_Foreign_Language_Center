@@ -17,7 +17,7 @@ const AssignmentList = ({ data }) => {
 
   return (
     <div className="w-full h-full flex flex-col gap-4">
-      <div className="w-full h-fit flex flex-row justify-between items-center">
+      <div className="w-full h-fit flex flex-row justify-between tems-center">
         <div className="relative w-fit h-fit flex flex-row gap-4">
           <Button className="bg-orange text-white w-32" radius="sm">
             Lọc dữ liệu
@@ -30,7 +30,7 @@ const AssignmentList = ({ data }) => {
           </Button>
         </div>
 
-        <div className="relative w-fit h-fit">
+        <div className="relative w-fit h-fit flex flex-row gap-16">
           <Button className="bg-[#FDF8EE] text-black w-32" radius="sm">
             Chọn
           </Button>
@@ -46,10 +46,10 @@ const AssignmentList = ({ data }) => {
           </Button>
         </div>
       </div>
-      <div className="w-full h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+      <div className="w-full h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
         {currentItems?.map((item) => (
-          <div key={item.id} className="w-full h-full">
-            <div className="h-full flex flex-row items-center justify-between">
+          <div key={item.id}>
+            <div>
               <AssignmentCard data={item} />
             </div>
           </div>
