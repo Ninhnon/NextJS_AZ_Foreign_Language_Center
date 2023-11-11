@@ -9,6 +9,7 @@ import ProfileSwiper from '@/components/swipers/ProfileSwiper';
 import SummaryCard from '@/components/cards/SummaryCard';
 import CourseSwiper from '@/components/swipers/CourseSwiper';
 import QuestionBox from '@/components/ui/QuestionBox';
+import { Button } from '@nextui-org/react';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
@@ -204,24 +205,24 @@ const page = () => {
         className="flex flex-col lg:flex-row space-between
       h-fit w-full bg-no-repeat bg-cover bg-hero-pattern bg-[#FDF8EE]"
       >
-        <div className="flex flex-1 flex-col space-between items-center px-5">
-          <p className=" text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium">
+        <div className="flex flex-1 flex-col space-between items-center justify-start px-5 gap-6">
+          <p className=" text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             <span className="text-[#050C26]">Lựa Chọn </span>
             <span className="text-[#FF7426]">Đúng</span>
-            <br className="lg:flex hidden" />
+            <div className="my-2 md:my-4"></div>
             <span className="text-[#050C26]">Cho </span>
             <span className="text-[#FF7426]">Tương Lai</span>
             <br className="lg:flex hidden" />
           </p>
-          <p className="text-sm sm:text-base lg:text-lg text-black p-4">
-            Tại A&Z, học viên học tập và phát triển theo phương
-            <br className="lg:flex hidden" />
-            pháp riêng phù hợp với sự khác biệt của bản thân, tài
-            <br className="lg:flex hidden" />
-            nguyên học tập cá nhân hoá, bài giảng trọng tâm dễ
-            <br className="lg:flex hidden" />
-            hiểu và đạt mục tiêu trong thời gian mong muốn.
+          <p className="text-sm sm:text-base lg:text-lg font-bold text-justify text-black p-4 max-w-[40ch]">
+            Tại A&Z, học viên học tập và phát triển theo phương pháp riêng phù
+            hợp với sự khác biệt của bản thân, tài nguyên học tập cá nhân hoá,
+            bài giảng trọng tâm dễ hiểu và đạt mục tiêu trong thời gian mong
+            muốn.
           </p>
+          <Button radius="full" size="lg" className="bg-[#FDB21A] text-white">
+            Khám phá tại đây
+          </Button>
         </div>
         <Image
           alt="hero banner"
@@ -308,7 +309,7 @@ const page = () => {
         <div className="w-full h-fit flex flex-row justify-around items-center mt-8">
           <Image
             alt="curved arrow"
-            src="/curved-arrow.png"
+            src="/curved_arrow.png"
             width={150}
             height={150}
           />
