@@ -22,9 +22,14 @@ import { cn, formatBytes } from '@/lib/utils';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Icons } from '@/assets/Icons';
+<<<<<<< HEAD
 import { ScrollArea } from '../ui/scroll-area';
 import { ImageCustom } from '../ImageCustom';
 
+=======
+import { ScrollArea } from '@/components/ui/scroll-area';
+import Image from 'next/image';
+>>>>>>> 4fcfb7d (Init: admin add course page)
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
   preview: string;
@@ -183,7 +188,10 @@ export function FileDialog<TFieldValues extends FieldValues>({
         <ScrollArea className="h-[300px] mt-10 px-3">
           {files?.length ? (
             <div className="grid gap-5">
+<<<<<<< HEAD
             <div className="grid gap-5">
+=======
+>>>>>>> 4fcfb7d (Init: admin add course page)
               {files?.map((file, i) => (
                 <FileCard
                   key={i}
@@ -267,6 +275,7 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
   return (
     <div className="relative flex items-center justify-between gap-2.5">
       <div className="flex items-center gap-2">
+<<<<<<< HEAD
         <ImageCustom
           src={cropData ? cropData : file?.preview || file?.url}
           alt={file.name}
@@ -275,6 +284,18 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
         <div className="flex flex-col">
           <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
             {file.name}
+=======
+        <Image
+          src={cropData ? cropData : file.preview}
+          alt={file.name}
+          className="h-12 w-12 shrink-0 rounded-md"
+          width={48}
+          height={48}
+        />
+        <div className="flex flex-col">
+          <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
+            {file.name.length > 30 ? file.name.slice(0, 30) + '...' : file.name}
+>>>>>>> 4fcfb7d (Init: admin add course page)
           </p>
           <p className="text-xs text-slate-500">
             {(file.size / 1024 / 1024).toFixed(2)}MB
@@ -282,6 +303,7 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
         </div>
       </div>
       <div className="flex items-center gap-2">
+<<<<<<< HEAD
         {file?.type?.startsWith('image') ||
           (file != null && (
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -352,10 +374,81 @@ function FileCard({ i, file, files, setFiles }: FileCardProps) {
                       Reset Crop
                     </Button>
                   </div>
+=======
+        {file !== null && (
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="h-7 w-7"
+              >
+                <Icons.crop
+                  className="h-4 w-4 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="sr-only"> Crop image</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
+                Crop image{' '}
+              </p>
+              <div className="mt-8 grid place-items-center space-y-5">
+                <Cropper
+                  ref={cropperRef}
+                  className="h-[450px] w-[450px] object-cover"
+                  zoomTo={0.5}
+                  initialAspectRatio={1 / 1}
+                  preview=".img-preview"
+                  src={file.preview}
+                  viewMode={1}
+                  minCropBoxHeight={10}
+                  minCropBoxWidth={10}
+                  background={false}
+                  responsive={true}
+                  autoCropArea={1}
+                  checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                  guides={true}
+                />
+                <div className="flex items-center justify-center space-x-2">
+                  <Button
+                    aria-label="Crop image"
+                    type="button"
+                    size="sm"
+                    className="h-8"
+                    onClick={() => {
+                      onCrop();
+                      setIsOpen(false);
+                    }}
+                  >
+                    <Icons.crop className="mr-2 h-3.5 w-3.5 text-secondary-50" />
+                    Crop image{' '}
+                  </Button>
+                  <Button
+                    aria-label="Reset crop"
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-8"
+                    onClick={() => {
+                      cropperRef.current?.cropper.reset();
+                      setCropData(null);
+                    }}
+                  >
+                    <Icons.reset
+                      className="mr-2 h-3.5 w-3.5 text-primary"
+                      aria-hidden="true"
+                    />
+                    Discard changes{' '}
+                  </Button>
+>>>>>>> 4fcfb7d (Init: admin add course page)
                 </div>
-              </DialogContent>
-            </Dialog>
-          ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
         <Button
           type="button"
           variant="outline"
