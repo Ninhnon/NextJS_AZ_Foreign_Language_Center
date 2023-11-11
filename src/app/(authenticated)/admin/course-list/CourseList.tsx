@@ -3,7 +3,6 @@ import AdminCourseCard from '@/components/cards/AdminCourseCard';
 import { Button, Pagination } from '@nextui-org/react';
 import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
-import { FaHouseChimney } from 'react-icons/fa6';
 
 export default function CourseList({ data }) {
   //Set selected option button
@@ -30,17 +29,7 @@ export default function CourseList({ data }) {
   };
 
   return (
-    <div className="flex flex-col w-full h-full py-6 px-32">
-      <div className="w-fit h-fit flex flex-col">
-        <Button
-          className="font-bold text-orange "
-          variant="light"
-          radius="sm"
-          startContent={<FaHouseChimney />}
-        >
-          Khóa học
-        </Button>
-      </div>
+    <div className="w-full h-full">
       <div className="w-full h-fit flex flex-col px-16 pt-2">
         <div className="ml-4 font-bold text-2xl">Danh sách khóa học</div>
         <div className="w-full h-fit flex flex-row items-center justify-between">
@@ -52,7 +41,7 @@ export default function CourseList({ data }) {
                   activeButton === button.id
                     ? 'bg-orange text-white'
                     : 'bg-white text-orange'
-                } border-x-neutral-950 w-32 m-4`}
+                } border-orange w-32 m-4`}
                 variant="bordered"
                 radius="sm"
                 onClick={() => handleButtonClick(button.id)}
