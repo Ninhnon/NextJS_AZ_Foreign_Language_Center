@@ -36,10 +36,11 @@ const AssignmentFilter = () => {
   console.log(Array.from(band)[0]);
 
   return (
-    <div className="w-full h-full flex flex-row gap-16 justify-center items-center">
+    <div className="w-full h-full flex flex-row gap-16 justify-center items-end">
       <div className="w-[15rem] h-fit flex flex-col gap-3">
         <div className="font-bold">Module</div>
         <Select
+          style={{ height: '3rem' }}
           key={'type'}
           radius={'md'}
           size="sm"
@@ -60,6 +61,7 @@ const AssignmentFilter = () => {
       <div className="w-[15rem] h-fit flex flex-col gap-3">
         <div className="font-bold">Kỹ năng</div>
         <Select
+          style={{ height: '3rem' }}
           size="sm"
           key={'type'}
           radius={'md'}
@@ -80,6 +82,7 @@ const AssignmentFilter = () => {
       <div className="w-[15rem] h-fit flex flex-col gap-3">
         <div className="font-bold">Trình độ</div>
         <Select
+          style={{ height: '3rem' }}
           size="sm"
           key={'type'}
           radius={'md'}
@@ -99,7 +102,7 @@ const AssignmentFilter = () => {
             ))}
         </Select>
       </div>
-      <Button className="w-[10rem] rounded-sm bg-orange text-white">
+      <Button className="w-[10rem] h-[3rem] rounded-sm bg-orange text-white">
         Lọc dữ liệu
       </Button>
     </div>
