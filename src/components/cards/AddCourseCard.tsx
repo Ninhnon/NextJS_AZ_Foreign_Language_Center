@@ -14,11 +14,8 @@ import {
   SelectItem,
   Button,
   Image,
-<<<<<<< HEAD
   Breadcrumbs,
   BreadcrumbItem,
-=======
->>>>>>> 4fcfb7d (Init: admin add course page)
 } from '@nextui-org/react';
 import { Label } from '@radix-ui/react-label';
 import { Calendar as CalendarIcon } from 'lucide-react';
@@ -27,12 +24,9 @@ import { format } from 'date-fns';
 import { FileDialog } from '../FileDialog';
 import { type FileWithPath } from 'react-dropzone';
 import { Zoom } from '@/components/ui/zoom-image';
-<<<<<<< HEAD
 import { AiFillHome } from 'react-icons/ai';
 import { RiAdminFill } from 'react-icons/ri';
 import { BsFillBookmarkPlusFill } from 'react-icons/bs';
-=======
->>>>>>> 4fcfb7d (Init: admin add course page)
 
 export default function AddCourseCard() {
   // Image
@@ -89,7 +83,6 @@ export default function AddCourseCard() {
 
   return (
     <div className="flex w-full flex-col p-4">
-<<<<<<< HEAD
       <Breadcrumbs sizes="lg" color="primary">
         <BreadcrumbItem startContent={<AiFillHome />}>Home</BreadcrumbItem>
         <BreadcrumbItem startContent={<RiAdminFill />}>Admin</BreadcrumbItem>
@@ -104,8 +97,6 @@ export default function AddCourseCard() {
       {/* 
       {!addSuccess ? null : (
         } */}
-=======
->>>>>>> 4fcfb7d (Init: admin add course page)
       <Tabs
         aria-label="Options"
         variant="bordered"
@@ -157,11 +148,7 @@ export default function AddCourseCard() {
                     radius="sm"
                     className="w-full font-bold"
                     classNames={{
-<<<<<<< HEAD
                       trigger: 'bg-old-lace hover:bg-parchment',
-=======
-                      trigger: 'bg-old-lace',
->>>>>>> 4fcfb7d (Init: admin add course page)
                       value: 'font-normal text-black',
                     }}
                   >
@@ -668,16 +655,12 @@ export default function AddCourseCard() {
                     Quay lại
                   </Button>
 
-<<<<<<< HEAD
                   <Button
                     color="primary"
                     variant="ghost"
                     className="w-[20%]"
                     onClick={() => setCurrentTab('finish')}
                   >
-=======
-                  <Button color="primary" variant="ghost" className="w-[20%]">
->>>>>>> 4fcfb7d (Init: admin add course page)
                     Lưu và tiếp tục
                   </Button>
                 </div>
@@ -685,7 +668,6 @@ export default function AddCourseCard() {
             </CardBody>
           </Card>
         </Tab>
-<<<<<<< HEAD
 
         <Tab key="finish" title="Hoàn thành">
           <Card>
@@ -714,8 +696,6 @@ export default function AddCourseCard() {
             </CardBody>
           </Card>
         </Tab>
-=======
->>>>>>> 4fcfb7d (Init: admin add course page)
       </Tabs>
     </div>
   );
