@@ -14,6 +14,8 @@ import {
   SelectItem,
   Button,
   Image,
+  Breadcrumbs,
+  BreadcrumbItem,
 } from '@nextui-org/react';
 import { Label } from '@radix-ui/react-label';
 import { Calendar as CalendarIcon } from 'lucide-react';
@@ -22,6 +24,9 @@ import { format } from 'date-fns';
 import { FileDialog } from '../FileDialog';
 import { type FileWithPath } from 'react-dropzone';
 import { Zoom } from '@/components/ui/zoom-image';
+import { AiFillHome } from 'react-icons/ai';
+import { RiAdminFill } from 'react-icons/ri';
+import { BsFillBookmarkPlusFill } from 'react-icons/bs';
 
 export default function AddCourseCard() {
   // Image
@@ -78,6 +83,20 @@ export default function AddCourseCard() {
 
   return (
     <div className="flex w-full flex-col p-4">
+      <Breadcrumbs sizes="lg" color="primary">
+        <BreadcrumbItem startContent={<AiFillHome />}>Home</BreadcrumbItem>
+        <BreadcrumbItem startContent={<RiAdminFill />}>Admin</BreadcrumbItem>
+        <BreadcrumbItem startContent={<BsFillBookmarkPlusFill />}>
+          Add Course
+        </BreadcrumbItem>
+      </Breadcrumbs>
+
+      <Label className="text-lg font-semibold mt-4 ml-4">
+        Tạo khóa học mới
+      </Label>
+      {/* 
+      {!addSuccess ? null : (
+        } */}
       <Tabs
         aria-label="Options"
         variant="bordered"
@@ -129,7 +148,7 @@ export default function AddCourseCard() {
                     radius="sm"
                     className="w-full font-bold"
                     classNames={{
-                      trigger: 'bg-old-lace',
+                      trigger: 'bg-old-lace hover:bg-parchment',
                       value: 'font-normal text-black',
                     }}
                   >
@@ -636,10 +655,43 @@ export default function AddCourseCard() {
                     Quay lại
                   </Button>
 
-                  <Button color="primary" variant="ghost" className="w-[20%]">
+                  <Button
+                    color="primary"
+                    variant="ghost"
+                    className="w-[20%]"
+                    onClick={() => setCurrentTab('finish')}
+                  >
                     Lưu và tiếp tục
                   </Button>
                 </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Tab>
+
+        <Tab key="finish" title="Hoàn thành">
+          <Card>
+            <CardBody>
+              <div className="flex flex-col items-center space-y-4">
+                <Label className="font-semibold">
+                  Danh sách khóa học đã được tạo thành công
+                </Label>
+                <Image
+                  className="object-cover rounded-xl"
+                  src={`/tick_icon.png`}
+                  alt="hero banner"
+                  width={100}
+                  height={50}
+                  loading="lazy"
+                />
+                <Button
+                  color="primary"
+                  variant="ghost"
+                  className="w-[20%]"
+                  onClick={() => setCurrentTab('lesson_detail')}
+                >
+                  Quay lại danh sách khóa học
+                </Button>
               </div>
             </CardBody>
           </Card>
