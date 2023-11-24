@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react';
 import React from 'react';
 import { FaHouseChimney } from 'react-icons/fa6';
 import AssignmentDetails from './AssignmentDetails';
+import AssignmentFilePicker from '@/components/AssignmentFilePicker';
 
 function page({ params }: { params: { slug: any } }) {
   const { slug } = params;
@@ -24,7 +25,7 @@ function page({ params }: { params: { slug: any } }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col py-6 px-32 justify-center">
+    <div className="w-full h-full flex flex-col py-6 px-32 justify-center gap-8">
       <div className="w-fit h-fit flex flex-col">
         <Button
           className="font-bold text-orange flex flex-row end-4"
@@ -36,6 +37,7 @@ function page({ params }: { params: { slug: any } }) {
         </Button>
       </div>
       <AssignmentDetails data={data} />
+      <AssignmentFilePicker data={data} />
     </div>
   );
 }
