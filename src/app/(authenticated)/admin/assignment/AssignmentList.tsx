@@ -18,7 +18,7 @@ const AssignmentList = ({ data }) => {
   return (
     <div className="w-full h-full flex flex-col gap-4">
       <div className="w-full h-fit flex flex-row justify-between tems-center">
-        <div className="relative w-fit h-fit flex flex-row gap-4">
+        <div className="relative w-fit h-fit flex flex-col md:flex-row gap-4">
           <Button className="bg-orange text-white w-32" radius="sm">
             Lọc dữ liệu
           </Button>
@@ -30,7 +30,7 @@ const AssignmentList = ({ data }) => {
           </Button>
         </div>
 
-        <div className="relative w-fit h-fit flex flex-row gap-16">
+        <div className="relative w-fit h-fit flex flex-col md:flex-row justify-center items-center">
           <Button className="bg-[#FDF8EE] text-black w-32" radius="sm">
             Chọn
           </Button>

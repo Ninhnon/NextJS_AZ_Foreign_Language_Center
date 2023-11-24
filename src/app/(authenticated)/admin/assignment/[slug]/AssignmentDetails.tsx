@@ -1,7 +1,8 @@
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import React, { useState } from 'react';
+import { FaPenToSquare } from 'react-icons/fa6';
 
-const AssignmentFilter = () => {
+const AssignmentDetails = ({ data }) => {
   const [module, setModule] = useState(new Set([]));
   const [skill, setSkill] = useState(new Set([]));
   const [band, setBand] = useState(new Set([]));
@@ -36,10 +37,16 @@ const AssignmentFilter = () => {
   console.log(Array.from(band)[0]);
 
   return (
-    <div className="w-full h-full flex md:flex-row flex-col gap-16 justify-center md:justify-between items-center md:items-end">
-      <div className="w-fit flex md:flex-row flex-col gap-8">
-        <div className="w-[15rem] h-fit flex flex-col gap-3">
-          <div className="font-bold">Module</div>
+    <div className="w-full h-fit flex flex-col px-4 gap-4">
+      <div className="w-fit h-fit flex flex-row items-center">
+        <span className="font-bold">{data.title}</span>
+        <Button className="ml-4" variant="light" radius="sm" isIconOnly>
+          <FaPenToSquare />
+        </Button>
+      </div>
+      <div className="iw-fit flex md:flex-row flex-col gap-8">
+        <div className="w-[15rem] h-fit flex flex-row gap-3 items-center">
+          <div className="w-fit min-w-[10ch] font-bold">Module</div>
           <Select
             style={{ height: '3rem' }}
             key={'type'}
@@ -59,8 +66,8 @@ const AssignmentFilter = () => {
             ))}
           </Select>
         </div>
-        <div className="w-[15rem] h-fit flex flex-col gap-3">
-          <div className="font-bold">Kỹ năng</div>
+        <div className="w-[15rem] h-fit flex flex-row gap-3 items-center">
+          <div className="w-fit min-w-[10ch]  font-bold">Kỹ năng</div>
           <Select
             style={{ height: '3rem' }}
             size="sm"
@@ -80,8 +87,8 @@ const AssignmentFilter = () => {
             ))}
           </Select>
         </div>
-        <div className="w-[15rem] h-fit flex flex-col gap-3">
-          <div className="font-bold">Trình độ</div>
+        <div className="w-[15rem] h-fit flex flex-row gap-3 items-center">
+          <div className="w-fit min-w-[10ch]  font-bold">Trình độ</div>
           <Select
             style={{ height: '3rem' }}
             size="sm"
@@ -104,12 +111,12 @@ const AssignmentFilter = () => {
           </Select>
         </div>
       </div>
-
-      <Button className="w-fit h-[3rem] rounded-sm bg-orange text-white">
-        Lọc dữ liệu
-      </Button>
+      <div className="w-fit h-fit flex flex-row font-bold">
+        <span>Ngày khởi tạo: &nbsp; &nbsp;</span>
+        <span>{new Date(data.createdAt).toLocaleDateString()}</span>
+      </div>
     </div>
   );
 };
 
-export default AssignmentFilter;
+export default AssignmentDetails;

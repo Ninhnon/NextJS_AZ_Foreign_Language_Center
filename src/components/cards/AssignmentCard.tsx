@@ -1,8 +1,10 @@
 import { Button } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaRegEye } from 'react-icons/fa6';
 
 const AssignmentCard = ({ data }) => {
+  const router = useRouter();
   return (
     <div
       className="relative rounded-xl p-8 bg-[#FDF8EE] w-fit h-fit m-8 mx-auto
@@ -26,6 +28,9 @@ const AssignmentCard = ({ data }) => {
           <Button
             className="border-1 rounded-3xl bg-bossanova text-white"
             startContent={<FaRegEye />}
+            onClick={() => {
+              router.push(`/admin/assignment/${data.id}`);
+            }}
           >
             Xem bài tập
           </Button>

@@ -89,7 +89,7 @@ const page = () => {
     },
   ];
   return (
-    <div className="w-full h-full flex flex-col py-6 px-32">
+    <div className="w-full h-full flex flex-col py-6 px-32 justify-center">
       <div className="w-fit h-fit flex flex-col">
         <Button
           className="font-bold text-orange flex flex-row end-4"
