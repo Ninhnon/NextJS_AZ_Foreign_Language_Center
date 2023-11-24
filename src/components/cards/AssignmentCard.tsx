@@ -11,7 +11,7 @@ const AssignmentCard = ({ data }) => {
       <div className="w-fit h-fit flex flex-col gap-2 font-bold">
         <div>{data.course}</div>
         <div>{data.title}</div>
-        <div className="w-fit h-fit flex flex-row text-sm mt-1 gap-2">
+        <div className="w-fit h-fit flex flex-row text-xs mt-1 gap-2">
           <div className="border-2 rounded-md bg-transparent border-[#FAAF3A]  text-[#FAAF3A] px-5 ">
             {data.courseDetail.module}
           </div>
