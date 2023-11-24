@@ -309,7 +309,7 @@ const page = () => {
         <div className="w-full h-fit flex flex-row justify-around items-center mt-8">
           <Image
             alt="curved arrow"
-            src="/curved-arrow.png"
+            src="/curved_arrow.png"
             width={150}
             height={150}
           />
