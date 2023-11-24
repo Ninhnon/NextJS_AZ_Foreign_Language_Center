@@ -79,7 +79,7 @@ export default function page() {
     },
   ];
   return (
-    <div className="w-full h-full flex flex-col py-6 px-32">
+    <div className="w-full h-full flex flex-col py-6 px-20">
       <div className="w-fit h-fit flex flex-col">
         <Button
           className="font-bold text-orange "
