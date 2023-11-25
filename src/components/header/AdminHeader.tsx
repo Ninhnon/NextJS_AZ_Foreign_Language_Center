@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import AuthSvg from '@/assets/AuthSvg';
-import { MobileNav } from './MobileNavBar';
 import Logo from '../logo';
 
 import {
@@ -51,12 +50,11 @@ const AdminHeader = ({ session }) => {
   return (
     <div
       className={`w-full h-[50px] md:h-[80px] 
-      bg-[#FDF8EE]  items-center justify-between z-30
+      bg-[#FDF8EE]  items-center md:justify-between justify-center z-30
     sticky transition-transform duration-300 px-14  
     ${show}
     `}
     >
-      <MobileNav />
       <div className="h-full flex justify-between items-center">
         {' '}
         <div className="flex flex-row items-center justify-center gap-16">
