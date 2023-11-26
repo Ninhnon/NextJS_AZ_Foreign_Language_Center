@@ -118,13 +118,5 @@ const AssignmentFilePicker = ({ data }) => {
     </div>
   );
 };
-console.log(
-  '🚀 ~ file: AssignmentFilePicker.tsx:112 ~ AssignmentFilePicker ~ t:',
-  t
-);
-console.log(
-  '🚀 ~ file: AssignmentFilePicker.tsx:112 ~ AssignmentFilePicker ~ t:',
-  t
-);
 
 export default AssignmentFilePicker;
