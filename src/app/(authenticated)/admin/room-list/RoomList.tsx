@@ -1,7 +1,7 @@
 'use client';
 import ClassroomDetailCard from '@/components/cards/ClassroomDetailCard';
 import { Input } from '@/components/ui/input';
-import { Button } from '@nextui-org/react';
+import { Button, Pagination } from '@nextui-org/react';
 import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa6';
 
@@ -13,9 +13,18 @@ const RoomList = ({ data }) => {
 
     { id: 2, text: 'Phòng khác' },
   ];
+  //Get first n items of data
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleOptionClick = (buttonId) => {
     setSelectedRoomListOption(buttonId);
+  };
+  const onPageChange = (page) => {
+    setCurrentPage(page);
   };
   return (
     <div className="w-full h-full flex flex-col py-6 px-20">
@@ -59,7 +68,19 @@ const RoomList = ({ data }) => {
         ))}
       </div>
       <div className="w-full h-fit flex flex-row items-center">
-        <ClassroomDetailCard data={data} />
+        <ClassroomDetailCard data={currentItems} />
+      </div>
+      <div className="w-full h-fit flex flex-col items-center">
+        <Pagination
+          color={'warning'}
+          showControls
+          total={10}
+          initialPage={1}
+          onChange={(page) => {
+            onPageChange(page);
+          }}
+          page={currentPage}
+        />
       </div>
     </div>
   );
