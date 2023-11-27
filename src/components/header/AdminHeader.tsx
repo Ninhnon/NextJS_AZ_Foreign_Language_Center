@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from 'next-auth/react';
+import Image from 'next/image';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +22,9 @@ import {
   FaBook,
   FaBookOpen,
   FaCalendarDays,
+  FaClipboardList,
   FaCommentDots,
+  FaDoorClosed,
   FaSquarePlus,
 } from 'react-icons/fa6';
 import { Button } from '../ui/button';
@@ -98,10 +101,53 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'/admin/course-list'}>
+                <Link href={''}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCalendarDays />
                     <div className="ml-2">Thời khóa biểu</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={''}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <Image
+                      src={'/teacher.png'}
+                      alt="teacher"
+                      width={15}
+                      height={15}
+                    />
+                    <div className="ml-2">Danh sách giảng viên</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={''}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <Image
+                      src={'/student.png'}
+                      alt="student"
+                      width={15}
+                      height={15}
+                    />
+                    <div className="ml-2">Danh sách học sinh</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={'admin/room-list'}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <FaDoorClosed />
+                    <div className="ml-2">Danh sách phòng học</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem>
+                <Link href={''}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <FaClipboardList />
+                    <div className="ml-2">Báo cáo</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
