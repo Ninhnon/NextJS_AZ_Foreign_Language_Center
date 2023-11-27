@@ -1,21 +1,47 @@
 'use client';
-import ClassroomDetailCard from '@/components/cards/ClassroomDetailCard';
+
 import { Input } from '@/components/ui/input';
 import { Button, Pagination } from '@nextui-org/react';
 import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa6';
+import OtherRoomList from './OtherRoomList';
+import ClassRoomList from './ClassRoomList';
 
 const RoomList = ({ data }) => {
   //Set selected option button
-  const [selectedRoomListOption, setSelectedRoomListOption] = useState(null);
+  const [selectedRoomListOption, setSelectedRoomListOption] = useState(1);
   const roomListOptions = [
     { id: 1, text: 'Phòng học' },
 
     { id: 2, text: 'Phòng khác' },
   ];
+  //Fetch data from DB
+  //(This is just a sample data)
+  const availableTimes = [
+    { id: 1, time: '7:00 - 9:00' },
+    { id: 2, time: '9:00 - 11:00' },
+    { id: 3, time: '11:00 - 13:00' },
+    { id: 4, time: '15:00 - 17:00' },
+    { id: 5, time: '17:00 - 19:00' },
+    { id: 6, time: '19:00 - 21:00' },
+  ];
+  //Function return whether a time is available or not
+  //(check if this classroom has booked this time or not)
+  const isTimeAvailable = (dataItem, dataItemTime) => {
+    console.log(
+      '🚀 ~ file: RoomList.tsx:32 ~ isTimeAvailable ~ dataItemTime:',
+      dataItemTime
+    );
+    console.log(
+      '🚀 ~ file: RoomList.tsx:32 ~ isTimeAvailable ~ dataItem:',
+      dataItem
+    );
+
+    return dataItem?.availableTime.some((time) => time.id == dataItemTime.id);
+  };
   //Get first n items of data
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(4);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
@@ -67,9 +93,16 @@ const RoomList = ({ data }) => {
           </Button>
         ))}
       </div>
-      <div className="w-full h-fit flex flex-row items-center">
-        <ClassroomDetailCard data={currentItems} />
-      </div>
+      {selectedRoomListOption === 1 ? (
+        <ClassRoomList
+          data={currentItems}
+          availableTimes={availableTimes}
+          isTimeAvailable={isTimeAvailable}
+        />
+      ) : (
+        <OtherRoomList data={currentItems} />
+      )}
+
       <div className="w-full h-fit flex flex-col items-center">
         <Pagination
           color={'warning'}
