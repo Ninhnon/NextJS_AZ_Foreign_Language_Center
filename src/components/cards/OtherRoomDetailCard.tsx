@@ -8,11 +8,11 @@ const OtherRoomDetailCard = ({ data }) => {
     <div className="w-fit h-fit bg-old-lace rounded-lg flex flex-col gap-3 p-4 my-3">
       <div className="w-fit h-fit flex flex-row gap-3">
         <span className="font-bold">{data.name}</span>
-        <span className="italic">{data.id}</span>
+        <span className="italic">#{data.id}</span>
       </div>
       <div className="w-full h-fit flex flex-row gap-4  justify-center items-center">
         <div className="w-fit h-fit flex flex-col gap-3">
-          {data.capacity > data.attendance ? (
+          {data.status === 'FREE' ? (
             <div className="w-fit h-[13rem] px-4 bg-[#21B573] text-white font-bold rounded-lg flex justify-center items-center">
               Trống
             </div>
@@ -57,23 +57,23 @@ const OtherRoomDetailCard = ({ data }) => {
           <ScrollArea className="h-[13rem] w-fit rounded-md border-0 p-2">
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Quạt trần</span>
-              <span className="font-bold">{data.furniture.ceilingFan}</span>
+              <span className="font-bold">{data.facility.ceilingFan}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Bàn</span>
-              <span className="font-bold">{data.furniture.table}</span>
+              <span className="font-bold">{data.facility.table}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Ghế</span>
-              <span className="font-bold">{data.furniture.chair}</span>
+              <span className="font-bold">{data.facility.chair}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Máy lọc nước</span>
-              <span className="font-bold">{data.furniture.waterPurifier}</span>
+              <span className="font-bold">{data.facility.waterPurifier}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Chổi</span>
-              <span className="font-bold">{data.furniture.broom}</span>
+              <span className="font-bold">{data.facility.broom}</span>
             </div>
           </ScrollArea>
         </div>
