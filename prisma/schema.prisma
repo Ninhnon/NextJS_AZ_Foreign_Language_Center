@@ -27,18 +27,38 @@ model IndexSalary {
   value Int
 }
 
+
+//Module 
+//(IELTS, TOEIC)
+model Module {
+  id    Int    @id @default(autoincrement())
+  name  String
+}
+
+//Band (Tương ứng với khóa học)
+//IETLS 5.0, IETLS 6.0, IETLS 7.0, IETLS 8.0
+//TOEIC 500, TOEIC 600, TOEIC 700, TOEIC 800
+model BandScore {
+  id    Int    @id @default(autoincrement())
+  moduleId Int
+  name  String
+  @@index([moduleId])
+}
 model Course {
   id            Int            @id @default(autoincrement())
-  module        Int
-  level         String
-  countStudent  Int            @default(0)
+  moduleId     Int
+  BandScoreId      Int
+  name         String
+  totalSession  Int            @default(0)
   startTime     DateTime
   endTime       DateTime
-  number        Int            @default(8)
-  fee           Int
-  cost          Int
-  otherCourseId Int
+  totalAttendance        Int            @default(0)
+  tuitionFee          Int
+  totalCost          Int
+  recommendCourseId Int
   classSessions ClassSession[]
+  @@index([moduleId])
+  @@index([BandScoreId])
 }
 
 model ClassSession {
@@ -51,7 +71,6 @@ model ClassSession {
   Course                   Course                    @relation(fields: [courseId], references: [id])
   classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
-
   @@index([courseId])
   @@index([classShiftId])
 }
