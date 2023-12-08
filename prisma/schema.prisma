@@ -44,6 +44,19 @@ model BandScore {
   name  String
   @@index([moduleId])
 }
+
+//Course (Tương ứng với khóa học)
+//ModuleId: IELTS, TOEIC
+//BandScoreId: IELTS 5.0, IELTS 6.0, IELTS 7.0, IELTS 8.0, TOEIC 500, TOEIC 600, TOEIC 700, TOEIC 800
+//Name: tên khóa học
+//TotalSession: tổng số buổi học
+//StartTime: thời gian bắt đầu
+//EndTime: thời gian kết thúc
+//TotalAttendance: tổng số người tham gia
+//TuitionFee: học phí
+//TotalCost: tổng chi phí
+//RecommendCourseId: khóa học được đề xuất 
+
 model Course {
   id            Int            @id @default(autoincrement())
   moduleId     Int
@@ -55,12 +68,19 @@ model Course {
   totalAttendance        Int            @default(0)
   tuitionFee          Int
   totalCost          Int
-  recommendCourseId Int
+  recommendCourseId Int?
   classSessions ClassSession[]
+  thumbnail String?
   @@index([moduleId])
   @@index([BandScoreId])
 }
 
+//ClassSession (Tương ứng với từng buổi học của khóa học)
+//CourseId: khóa học
+//TeacherId: giáo viên
+//RoomId: phòng học
+//StartTime: thời gian bắt đầu (theo ngày)
+//ClassShiftId: ca học
 model ClassSession {
   id                       Int                       @id @default(autoincrement())
   courseId                 Int
@@ -75,12 +95,17 @@ model ClassSession {
   @@index([classShiftId])
 }
 
+//TimeShift (Tương ứng với thời gian từng ca học)
+//Time: thời gian (vd: 7h30 - 9h30)
 model TimeShift {
   id          Int          @id @default(autoincrement())
   time        String
   classShifts ClassShift[]
 }
 
+//ClassShift (Tương ứng với từng ca học)
+//RoomId: phòng học
+//TimeId: thời gian (vd: 7h30 - 9h30)
 model ClassShift {
   id            Int            @id @default(autoincrement())
   roomId        Int?
@@ -90,6 +115,16 @@ model ClassShift {
   Room          Room?          @relation(fields: [roomId], references: [id])
 }
 
+//Room (Tương ứng với phòng)
+//Name: tên phòng
+//Status: trạng thái (Free, Full)
+//TypeId: loại phòng (Classroom, Other)
+//Note: ghi chú
+//Attendance: số người tham gia
+//Capacity: sức chứa
+//Floor: tầng
+//Toilet: số lượng nhà vệ sinh
+//ClassShifts: ca học
 model Room {
   id          Int          @id @default(autoincrement())
   name        String
@@ -107,12 +142,16 @@ model Room {
   @@index([typeId])
 }
 
+//RoomType (Tương ứng với loại phòng)
+//Name: tên loại phòng (Classroom, Other)
 model RoomType {
   id    Int    @id @default(autoincrement())
   name  String
   rooms Room[]
 }
 
+//Facility (Tương ứng với tiện nghi của phòng)
+//RoomId: phòng
 model Facility {
   id            Int    @id @default(autoincrement())
   name          String

@@ -41,7 +41,7 @@ const RoomList = () => {
   const { onGetRoom } = useRoom();
   //Get review data per page from API
   // Define a query key and fetch function for fetching review data
-  const reviewDataQueryKey = ['room', currentPage];
+  const roomDataQueryKey = ['room', currentPage];
 
   const fetchRoomListData = async () => {
     const roomList = await onGetRoom(
@@ -58,7 +58,7 @@ const RoomList = () => {
     data: roomListData,
     refetch,
     isFetching,
-  } = useQuery(reviewDataQueryKey, fetchRoomListData, {
+  } = useQuery(roomDataQueryKey, fetchRoomListData, {
     staleTime: 1000 * 60 * 1,
     keepPreviousData: true,
   });
