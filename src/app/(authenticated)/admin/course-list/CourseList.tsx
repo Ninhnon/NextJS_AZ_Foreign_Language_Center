@@ -1,18 +1,18 @@
 'use client';
 import AdminCourseCard from '@/components/cards/AdminCourseCard';
-import { Button, Pagination } from '@nextui-org/react';
-import React, { useState } from 'react';
+import { useCourse } from '@/hooks/useCourse';
+import { Button, Pagination, Spinner } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
-export default function CourseList({ data }) {
+export default function CourseList() {
   //Set selected option button
-  const [activeButton, setActiveButton] = useState(null);
+  const [type, setType] = useState(1);
   //Get first n items of data
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const [totalPage, setTotalPage] = useState(10);
 
   const buttons = [
     { id: 1, text: 'Đang diễn ra' },
@@ -21,9 +21,51 @@ export default function CourseList({ data }) {
     { id: 3, text: 'Sắp tới' },
   ];
 
-  const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId);
+  const { onGetCourse } = useCourse();
+  //Get review data per page from API
+  // Define a query key and fetch function for fetching review data
+  const courseDataQueryKey = ['room', currentPage];
+
+  const fetchCourseListData = async () => {
+    const courseList = await onGetCourse(
+      currentPage,
+      itemsPerPage,
+      type === 1 ? 'open' : type === 2 ? 'close' : 'soon'
+    );
+    return courseList;
   };
+
+  // Fetch review data
+  const {
+    data: courseListData,
+    refetch,
+    isFetching,
+  } = useQuery(courseDataQueryKey, fetchCourseListData, {
+    staleTime: 1000 * 60 * 1,
+    keepPreviousData: true,
+  });
+
+  //Handle event when option button is clicked
+  //(Change type of room list)
+
+  const handleButtonClick = async (buttonId) => {
+    setType(buttonId);
+    await setCurrentPage(1);
+    await setType(buttonId);
+    await refetch();
+  };
+  //Set total page when data is fetched
+  useEffect(() => {
+    if (courseListData) {
+      setTotalPage(courseListData.totalPage);
+    }
+  }, [courseListData]);
+
+  console.log(
+    '🚀 ~ file: RoomList.tsx:58 ~ RoomList ~ roomListData:',
+    courseListData
+  );
+
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
@@ -38,7 +80,7 @@ export default function CourseList({ data }) {
               <Button
                 key={button.id}
                 className={`${
-                  activeButton === button.id
+                  type === button.id
                     ? 'bg-orange text-white'
                     : 'bg-white text-orange'
                 } border-orange w-32 m-4`}
@@ -68,23 +110,40 @@ export default function CourseList({ data }) {
         </div>
       </div>
       <div className="w-full h-fit flex flex-col items-center">
-        {currentItems.map((item) => (
-          <div
-            key={item.id}
-            className="w-full h-32 flex flex-row items-center justify-between px-16"
-          >
-            <AdminCourseCard data={item} />
-          </div>
-        ))}
-        <Pagination
-          showControls
-          total={10}
-          initialPage={1}
-          onChange={(page) => {
-            onPageChange(page);
-          }}
-          page={currentPage}
-        />
+        {courseListData ? (
+          <>
+            {' '}
+            {isFetching ? (
+              <Spinner
+                className=""
+                label="Đang tải..."
+                color="warning"
+                labelColor="warning"
+              />
+            ) : (
+              <div className="w-full h-fit flex flex-col items-center">
+                {courseListData?.data.map((item) => (
+                  <div
+                    key={item.id}
+                    className="w-full h-32 flex flex-row items-center justify-between px-16"
+                  >
+                    <AdminCourseCard data={item} />
+                  </div>
+                ))}
+                <Pagination
+                  color="warning"
+                  showControls
+                  total={totalPage}
+                  initialPage={1}
+                  onChange={(page) => {
+                    onPageChange(page);
+                  }}
+                  page={currentPage}
+                />
+              </div>
+            )}
+          </>
+        ) : null}
       </div>
     </div>
   );
