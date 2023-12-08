@@ -118,5 +118,4 @@ const AssignmentFilePicker = ({ data }) => {
     </div>
   );
 };
-
 export default AssignmentFilePicker;
