@@ -35,6 +35,13 @@ model Module {
   name  String
 }
 
+//Skill
+//(Listening, Speaking, Reading, Writing)
+model Skill {
+  id    Int    @id @default(autoincrement())
+  name  String
+}
+
 //Band (Tương ứng với khóa học)
 //IETLS 5.0, IETLS 6.0, IETLS 7.0, IETLS 8.0
 //TOEIC 500, TOEIC 600, TOEIC 700, TOEIC 800
@@ -169,8 +176,9 @@ model Facility {
 model Assignment {
   id                       Int                       @id @default(autoincrement())
   name                     String
-  type                     String
-  level                    String
+  moduleId                  Int
+  skillId               Int 
+  bandScoreId               Int
   startTime                DateTime
   files                    String?                   @db.LongText
   Assignment_ClassSessions Assignment_ClassSession[]
