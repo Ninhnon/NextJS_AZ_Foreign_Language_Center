@@ -25,7 +25,7 @@ const AssignmentFilePicker = ({ data }) => {
 
   console.log(
     '🚀 ~ file: AssignmentFilePicker.tsx:13 ~ AssignmentFilePicker ~ files:',
-    files.length
+    files
   );
 
   const handleFileChange = (files) => {

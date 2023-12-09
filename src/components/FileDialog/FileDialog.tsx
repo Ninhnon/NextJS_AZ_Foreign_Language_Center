@@ -54,6 +54,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
     'image/*': [],
     'application/pdf': ['.pdf'],
     'video/mp4': ['.mp4'],
+    'video/mp3': ['.mp3'],
   },
   maxSize = 1024 * 1024 * 2,
   maxFiles = 1,
