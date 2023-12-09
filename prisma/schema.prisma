@@ -33,6 +33,7 @@ model IndexSalary {
 model Module {
   id    Int    @id @default(autoincrement())
   name  String
+  assignments Assignment[]
 }
 
 //Skill
@@ -40,6 +41,7 @@ model Module {
 model Skill {
   id    Int    @id @default(autoincrement())
   name  String
+  assignments Assignment[]
 }
 
 //Band (Tương ứng với khóa học)
@@ -49,7 +51,9 @@ model BandScore {
   id    Int    @id @default(autoincrement())
   moduleId Int
   name  String
+  assignments Assignment[]
   @@index([moduleId])
+
 }
 
 //Course (Tương ứng với khóa học)
@@ -177,10 +181,14 @@ model Assignment {
   id                       Int                       @id @default(autoincrement())
   name                     String
   moduleId                  Int
+  module                Module                    @relation(fields: [moduleId], references: [id])
   skillId               Int 
+  skill                 Skill                    @relation(fields: [skillId], references: [id])
   bandScoreId               Int
+  bandScore             BandScore                    @relation(fields: [bandScoreId], references: [id])
   startTime                DateTime
   files                    String?                   @db.LongText
+
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
 }
