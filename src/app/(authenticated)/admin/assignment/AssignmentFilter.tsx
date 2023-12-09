@@ -1,15 +1,18 @@
 import { Button, Select, SelectItem } from '@nextui-org/react';
-import React, { useState } from 'react';
 
-const AssignmentFilter = () => {
-  const [module, setModule] = useState(new Set([]));
-  const [skill, setSkill] = useState(new Set([]));
-  const [band, setBand] = useState(new Set([]));
-
+const AssignmentFilter = ({
+  module,
+  setModule,
+  skill,
+  setSkill,
+  band,
+  setBand,
+  onSubmit,
+  setCurrentPage,
+}) => {
   const modules = [
     { id: 1, module: 'IELTS' },
-    { id: 2, module: 'TOEFL' },
-    { id: 3, module: 'TOEIC' },
+    { id: 2, module: 'TOEIC' },
   ];
   const skills = [
     { id: 1, skill: 'Reading' },
@@ -18,22 +21,15 @@ const AssignmentFilter = () => {
     { id: 4, skill: 'Speaking' },
   ];
   const bands = [
-    { id: 1, moduleId: 1, band: '4.5 - 5.0' },
-    { id: 2, moduleId: 1, band: '5.0 - 5.5' },
-    { id: 3, moduleId: 1, band: '5.5 - 6.0' },
-    { id: 4, moduleId: 1, band: '6.0 - 6.5' },
-    { id: 5, moduleId: 2, band: '0-31' },
-    { id: 6, moduleId: 2, band: '32-34' },
-    { id: 7, moduleId: 2, band: '35-45' },
-    { id: 8, moduleId: 2, band: '46-59' },
-    { id: 9, moduleId: 3, band: '0-300' },
-    { id: 10, moduleId: 3, band: '301-600' },
-    { id: 11, moduleId: 3, band: '601-990' },
+    { id: 1, moduleId: 1, band: '5.0' },
+    { id: 2, moduleId: 1, band: '6.0' },
+    { id: 3, moduleId: 1, band: '7.0' },
+    { id: 4, moduleId: 1, band: '8.0' },
+    { id: 5, moduleId: 2, band: '500' },
+    { id: 6, moduleId: 2, band: '600' },
+    { id: 7, moduleId: 2, band: '700' },
+    { id: 8, moduleId: 2, band: '800' },
   ];
-
-  console.log(Array.from(module)[0]);
-  console.log(Array.from(skill)[0]);
-  console.log(Array.from(band)[0]);
 
   return (
     <div className="w-full h-full flex md:flex-row flex-col gap-16 justify-center md:justify-between items-center md:items-end">
@@ -105,7 +101,13 @@ const AssignmentFilter = () => {
         </div>
       </div>
 
-      <Button className="w-fit h-[3rem] rounded-sm bg-orange text-white">
+      <Button
+        className="w-fit h-[3rem] rounded-sm bg-orange text-white"
+        onClick={() => {
+          setCurrentPage(1);
+          onSubmit(1);
+        }}
+      >
         Lọc dữ liệu
       </Button>
     </div>
