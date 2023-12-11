@@ -20,6 +20,7 @@ model User {
   indexSalary      Int?
   level            Int?
   assignment_users Assignment_User[]
+  classSessions    ClassSession[]
 }
 
 model IndexSalary {
@@ -27,96 +28,73 @@ model IndexSalary {
   value Int
 }
 
-
-//Module 
-//(IELTS, TOEIC)
 model Module {
-  id    Int    @id @default(autoincrement())
-  name  String
+  id          Int          @id @default(autoincrement())
+  name        String
   assignments Assignment[]
 }
 
-//Skill
-//(Listening, Speaking, Reading, Writing)
 model Skill {
-  id    Int    @id @default(autoincrement())
-  name  String
+  id          Int          @id @default(autoincrement())
+  name        String
   assignments Assignment[]
 }
 
-//Band (Tương ứng với khóa học)
-//IETLS 5.0, IETLS 6.0, IETLS 7.0, IETLS 8.0
-//TOEIC 500, TOEIC 600, TOEIC 700, TOEIC 800
 model BandScore {
-  id    Int    @id @default(autoincrement())
-  moduleId Int
-  name  String
+  id          Int          @id @default(autoincrement())
+  moduleId    Int
+  name        String
   assignments Assignment[]
+
   @@index([moduleId])
-
 }
-
-//Course (Tương ứng với khóa học)
-//ModuleId: IELTS, TOEIC
-//BandScoreId: IELTS 5.0, IELTS 6.0, IELTS 7.0, IELTS 8.0, TOEIC 500, TOEIC 600, TOEIC 700, TOEIC 800
-//Name: tên khóa học
-//TotalSession: tổng số buổi học
-//StartTime: thời gian bắt đầu
-//EndTime: thời gian kết thúc
-//TotalAttendance: tổng số người tham gia
-//TuitionFee: học phí
-//TotalCost: tổng chi phí
-//RecommendCourseId: khóa học được đề xuất 
 
 model Course {
-  id            Int            @id @default(autoincrement())
-  moduleId     Int
-  BandScoreId      Int
-  name         String
-  totalSession  Int            @default(0)
-  startTime     DateTime
-  endTime       DateTime
-  totalAttendance        Int            @default(0)
-  tuitionFee          Int
-  totalCost          Int
+  id                Int            @id @default(autoincrement())
+  moduleId          Int            @default(1)
+  BandScoreId       Int            @default(1)
+  name              String         @default("online")
+  totalSession      Int            @default(0)
+  startTime         DateTime
+  endTime           DateTime
+  totalAttendance   Int            @default(0)
+  tuitionFee        Int
+  totalCost         Int
   recommendCourseId Int?
-  classSessions ClassSession[]
-  thumbnail String?
+  thumbnail         String?
+  classSessions     ClassSession[]
+
   @@index([moduleId])
   @@index([BandScoreId])
 }
 
-//ClassSession (Tương ứng với từng buổi học của khóa học)
-//CourseId: khóa học
-//TeacherId: giáo viên
-//RoomId: phòng học
-//StartTime: thời gian bắt đầu (theo ngày)
-//ClassShiftId: ca học
 model ClassSession {
   id                       Int                       @id @default(autoincrement())
   courseId                 Int
   teacherId                Int
   roomId                   Int
   StartTime                DateTime
+  timeId                   Int
   classShiftId             Int
+  teacher                  User                      @relation(fields: [teacherId], references: [id])
+  Room                     Room?                     @relation(fields: [roomId], references: [id])
+  time                     TimeShift                 @relation(fields: [timeId], references: [id])
   Course                   Course                    @relation(fields: [courseId], references: [id])
   classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
+  CategoryColor String @default("#fecaca")
+  @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
 }
 
-//TimeShift (Tương ứng với thời gian từng ca học)
-//Time: thời gian (vd: 7h30 - 9h30)
 model TimeShift {
-  id          Int          @id @default(autoincrement())
-  time        String
-  classShifts ClassShift[]
+  id            Int            @id @default(autoincrement())
+  time          String
+  classShifts   ClassShift[]
+  classSessions ClassSession[]
 }
 
-//ClassShift (Tương ứng với từng ca học)
-//RoomId: phòng học
-//TimeId: thời gian (vd: 7h30 - 9h30)
 model ClassShift {
   id            Int            @id @default(autoincrement())
   roomId        Int?
@@ -124,45 +102,35 @@ model ClassShift {
   time          TimeShift      @relation(fields: [timeId], references: [id])
   classsessions ClassSession[]
   Room          Room?          @relation(fields: [roomId], references: [id])
+
+  @@index([timeId])
+  @@index([roomId])
 }
 
-//Room (Tương ứng với phòng)
-//Name: tên phòng
-//Status: trạng thái (Free, Full)
-//TypeId: loại phòng (Classroom, Other)
-//Note: ghi chú
-//Attendance: số người tham gia
-//Capacity: sức chứa
-//Floor: tầng
-//Toilet: số lượng nhà vệ sinh
-//ClassShifts: ca học
 model Room {
-  id          Int          @id @default(autoincrement())
-  name        String
-  status      String?      @default("Free")
-  typeId      Int
-  note        String?
-  attendance  Int
-  capacity    Int
-  floor       Int
-  toilet      Int
-  classShifts ClassShift[]
-  type        RoomType     @relation(fields: [typeId], references: [id])
-  facility    Facility?
+  id            Int            @id @default(autoincrement())
+  name          String
+  status        String?        @default("Free")
+  typeId        Int
+  note          String?
+  attendance    Int
+  capacity      Int
+  floor         Int
+  toilet        Int
+  classShifts   ClassShift[]
+  type          RoomType       @relation(fields: [typeId], references: [id])
+  facility      Facility?
+  classSessions ClassSession[]
 
   @@index([typeId])
 }
 
-//RoomType (Tương ứng với loại phòng)
-//Name: tên loại phòng (Classroom, Other)
 model RoomType {
   id    Int    @id @default(autoincrement())
   name  String
   rooms Room[]
 }
 
-//Facility (Tương ứng với tiện nghi của phòng)
-//RoomId: phòng
 model Facility {
   id            Int    @id @default(autoincrement())
   name          String
@@ -180,15 +148,15 @@ model Facility {
 model Assignment {
   id                       Int                       @id @default(autoincrement())
   name                     String
-  moduleId                  Int
-  module                Module                    @relation(fields: [moduleId], references: [id])
-  skillId               Int 
-  skill                 Skill                    @relation(fields: [skillId], references: [id])
-  bandScoreId               Int
-  bandScore             BandScore                    @relation(fields: [bandScoreId], references: [id])
+  moduleId                 Int
+  skillId                  Int
+  bandScoreId              Int
   startTime                DateTime
   files                    String?                   @db.LongText
-
+  lastModifiedTime         DateTime                  @default(now())
+  module                   Module                    @relation(fields: [moduleId], references: [id])
+  skill                    Skill                     @relation(fields: [skillId], references: [id])
+  bandScore                BandScore                 @relation(fields: [bandScoreId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
 }
