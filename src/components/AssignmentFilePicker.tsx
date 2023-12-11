@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { FileDialog } from './FileDialog/FileDialog';
 import FileCard from './FileCard';
 import { Button } from '@nextui-org/react';
@@ -12,15 +12,24 @@ const AssignmentFilePicker = ({ data }) => {
   );
   //Data state
   const [files, setFiles] = React.useState([]);
-  const [lastModifiedAt, setLastModifiedAt] = React.useState<Date>();
+  const [lastModifiedTime, setLastModifiedTime] = React.useState<Date>();
 
   //Dialog state
   const [open, setOpen] = React.useState(false);
 
+  useLayoutEffect(() => {
+    const initData = async () => {
+      if (data?.files?.length) {
+        await setFiles(JSON.parse(data?.files));
+      }
+      await setLastModifiedTime(new Date(data?.lastModifiedTime));
+    };
+    initData();
+  }, []);
   //Set mode to edit
   //When files change for the first time
   useEffect(() => {
-    setLastModifiedAt(new Date());
+    setLastModifiedTime(new Date());
   }, [files]);
 
   console.log(
@@ -58,7 +67,7 @@ const AssignmentFilePicker = ({ data }) => {
             </div>
             <div className="w-full h-fit flex flex-row mt-3  items-center gap-8 font-bold">
               <span>Chỉnh sửa lần cuối</span>
-              <span>{lastModifiedAt.toLocaleDateString()}</span>
+              <span>{lastModifiedTime?.toLocaleString()}</span>
             </div>
             <div className="w-full h-fit flex flex-row justify-center items-center gap-4">
               <Button

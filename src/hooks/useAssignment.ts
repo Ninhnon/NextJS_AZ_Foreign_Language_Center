@@ -25,5 +25,13 @@ export const useAssignment = () => {
     return res;
   };
 
-  return { onGetAssignment };
+  const onGetAssignmentById = async (id: number) => {
+    const res = await getRequest({
+      endPoint: `/api/assignment?id=${id}`,
+    });
+
+    return res;
+  };
+
+  return { onGetAssignment, onGetAssignmentById };
 };
