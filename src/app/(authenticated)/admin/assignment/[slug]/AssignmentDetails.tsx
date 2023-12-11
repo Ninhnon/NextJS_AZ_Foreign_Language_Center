@@ -1,16 +1,18 @@
 import { Button, Select, SelectItem } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPenToSquare } from 'react-icons/fa6';
 
 const AssignmentDetails = ({ data }) => {
+  console.log(
+    '🚀 ~ file: AssignmentDetails.tsx:6 ~ AssignmentDetails ~ data:',
+    data
+  );
   const [module, setModule] = useState(new Set([]));
   const [skill, setSkill] = useState(new Set([]));
   const [band, setBand] = useState(new Set([]));
-
   const modules = [
     { id: 1, module: 'IELTS' },
-    { id: 2, module: 'TOEFL' },
-    { id: 3, module: 'TOEIC' },
+    { id: 2, module: 'TOEIC' },
   ];
   const skills = [
     { id: 1, skill: 'Reading' },
@@ -19,18 +21,27 @@ const AssignmentDetails = ({ data }) => {
     { id: 4, skill: 'Speaking' },
   ];
   const bands = [
-    { id: 1, moduleId: 1, band: '4.5 - 5.0' },
-    { id: 2, moduleId: 1, band: '5.0 - 5.5' },
-    { id: 3, moduleId: 1, band: '5.5 - 6.0' },
-    { id: 4, moduleId: 1, band: '6.0 - 6.5' },
-    { id: 5, moduleId: 2, band: '0-31' },
-    { id: 6, moduleId: 2, band: '32-34' },
-    { id: 7, moduleId: 2, band: '35-45' },
-    { id: 8, moduleId: 2, band: '46-59' },
-    { id: 9, moduleId: 3, band: '0-300' },
-    { id: 10, moduleId: 3, band: '301-600' },
-    { id: 11, moduleId: 3, band: '601-990' },
+    { id: 1, moduleId: 1, band: '5.0' },
+    { id: 2, moduleId: 1, band: '6.0' },
+    { id: 3, moduleId: 1, band: '7.0' },
+    { id: 4, moduleId: 1, band: '8.0' },
+    { id: 5, moduleId: 2, band: '500' },
+    { id: 6, moduleId: 2, band: '600' },
+    { id: 7, moduleId: 2, band: '700' },
+    { id: 8, moduleId: 2, band: '800' },
   ];
+
+  useEffect(() => {
+    const initialModule = modules.find((m) => m.id == data.module.id);
+    const initialSkill = skills.find((s) => s.id == data.skill.id);
+    const initialBand = bands.find(
+      (b) => b.moduleId === initialModule.id && b.id == data.bandScore.id
+    );
+
+    setModule(new Set([initialModule.id]));
+    setSkill(new Set([initialSkill.id]));
+    setBand(new Set([initialBand.id]));
+  }, []);
 
   console.log(Array.from(module)[0]);
   console.log(Array.from(skill)[0]);
@@ -39,7 +50,7 @@ const AssignmentDetails = ({ data }) => {
   return (
     <div className="w-full h-fit flex flex-col px-4 gap-4">
       <div className="w-fit h-fit flex flex-row items-center">
-        <span className="font-bold">{data.title}</span>
+        <span className="font-bold">{data.name}</span>
         <Button className="ml-4" variant="light" radius="sm" isIconOnly>
           <FaPenToSquare />
         </Button>
@@ -52,10 +63,8 @@ const AssignmentDetails = ({ data }) => {
             key={'type'}
             radius={'md'}
             size="sm"
-            value={modules[0].module}
             autoFocus={false}
-            placeholder="Chọn module"
-            selectedKeys={module}
+            placeholder={modules.find((m) => m.id == data.module.id).module}
             onSelectionChange={setModule}
             className="max-w-xs"
           >
@@ -73,10 +82,8 @@ const AssignmentDetails = ({ data }) => {
             size="sm"
             key={'type'}
             radius={'md'}
-            value={skills[0].skill}
             autoFocus={false}
-            placeholder="Chọn kỹ năng"
-            selectedKeys={skill}
+            placeholder={skills.find((s) => s.id == data.skill.id).skill}
             onSelectionChange={setSkill}
             className="max-w-xs"
           >
@@ -94,10 +101,8 @@ const AssignmentDetails = ({ data }) => {
             size="sm"
             key={'type'}
             radius={'md'}
-            value={bands[0].band}
             autoFocus={false}
-            placeholder="Chọn trình độ"
-            selectedKeys={band}
+            placeholder={bands.find((b) => b.id == data.bandScore.id).band}
             onSelectionChange={setBand}
             className="max-w-xs"
           >
@@ -113,7 +118,7 @@ const AssignmentDetails = ({ data }) => {
       </div>
       <div className="w-fit h-fit flex flex-row font-bold">
         <span>Ngày khởi tạo: &nbsp; &nbsp;</span>
-        <span>{new Date(data.createdAt).toLocaleDateString()}</span>
+        <span>{new Date(data.startTime).toLocaleString()}</span>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { getRequest } from '@/lib/fetch';
+import { getRequest, postRequest } from '@/lib/fetch';
 
 export const useAssignment = () => {
   const onGetAssignment = async (
@@ -25,5 +25,22 @@ export const useAssignment = () => {
     return res;
   };
 
-  return { onGetAssignment };
+  const onGetAssignmentById = async (id: number) => {
+    const res = await getRequest({
+      endPoint: `/api/assignment?id=${id}`,
+    });
+
+    return res;
+  };
+
+  const onUpdateAssignment = async (data: any) => {
+    const res = await postRequest({
+      endPoint: `/api/assignment`,
+      isFormData: false,
+      formData: data,
+    });
+    return res;
+  };
+
+  return { onGetAssignment, onGetAssignmentById, onUpdateAssignment };
 };

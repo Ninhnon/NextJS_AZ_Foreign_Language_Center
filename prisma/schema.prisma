@@ -86,6 +86,7 @@ model ClassSession {
   @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
+  @@index([timeId])
 }
 
 model TimeShift {
@@ -103,8 +104,9 @@ model ClassShift {
   classsessions ClassSession[]
   Room          Room?          @relation(fields: [roomId], references: [id])
 
-  @@index([timeId])
   @@index([roomId])
+  @@index([timeId])
+
 }
 
 model Room {
@@ -152,6 +154,7 @@ model Assignment {
   skillId                  Int
   bandScoreId              Int
   startTime                DateTime
+  lastModifiedTime         DateTime @default(now())
   files                    String?                   @db.LongText
   lastModifiedTime         DateTime                  @default(now())
   module                   Module                    @relation(fields: [moduleId], references: [id])
