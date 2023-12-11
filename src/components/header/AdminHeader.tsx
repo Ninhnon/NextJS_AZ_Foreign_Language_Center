@@ -63,9 +63,9 @@ const AdminHeader = ({ session }) => {
         <div className="flex flex-row items-center justify-center gap-16">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button className="bg-transparent text-black hover:bg-transparent">
-                <FaBars className="w-8 h-8"></FaBars>
-              </Button>
+              {/* <Button className="bg-transparent text-black hover:bg-transparent"> */}
+              <FaBars className="w-8 h-8"></FaBars>
+              {/* </Button> */}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#FDF8EE] ml-16 p-4 shadow-none font-bold text-lg">
               <DropdownMenuItem>

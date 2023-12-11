@@ -20,6 +20,7 @@ model User {
   indexSalary      Int?
   level            Int?
   assignment_users Assignment_User[]
+  classSessions    ClassSession[]
 }
 
 model IndexSalary {
@@ -75,19 +76,24 @@ model ClassSession {
   StartTime                DateTime
   timeId                   Int
   classShiftId             Int
+  teacher                  User                      @relation(fields: [teacherId], references: [id])
+  Room                     Room?                     @relation(fields: [roomId], references: [id])
+  time                     TimeShift                 @relation(fields: [timeId], references: [id])
   Course                   Course                    @relation(fields: [courseId], references: [id])
   classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
-
+  CategoryColor String @default("#fecaca")
+  @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
   @@index([timeId])
 }
 
 model TimeShift {
-  id          Int          @id @default(autoincrement())
-  time        String
-  classShifts ClassShift[]
+  id            Int            @id @default(autoincrement())
+  time          String
+  classShifts   ClassShift[]
+  classSessions ClassSession[]
 }
 
 model ClassShift {
@@ -100,21 +106,23 @@ model ClassShift {
 
   @@index([roomId])
   @@index([timeId])
+
 }
 
 model Room {
-  id          Int          @id @default(autoincrement())
-  name        String
-  status      String?      @default("Free")
-  typeId      Int
-  note        String?
-  attendance  Int
-  capacity    Int
-  floor       Int
-  toilet      Int
-  classShifts ClassShift[]
-  type        RoomType     @relation(fields: [typeId], references: [id])
-  facility    Facility?
+  id            Int            @id @default(autoincrement())
+  name          String
+  status        String?        @default("Free")
+  typeId        Int
+  note          String?
+  attendance    Int
+  capacity      Int
+  floor         Int
+  toilet        Int
+  classShifts   ClassShift[]
+  type          RoomType       @relation(fields: [typeId], references: [id])
+  facility      Facility?
+  classSessions ClassSession[]
 
   @@index([typeId])
 }
@@ -148,6 +156,7 @@ model Assignment {
   startTime                DateTime
   lastModifiedTime         DateTime @default(now())
   files                    String?                   @db.LongText
+  lastModifiedTime         DateTime                  @default(now())
   module                   Module                    @relation(fields: [moduleId], references: [id])
   skill                    Skill                     @relation(fields: [skillId], references: [id])
   bandScore                BandScore                 @relation(fields: [bandScoreId], references: [id])
