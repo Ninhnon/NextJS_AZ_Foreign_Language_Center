@@ -115,11 +115,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
   React.useEffect(() => {
     return () => {
       if (!files) return;
-      files.forEach((file) =>
-        URL.revokeObjectURL(
-          file?.preview || `${import.meta.env.VITE_IMAGE_HOST}${file}`
-        )
-      );
+      files.forEach((file) => URL.revokeObjectURL(file?.preview));
     };
   }, []);
 

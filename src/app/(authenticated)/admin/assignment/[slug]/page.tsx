@@ -30,6 +30,7 @@ function page({ params }: { params: { slug: any } }) {
       keepPreviousData: true,
     }
   );
+
   console.log('🚀 ~ file: page.tsx:26 ~ page ~ refetch:', refetch);
   console.log('🚀 ~ file: page.tsx:26 ~ page ~ isFetched:', isFetched);
   console.log('🚀 ~ file: page.tsx:8 ~ page ~ slug:', slug);
@@ -57,7 +58,7 @@ function page({ params }: { params: { slug: any } }) {
         </div>
       ) : (
         <Spinner
-          className=""
+          className="w-full h-full flex justify-center items-center"
           label="Đang tải..."
           color="warning"
           labelColor="warning"
