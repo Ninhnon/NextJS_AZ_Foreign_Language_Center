@@ -5,7 +5,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-10T04:00:00.000Z',
     EndTime: '2023-11-10T05:30:00.000Z',
-    Teacher: '#1aaa55',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 2,
@@ -13,7 +13,7 @@ export const scheduleData = [
     Location: 'Newyork City',
     StartTime: '2023-11-11T06:30:00.000Z',
     EndTime: '2023-11-11T08:30:00.000Z',
-    Teacher: '#357cd2',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 3,
@@ -21,7 +21,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-12T06:00:00.000Z',
     EndTime: '2023-11-12T08:30:00.000Z',
-    Teacher: '#7fa900',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 4,
@@ -29,7 +29,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-13T07:30:00.000Z',
     EndTime: '2023-11-13T09:00:00.000Z',
-    Teacher: '#ea7a57',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 5,
@@ -37,7 +37,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-14T06:30:00.000Z',
     EndTime: '2023-11-14T08:30:00.000Z',
-    Teacher: '#00bdae',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 6,
@@ -45,7 +45,7 @@ export const scheduleData = [
     Location: 'Bermuda',
     StartTime: '2023-11-14T04:00:00.000Z',
     EndTime: '2023-11-14T05:30:00.000Z',
-    Teacher: '#f57f17',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 7,
@@ -53,7 +53,7 @@ export const scheduleData = [
     Location: 'Himalayas',
     StartTime: '2023-11-15T05:30:00.000Z',
     EndTime: '2023-11-15T07:00:00.000Z',
-    Teacher: '#1aaa55',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 8,
@@ -61,15 +61,15 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-16T03:30:00.000Z',
     EndTime: '2023-11-16T04:30:00.000Z',
-    Teacher: '#357cd2',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 9,
     Subject: 'Alien Civilization',
     Location: 'Space Center USA',
-    StartTime: '2023-11-18T05:30:00.000Z',
-    EndTime: '2023-11-18T07:30:00.000Z',
-    Teacher: '#7fa900',
+    StartTime: '2023-10-13T05:30:00.000Z',
+    EndTime: '2023-10-13T07:30:00.000Z',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 10,
@@ -77,7 +77,7 @@ export const scheduleData = [
     Location: 'Africa',
     StartTime: '2023-11-20T05:30:00.000Z',
     EndTime: '2023-11-20T07:30:00.000Z',
-    Teacher: '#ea7a57',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 11,
@@ -85,7 +85,7 @@ export const scheduleData = [
     Location: 'London',
     StartTime: '2023-11-21T04:00:00.000Z',
     EndTime: '2023-11-21T05:30:00.000Z',
-    Teacher: '#00bdae',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 12,
@@ -93,7 +93,7 @@ export const scheduleData = [
     Location: 'Sweden',
     StartTime: '2023-11-08T04:30:00.000Z',
     EndTime: '2023-11-08T06:00:00.000Z',
-    Teacher: '#f57f17',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 13,
@@ -101,7 +101,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-06T05:00:00.000Z',
     EndTime: '2023-11-06T07:00:00.000Z',
-    Teacher: '#1aaa55',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 14,
@@ -109,7 +109,7 @@ export const scheduleData = [
     Location: 'Research Center of USA',
     StartTime: '2023-11-05T04:30:00.000Z',
     EndTime: '2023-11-05T06:00:00.000Z',
-    Teacher: '#357cd2',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 15,
@@ -117,7 +117,7 @@ export const scheduleData = [
     Location: 'California',
     StartTime: '2023-11-19T04:00:00.000Z',
     EndTime: '2023-11-19T05:30:00.000Z',
-    Teacher: '#7fa900',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 16,
@@ -125,15 +125,15 @@ export const scheduleData = [
     Location: 'Alaska',
     StartTime: '2023-11-22T05:30:00.000Z',
     EndTime: '2023-11-22T07:30:00.000Z',
-    Teacher: '#ea7a57',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 17,
     Subject: 'The Cycle of Seasons',
     Location: 'Research Center of USA',
-    StartTime: '2023-11-11T06:00:00.000Z',
-    EndTime: '2023-11-11T08:00:00.000Z',
-    Teacher: '#00bdae',
+    StartTime: '2023-12-11T06:00:00.000Z',
+    EndTime: '2023-12-11T08:00:00.000Z',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 18,
@@ -141,7 +141,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-11T06:30:00.000Z',
     EndTime: '2023-11-11T08:00:00.000Z',
-    Teacher: '#f57f17',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 19,
@@ -149,15 +149,15 @@ export const scheduleData = [
     Location: 'San Fransisco',
     StartTime: '2023-11-14T00:30:00.000Z',
     EndTime: '2023-11-14T02:00:00.000Z',
-    Teacher: '#7fa900',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 20,
     Subject: 'Alien Civilization 1',
     Location: 'Space Center USA',
-    StartTime: '2023-11-14T10:30:00.000Z',
-    EndTime: '2023-11-14T12:30:00.000Z',
-    Teacher: '#ea7a57',
+    StartTime: '2023-12-14T10:30:00.000Z',
+    EndTime: '2023-12-14T12:30:00.000Z',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 21,
@@ -165,7 +165,7 @@ export const scheduleData = [
     Location: 'Space Center USA',
     StartTime: '2023-11-10T08:30:00.000Z',
     EndTime: '2023-11-10T10:30:00.000Z',
-    Teacher: '#ea7a57',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 22,
@@ -173,7 +173,7 @@ export const scheduleData = [
     Location: 'Research Center of USA',
     StartTime: '2023-11-12T09:00:00.000Z',
     EndTime: '2023-11-12T10:30:00.000Z',
-    Teacher: '#00bdae',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 23,
@@ -181,7 +181,7 @@ export const scheduleData = [
     Location: 'Greenland',
     StartTime: '2023-11-15T09:00:00.000Z',
     EndTime: '2023-11-15T10:30:00.000Z',
-    Teacher: '#ea7a57',
+    CategoryColor: '#fecaca',
   },
   {
     Id: 24,
@@ -189,6 +189,6 @@ export const scheduleData = [
     Location: 'California',
     StartTime: '2023-11-16T07:00:00.000Z',
     EndTime: '2023-11-16T09:00:00.000Z',
-    Teacher: '#7fa900',
+    CategoryColor: '#fecaca',
   },
 ];
