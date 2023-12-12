@@ -1,30 +1,30 @@
+// import { getSession } from '@/lib/auth';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 
 const f = createUploadthing();
 
-// FileRouter for your app, can contain multiple FileRoutes
+const handleAuth = async () => {
+  // const session = await getSession();
+  // if (!session) throw new Error('Unauthorized');
+  return { userId: 'admin' };
+};
+
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f({ image: { maxFileSize: '4MB', maxFileCount: 8 } })
-    // Set permissions and file types for this FileRoute
-    .middleware(async (req) => {
-      console.log(req);
-      // This code runs on your server before upload
-      //   const user = await currentUser()
-
-      // If you throw, the user will not be able to upload
-      //   if (!user) throw new Error("Unauthorized")
-
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: 'admin' };
-    })
-    // eslint-disable-next-line @typescript-eslint/require-await
-    .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log('Upload complete for userId:', metadata.userId);
-
-      console.log('file url', file.url);
-    }),
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  courseAttachment: f({
+    video: { maxFileSize: '16MB', maxFileCount: 2 },
+    audio: { maxFileSize: '8MB', maxFileCount: 2 },
+    image: { maxFileSize: '4MB', maxFileCount: 8 },
+    pdf: { maxFileSize: '16MB', maxFileCount: 2 },
+    text: { maxFileSize: '64KB', maxFileCount: 2 },
+  })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: '64MB' } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

@@ -10,7 +10,7 @@ import Loader from '../Loader';
 
 const ProfileSwiper = ({ data }) => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex items-center justify-center">
       <Swiper
         style={
           {
@@ -24,7 +24,6 @@ const ProfileSwiper = ({ data }) => {
           } as React.CSSProperties
         }
         direction="horizontal"
-        spaceBetween={50}
         navigation={false}
         pagination={{
           clickable: true,
@@ -45,14 +44,10 @@ const ProfileSwiper = ({ data }) => {
           },
           1100: {
             slidesPerView: 4,
-            spaceBetween: 20,
-          },
-          1300: {
-            slidesPerView: 5,
             spaceBetween: 10,
           },
         }}
-        className="w-full h-auto overflow-visible relative items-center justify-center"
+        className="w-full h-auto overflow-visible relative flex items-center justify-center"
       >
         {data ? (
           data?.map((teacher) => (

@@ -18,13 +18,13 @@ import type {
 import { toast } from 'react-hot-toast';
 
 import 'cropperjs/dist/cropper.css';
-
 import { cn, formatBytes } from '@/lib/utils';
-import { Button } from '@components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Button } from '../ui/button';
 import { Icons } from '@/assets/Icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Image from 'next/image';
+import { ImageCustom } from '../ImageCustom';
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
   preview: string;
@@ -43,6 +43,8 @@ interface FileDialogProps<
   setFiles: React.Dispatch<React.SetStateAction<FileWithPreview[] | null>>;
   isUploading?: boolean;
   disabled?: boolean;
+  open?: boolean;
+  onOpenChange?: () => void;
 }
 
 export function FileDialog<TFieldValues extends FieldValues>({
@@ -50,6 +52,9 @@ export function FileDialog<TFieldValues extends FieldValues>({
   setValue,
   accept = {
     'image/*': [],
+    'application/pdf': ['.pdf'],
+    'video/mp4': ['.mp4'],
+    'video/mp3': ['.mp3'],
   },
   maxSize = 1024 * 1024 * 2,
   maxFiles = 1,
@@ -57,6 +62,8 @@ export function FileDialog<TFieldValues extends FieldValues>({
   setFiles,
   isUploading = false,
   disabled = false,
+  open = false,
+  onOpenChange,
   className,
   ...props
 }: FileDialogProps<TFieldValues>) {
@@ -117,7 +124,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button className={className} variant="outline" disabled={disabled}>
           Upload files
@@ -159,10 +166,11 @@ export function FileDialog<TFieldValues extends FieldValues>({
                 <div className="grid place-items-center gap-1 sm:px-5">
                   <Icons.upload className="h-8 w-8 text-muted-foreground" />
                   <p className="mt-2 text-base font-medium text-muted-foreground">
-                    Drag and drop your files here
+
+                    Drag {`'n'`} drop file here, or click to select file
                   </p>
                   <p className="text-sm text-slate-500">
-                    Please upload files with size up to
+                    Please upload file with size less than{' '}
                     {formatBytes(maxSize)}
                   </p>
                 </div>
