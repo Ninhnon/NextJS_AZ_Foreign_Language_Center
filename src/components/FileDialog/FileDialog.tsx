@@ -24,7 +24,6 @@ import { Button } from '../ui/button';
 import { Icons } from '@/assets/Icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Image from 'next/image';
-import { ImageCustom } from '../ImageCustom';
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
   preview: string;
@@ -166,7 +165,6 @@ export function FileDialog<TFieldValues extends FieldValues>({
                 <div className="grid place-items-center gap-1 sm:px-5">
                   <Icons.upload className="h-8 w-8 text-muted-foreground" />
                   <p className="mt-2 text-base font-medium text-muted-foreground">
-
                     Drag {`'n'`} drop file here, or click to select file
                   </p>
                   <p className="text-sm text-slate-500">
