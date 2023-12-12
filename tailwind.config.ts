@@ -20,14 +20,20 @@ const config: Config = {
         'yellow-orange': '#FFAE42',
         'silver-chalice': '#ACACAC',
         'old-lace': '#FDF8EE',
+        parchment: '#F2E8D4',
         bossanova: '#4D2C5E',
+
+        default: {
+          DEFAULT: '#FDF8EE',
+          foreground: '#09090b',
+        },
         primary: {
-          DEFAULT: '#18181b',
+          DEFAULT: '#FF7426',
           foreground: '#fafafa',
         },
         secondary: {
           DEFAULT: '#f4f4f5',
-          foreground: '#0a0a0a',
+          foreground: '#FF7426',
         },
         destructive: {
           DEFAULT: '#ef4444',
