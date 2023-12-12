@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-
 function Logo() {
   return (
     <Link className="w-[200px]" href={'/'}>
