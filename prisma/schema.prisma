@@ -165,7 +165,6 @@ model Assignment {
 
 model MultipleChoiceQuestion {
   id           Int        @id @default(autoincrement())
-  name String
   assignmentId Int
   question     String
   answer       Int

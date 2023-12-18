@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Image from 'next/image';
 
@@ -10,9 +10,13 @@ import SummaryCard from '@/components/cards/SummaryCard';
 import CourseSwiper from '@/components/swipers/CourseSwiper';
 import QuestionBox from '@/components/ui/QuestionBox';
 import { Button } from '@nextui-org/react';
+import { useCourse } from '@/hooks/useCourse';
 
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
+
+  const { onGetTopCourse } = useCourse();
+  const [courseData, setCourseData] = useState(null);
   const teacherData = [
     {
       id: 1,
@@ -170,35 +174,54 @@ const page = () => {
     },
   ];
 
-  const courseData = [
-    {
-      id: 1,
-      image: '/course_writing.png',
-      level: 'Beginner',
-      title: 'Luyện thi Ielts 4.5',
-      enrolled: '250.000+',
-      length: '1h30p/buổi',
-      duration: '34 buổi',
-    },
-    {
-      id: 2,
-      image: '/course_group.png',
-      level: 'Intermediate',
-      title: 'Luyện thi Ielts 5.5',
-      enrolled: '250.000+',
-      length: '1h30p/buổi',
-      duration: '34 buổi',
-    },
-    {
-      id: 3,
-      image: '/course_learn.png',
-      level: 'Advanced',
-      title: 'Luyện thi Ielts 6.5',
-      enrolled: '250.000+',
-      length: '1h30p/buổi',
-      duration: '34 buổi',
-    },
-  ];
+  // const courseData = [
+  //   {
+  //     id: 1,
+  //     image: '/course_writing.png',
+  //     level: 'Beginner',
+  //     title: 'Luyện thi Ielts 4.5',
+  //     enrolled: '250.000+',
+  //     length: '1h30p/buổi',
+  //     duration: '34 buổi',
+  //   },
+  //   {
+  //     id: 2,
+  //     image: '/course_group.png',
+  //     level: 'Intermediate',
+  //     title: 'Luyện thi Ielts 5.5',
+  //     enrolled: '250.000+',
+  //     length: '1h30p/buổi',
+  //     duration: '34 buổi',
+  //   },
+  //   {
+  //     id: 3,
+  //     image: '/course_learn.png',
+  //     level: 'Advanced',
+  //     title: 'Luyện thi Ielts 6.5',
+  //     enrolled: '250.000+',
+  //     length: '1h30p/buổi',
+  //     duration: '34 buổi',
+  //   },
+  // ];
+
+  /* Bắt đầu logic lấy top n khóa học */
+  useEffect(() => {
+    const fetchTopCourses = async () => {
+      try {
+        const response = await onGetTopCourse(5);
+        const data = await response.json();
+        setCourseData(data);
+        console.log('🚀 ~ file: page.tsx:211 ~ fetchTopCourses ~ data:', data);
+      } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+      }
+    };
+
+    fetchTopCourses();
+  }, []);
+
+  /* Kết thúc logic lấy top n khóa học */
+
   return (
     <div className="flex flex-col h-full w-full">
       <div

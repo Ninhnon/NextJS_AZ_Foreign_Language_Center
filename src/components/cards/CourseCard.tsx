@@ -7,7 +7,7 @@ import { Button } from '@nextui-org/react';
 const CourseCard = ({ data }) => {
   return (
     <div
-      className="relative rounded-xl p-4 bg-white w-fit min-h-0 m-8 mx-auto
+      className="relative rounded-xl p-4 bg-white w-fit max-w-full min-h-0 m-8 mx-auto
     drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words"
     >
       {/* Start Description Image */}
@@ -15,7 +15,7 @@ const CourseCard = ({ data }) => {
       <div className=" rounded-xl bg-neutral-400 max-h-[50%] row-span-1">
         <Image
           className="object-cover rounded-xl"
-          src={data.image}
+          src={data.thumbnail}
           alt="hero banner"
           width={300}
           height={300}
@@ -27,24 +27,24 @@ const CourseCard = ({ data }) => {
 
       <div className="row-span-1">
         <div>
-          <p>
+          {/* <p>
             <span className="text-silver-chalice text-sm font-medium">
-              {data.level}
+              {data.BandScoreId}
             </span>
             <br />
-          </p>
+          </p> */}
 
-          <p>
-            <span className="text-black text-base font-medium">
-              {data.title}
+          <div className="w-full overflow-hidden whitespace-nowrap text-ellipsis">
+            <span className="text-black text-base font-medium ">
+              {data.name}
             </span>
             <br />
-          </p>
+          </div>
 
           <div className="flex items-center space-x-1">
             <HiUserGroup className="fill-orange" />
             <span className="text-orange font-medium text-sm">
-              {data.enrolled}
+              {data.totalAttendance} học viên
             </span>
           </div>
         </div>
@@ -55,14 +55,14 @@ const CourseCard = ({ data }) => {
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineClockCircle />
             <span className=" text-silver-chalice text-sm font-light">
-              {data.length}
+              {data.totalSession} buổi
             </span>
           </div>
 
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineCalendar />
             <span className="text-silver-chalice text-sm font-light">
-              {data.duration}
+              {new Date(data.startTime).toLocaleDateString('vi-VN')}
             </span>
           </div>
         </div>
