@@ -135,7 +135,7 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'admin/room-list'}>
+                <Link href={'/admin/room-list'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaDoorClosed />
                     <div className="ml-2">Danh sách phòng học</div>
