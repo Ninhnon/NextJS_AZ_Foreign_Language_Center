@@ -1,8 +1,12 @@
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
-import { FaPenToSquare } from 'react-icons/fa6';
+import {
+  FaCircleQuestion,
+  FaHouseChimney,
+  FaPenToSquare,
+} from 'react-icons/fa6';
 
-const AssignmentDetails = ({ data }) => {
+const AssignmentDetails = ({ data, router }) => {
   console.log(
     '🚀 ~ file: AssignmentDetails.tsx:6 ~ AssignmentDetails ~ data:',
     data
@@ -120,6 +124,19 @@ const AssignmentDetails = ({ data }) => {
         <span>Ngày khởi tạo: &nbsp; &nbsp;</span>
         <span>{new Date(data.startTime).toLocaleString()}</span>
       </div>
+      <Button
+        className="font-bold text-orange flex flex-row w-fit end-4"
+        variant="light"
+        radius="sm"
+        startContent={<FaCircleQuestion />}
+        onClick={() => {
+          router.push(
+            `/admin/assignment/${data.id}/multiple-choice-question?id=${data.id}`
+          );
+        }}
+      >
+        Câu hỏi trắc nghiệm
+      </Button>
     </div>
   );
 };

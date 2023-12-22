@@ -42,5 +42,22 @@ export const useAssignment = () => {
     return res;
   };
 
-  return { onGetAssignment, onGetAssignmentById, onUpdateAssignment };
+  const onGetMultipleChoiceQuestion = async (
+    id: number,
+    page: number,
+    limit: number
+  ) => {
+    const res = await getRequest({
+      endPoint: `/api/assignment/multiple-choice-question?assignmentId=${id}&page=${page}&limit=${limit}`,
+    });
+
+    return res;
+  };
+
+  return {
+    onGetAssignment,
+    onGetAssignmentById,
+    onUpdateAssignment,
+    onGetMultipleChoiceQuestion,
+  };
 };
