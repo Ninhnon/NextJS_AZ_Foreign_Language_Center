@@ -76,17 +76,17 @@ model ClassSession {
   StartTime                DateTime
   timeId                   Int
   classShiftId             Int
+  CategoryColor            String                    @default("#fecaca")
   teacher                  User                      @relation(fields: [teacherId], references: [id])
   Room                     Room?                     @relation(fields: [roomId], references: [id])
   time                     TimeShift                 @relation(fields: [timeId], references: [id])
   Course                   Course                    @relation(fields: [courseId], references: [id])
   classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
-  CategoryColor String @default("#fecaca")
+
   @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
-  @@index([timeId])
 }
 
 model TimeShift {
@@ -106,7 +106,6 @@ model ClassShift {
 
   @@index([roomId])
   @@index([timeId])
-
 }
 
 model Room {
@@ -154,7 +153,6 @@ model Assignment {
   skillId                  Int
   bandScoreId              Int
   startTime                DateTime
-  lastModifiedTime         DateTime @default(now())
   files                    String?                   @db.LongText
   lastModifiedTime         DateTime                  @default(now())
   module                   Module                    @relation(fields: [moduleId], references: [id])
@@ -162,6 +160,22 @@ model Assignment {
   bandScore                BandScore                 @relation(fields: [bandScoreId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
+  MultipleChoiceQuestions  MultipleChoiceQuestion[]
+}
+
+model MultipleChoiceQuestion {
+  id           Int        @id @default(autoincrement())
+  assignmentId Int
+  question     String
+  answer       Int
+  option1      String
+  option2      String
+  option3      String
+  option4      String
+  audio        String?
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+
+  @@index([assignmentId])
 }
 
 model Assignment_ClassSession {
