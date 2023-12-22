@@ -1,9 +1,10 @@
+import AddCourseCard from '@/components/cards/AddCourseCard';
 import React from 'react';
-import Scheduler from './Scheduler';
+
 const page = () => {
   return (
     <div>
-      <Scheduler />
+      <AddCourseCard />
     </div>
   );
 };

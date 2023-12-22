@@ -32,22 +32,22 @@ const CourseSwiper = ({ data }) => {
         breakpoints={{
           450: {
             slidesPerView: 1,
-            spaceBetween: 0,
+            spaceBetween: 20,
           },
           700: {
             slidesPerView: 2,
-            spaceBetween: 0,
+            spaceBetween: 20,
           },
           900: {
             slidesPerView: 3,
-            spaceBetween: 0,
+            spaceBetween: 20,
           },
         }}
         className="w-full h-auto overflow-visible relative flex"
       >
         {data ? (
           data?.map((course) => (
-            <SwiperSlide key={course.id}>
+            <SwiperSlide key={course.id} className="mb-8">
               <CourseCard data={course} />
             </SwiperSlide>
           ))

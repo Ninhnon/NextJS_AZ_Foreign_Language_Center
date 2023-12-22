@@ -8,64 +8,41 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id               Int               @id @default(autoincrement())
+model Assignment {
+  id               Int      @id @default(autoincrement())
   name             String
-  email            String            @unique
-  password         String
-  role             String?           @default("user")
-  avatar           String?           @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
-  address          String?           @default("VietNam")
-  birthDay         DateTime?
-  indexSalary      Int?
-  level            Int?
-  assignment_users Assignment_User[]
-  classSessions    ClassSession[]
+  moduleId         Int
+  skillId          Int
+  bandScoreId      Int
+  startTime        DateTime
+  files            String?  @db.LongText
+  lastModifiedTime DateTime @default(now())
 }
 
-model IndexSalary {
-  id    Int @id @default(autoincrement())
-  value Int
+model Assignment_ClassSession {
+  id             Int @id @default(autoincrement())
+  classSessionId Int
+  assignmentId   Int
+
+  @@index([assignmentId])
+  @@index([classSessionId])
 }
 
-model Module {
-  id          Int          @id @default(autoincrement())
-  name        String
-  assignments Assignment[]
-}
+model Assignment_User {
+  id           Int @id @default(autoincrement())
+  userId       Int
+  assignmentId Int
 
-model Skill {
-  id          Int          @id @default(autoincrement())
-  name        String
-  assignments Assignment[]
+  @@index([assignmentId])
+  @@index([userId])
 }
 
 model BandScore {
-  id          Int          @id @default(autoincrement())
-  moduleId    Int
-  name        String
-  assignments Assignment[]
+  id       Int    @id @default(autoincrement())
+  moduleId Int
+  name     String
 
   @@index([moduleId])
-}
-
-model Course {
-  id                Int            @id @default(autoincrement())
-  moduleId          Int            @default(1)
-  BandScoreId       Int            @default(1)
-  name              String         @default("online")
-  totalSession      Int            @default(0)
-  startTime         DateTime
-  endTime           DateTime
-  totalAttendance   Int            @default(0)
-  tuitionFee        Int
-  totalCost         Int
-  recommendCourseId Int?
-  thumbnail         String?
-  classSessions     ClassSession[]
-
-  @@index([moduleId])
-  @@index([BandScoreId])
 }
 
 model ClassSession {
@@ -89,47 +66,31 @@ model ClassSession {
   @@index([classShiftId])
 }
 
-model TimeShift {
-  id            Int            @id @default(autoincrement())
-  time          String
-  classShifts   ClassShift[]
-  classSessions ClassSession[]
-}
-
 model ClassShift {
-  id            Int            @id @default(autoincrement())
-  roomId        Int?
-  timeId        Int
-  time          TimeShift      @relation(fields: [timeId], references: [id])
-  classsessions ClassSession[]
-  Room          Room?          @relation(fields: [roomId], references: [id])
+  id     Int  @id @default(autoincrement())
+  roomId Int?
+  timeId Int
 
   @@index([roomId])
   @@index([timeId])
 }
 
-model Room {
-  id            Int            @id @default(autoincrement())
-  name          String
-  status        String?        @default("Free")
-  typeId        Int
-  note          String?
-  attendance    Int
-  capacity      Int
-  floor         Int
-  toilet        Int
-  classShifts   ClassShift[]
-  type          RoomType       @relation(fields: [typeId], references: [id])
-  facility      Facility?
-  classSessions ClassSession[]
+model Course {
+  id                Int      @id @default(autoincrement())
+  moduleId          Int      @default(1)
+  BandScoreId       Int      @default(1)
+  name              String   @default("online")
+  totalSession      Int      @default(0)
+  startTime         DateTime
+  endTime           DateTime
+  totalAttendance   Int      @default(0)
+  tuitionFee        Int
+  totalCost         Int
+  recommendCourseId Int?
+  thumbnail         String?
 
-  @@index([typeId])
-}
-
-model RoomType {
-  id    Int    @id @default(autoincrement())
-  name  String
-  rooms Room[]
+  @@index([BandScoreId])
+  @@index([moduleId])
 }
 
 model Facility {
@@ -141,7 +102,6 @@ model Facility {
   chair         Int
   table         Int
   waterPurifier Int
-  room          Room   @relation(fields: [roomId], references: [id])
 
   @@index([roomId])
 }
@@ -178,24 +138,49 @@ model MultipleChoiceQuestion {
   @@index([assignmentId])
 }
 
-model Assignment_ClassSession {
-  id             Int          @id @default(autoincrement())
-  classSessionId Int
-  assignmentId   Int
-  classSession   ClassSession @relation(fields: [classSessionId], references: [id])
-  assignment     Assignment   @relation(fields: [assignmentId], references: [id])
-
-  @@index([assignmentId])
-  @@index([classSessionId])
+model Module {
+  id   Int    @id @default(autoincrement())
+  name String
 }
 
-model Assignment_User {
-  id           Int        @id @default(autoincrement())
-  userId       Int
-  assignmentId Int
-  user         User       @relation(fields: [userId], references: [id])
-  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+model Room {
+  id         Int     @id @default(autoincrement())
+  name       String
+  status     String? @default("Free")
+  typeId     Int
+  note       String?
+  attendance Int
+  capacity   Int
+  floor      Int
+  toilet     Int
 
-  @@index([assignmentId])
-  @@index([userId])
+  @@index([typeId])
+}
+
+model RoomType {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Skill {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model TimeShift {
+  id   Int    @id @default(autoincrement())
+  time String
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  role        String?   @default("user")
+  avatar      String?   @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  address     String?   @default("VietNam")
+  birthDay    DateTime?
+  indexSalary Int?
+  level       Int?
 }
