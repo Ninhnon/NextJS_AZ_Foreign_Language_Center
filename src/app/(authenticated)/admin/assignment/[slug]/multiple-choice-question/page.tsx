@@ -97,6 +97,11 @@ function page() {
     console.log('🚀 ~ file: page.tsx:97 ~ onSubmit ~ data:', data);
     await setIsInvalid(false);
 
+    if (data.name === '') {
+      setIsInvalid(true); // Set isInvalid to true if title is empty
+      return;
+    }
+
     if (data.question === '') {
       setIsInvalid(true); // Set isInvalid to true if title is empty
       return;
@@ -174,6 +179,7 @@ function page() {
       console.log(ret);
       toast.success('Thêm câu hỏi thành công!');
       await setIsLoading(false);
+      await setIsShowDialog(false);
       reset();
       refetch();
     }
@@ -259,6 +265,28 @@ function page() {
                   <span className="text-[12px] sm:text-sm md:text-base font-semibold">
                     THÊM CÂU HỎI TRẮC NGHIỆM
                   </span>
+                </div>
+
+                <div className="flex w-full flex-col flex-wrap md:flex-nowrap gap-3">
+                  <Label className="font-semibold text-[10px] sm:text-[14px]">
+                    Tên câu hỏi
+                  </Label>
+                  <Controller
+                    control={control}
+                    defaultValue={''}
+                    name="name"
+                    render={({ field }) => {
+                      return (
+                        <Input
+                          className="h-full"
+                          size="sm"
+                          type="input"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      );
+                    }}
+                  />
                 </div>
 
                 <div className="flex w-full flex-col flex-wrap md:flex-nowrap gap-3">

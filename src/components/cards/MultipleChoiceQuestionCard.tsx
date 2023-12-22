@@ -22,6 +22,8 @@ const MultipleChoiceQuestionCard = ({ data }) => {
   };
   return (
     <div className="w-full h-fit flex flex-col border-2 rounded-md p-2 gap-2">
+      <div className="font-bold">{data.name}</div>
+
       <div className="w-full h-fit flex flex-row justify-between items-center">
         <div>{data.question}</div>
         {data.audio ? (
