@@ -7,7 +7,13 @@ const MultipleChoiceQuestionCard = ({ data }) => {
   const [audio, setAudio] = useState(null);
   useEffect(() => {
     if (data.audio) {
-      setAudio(new Howl({ src: [data.audio], html5: true, onend: () => {} }));
+      setAudio(
+        new Howl({
+          src: [JSON.parse(data.audio)[0].url],
+          html5: true,
+          onend: () => {},
+        })
+      );
     }
   }, []);
 

@@ -39,3 +39,22 @@ export async function GET(req: Request) {
     );
   }
 }
+export async function POST(request: Request) {
+  const re = await request.json();
+  const res = await prisma.multipleChoiceQuestion.create({
+    data: {
+      question: re.question,
+      assignmentId: re.assignmentId,
+      answer: re.answer,
+      option1: re.option1,
+      option2: re.option2,
+      option3: re.option3,
+      option4: re.option4,
+      audio: re.audio ? re.audio : null,
+    },
+  });
+  if (!res) {
+    return new Response(JSON.stringify({}), { status: 404 });
+  }
+  return new Response(JSON.stringify(res), { status: 200 });
+}

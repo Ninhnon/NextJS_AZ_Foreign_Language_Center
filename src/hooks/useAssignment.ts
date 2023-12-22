@@ -54,10 +54,25 @@ export const useAssignment = () => {
     return res;
   };
 
+  const onPostMultipleChoiceQuestion = async (data) => {
+    console.log(
+      '🚀 ~ file: useAssignment.ts:58 ~ onPostMultipleChoiceQuestion ~ data:',
+      data
+    );
+    const question = await postRequest({
+      endPoint: '/api/assignment/multiple-choice-question',
+      formData: data,
+      isFormData: true,
+    });
+    console.log(question);
+    return question;
+  };
+
   return {
     onGetAssignment,
     onGetAssignmentById,
     onUpdateAssignment,
     onGetMultipleChoiceQuestion,
+    onPostMultipleChoiceQuestion,
   };
 };

@@ -1,10 +1,6 @@
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
-import {
-  FaCircleQuestion,
-  FaHouseChimney,
-  FaPenToSquare,
-} from 'react-icons/fa6';
+import { FaCircleQuestion, FaPenToSquare } from 'react-icons/fa6';
 
 const AssignmentDetails = ({ data, router }) => {
   console.log(

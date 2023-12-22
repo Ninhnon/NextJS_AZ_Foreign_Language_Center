@@ -111,7 +111,7 @@ function DialogCustom({
       <div className="w-full h-full">
         <div className="absolute">
           <div
-            className={`fixed inset-0 z-50 bg-background/80 backdrop-blur-sm ${
+            className={`fixed inset-0 z-30 bg-background/80 backdrop-blur-sm ${
               isModalOpen ? `animate-in fade-in-0` : ''
             }  ${isClosing ? 'animate-out fade-out-0 ' : ''}
   `}
@@ -119,7 +119,7 @@ function DialogCustom({
 
           <div
             className={cn(
-              `fixed left-[50%] top-[50%] z-50 max-w-full translate-x-[-50%] 
+              `fixed left-[50%] top-[50%] z-30 max-w-full translate-x-[-50%] 
       translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 ww-[90%]  ${
         isModalOpen
           ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]`
