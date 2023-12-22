@@ -53,7 +53,7 @@ function page({ params }: { params: { slug: any } }) {
               Bài tập / {data.data.name}
             </Button>
           </div>
-          <AssignmentDetails data={data.data} />
+          <AssignmentDetails data={data.data} router={router} />
           <AssignmentFilePicker data={data.data} />
         </div>
       ) : (
