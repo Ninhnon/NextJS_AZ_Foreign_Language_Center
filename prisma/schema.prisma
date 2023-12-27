@@ -70,21 +70,32 @@ model ClassShift {
 }
 
 model Course {
-  id                Int      @id @default(autoincrement())
-  moduleId          Int      @default(1)
-  BandScoreId       Int      @default(1)
-  name              String   @default("online")
-  totalSession      Int      @default(0)
+  id                Int             @id @default(autoincrement())
+  moduleId          Int             @default(1)
+  BandScoreId       Int             @default(1)
+  name              String          @default("online")
+  totalSession      Int             @default(0)
   startTime         DateTime
   endTime           DateTime
-  totalAttendance   Int      @default(0)
+  totalAttendance   Int             @default(0)
   tuitionFee        Int
   totalCost         Int
   recommendCourseId Int?
   thumbnail         String?
+  courseDetails     CourseDetails[]
 
   @@index([BandScoreId])
   @@index([moduleId])
+}
+
+model CourseDetails {
+  id          Int     @id @default(autoincrement())
+  courseId    Int
+  subtitle    String  @db.LongText
+  description String? @db.LongText
+  course      Course  @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
 }
 
 model Facility {
@@ -150,4 +161,19 @@ model User {
   birthDay    DateTime?
   indexSalary Int?
   level       Int?
+}
+
+model MultipleChoiceQuestion {
+  id           Int     @id @default(autoincrement())
+  assignmentId Int
+  question     String
+  answer       Int
+  option1      String
+  option2      String
+  option3      String
+  option4      String
+  audio        String?
+  name         String
+
+  @@index([assignmentId])
 }
