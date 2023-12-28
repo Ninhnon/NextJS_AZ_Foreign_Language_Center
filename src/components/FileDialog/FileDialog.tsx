@@ -22,9 +22,8 @@ import { cn, formatBytes } from '@/lib/utils';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Icons } from '@/assets/Icons';
-import { ScrollArea } from '../ui/scroll-area';
 import { ImageCustom } from '../ImageCustom';
-
+import { ScrollArea } from '@/components/ui/scroll-area';
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
   preview: string;
