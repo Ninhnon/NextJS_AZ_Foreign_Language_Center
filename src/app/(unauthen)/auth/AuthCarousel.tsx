@@ -16,7 +16,7 @@ function AuthCarousel() {
       >
         <div className="h-screen w-full">
           <Image
-            src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_1423,c_limit/16b3442b-cfbb-4be0-8541-682a26631f15/nike-just-do-it.png"
+            src="https://utfs.io/f/f9aebee1-dffd-4761-8471-a0fb076d61c2-aclqkq.png"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -27,18 +27,18 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Do the difficult things while they are easy and do the
+                great things while they are small. A journey of a thousand miles
+                begins with a single step.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <footer className="text-sm">Lao Tzu</footer>
             </blockquote>
           </div>
           <div className="absolute inset-0 bg-black opacity-10" />
         </div>
         <div>
           <Image
-            src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/w_706,c_limit/3a1d0f80-4fcd-453e-9fa0-7f19dc8e6d8a/nike-just-do-it.png"
+            src="https://utfs.io/f/108d4057-8e86-4662-86aa-19b5552cc6fd-3locdn.jpg"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -49,17 +49,17 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Do the difficult things while they are easy and do the
+                great things while they are small. A journey of a thousand miles
+                begins with a single step.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <footer className="text-sm">Lao Tzu</footer>
             </blockquote>
           </div>
         </div>
         <div>
           <Image
-            src="https://freight.cargo.site/w/1920/q/94/i/1a52c93151b28b124e56b9e3b3b5cc4bc3f5c1aff4d972542fb260f4633b7012/Guidelines.png"
+            src="https://utfs.io/f/c8399328-2c5b-41df-beab-fcf30baac477-my3dt3.jpg"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -70,11 +70,11 @@ function AuthCarousel() {
           <div className="absolute bottom-20 z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
+                &ldquo;Do the difficult things while they are easy and do the
+                great things while they are small. A journey of a thousand miles
+                begins with a single step.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <footer className="text-sm">Lao Tzu</footer>
             </blockquote>
           </div>
         </div>

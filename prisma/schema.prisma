@@ -8,22 +8,14 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Assignment {
-  id               Int      @id @default(autoincrement())
-  name             String
-  moduleId         Int
-  skillId          Int
-  bandScoreId      Int
-  startTime        DateTime
-  files            String?  @db.LongText
-  lastModifiedTime DateTime @default(now())
-}
+
 
 model Assignment_ClassSession {
   id             Int @id @default(autoincrement())
   classSessionId Int
   assignmentId   Int
-
+  Assignment Assignment[]
+  classSession ClassSession[]
   @@index([assignmentId])
   @@index([classSessionId])
 }
@@ -32,7 +24,7 @@ model Assignment_User {
   id           Int @id @default(autoincrement())
   userId       Int
   assignmentId Int
-
+  Assignment Assignment[]
   @@index([assignmentId])
   @@index([userId])
 }
@@ -41,7 +33,7 @@ model BandScore {
   id       Int    @id @default(autoincrement())
   moduleId Int
   name     String
-
+  Assignment Assignment[]
   @@index([moduleId])
 }
 
@@ -61,6 +53,8 @@ model ClassSession {
   classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
 
+  @@index([teacherId])
+  @@index([roomId])
   @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
@@ -70,7 +64,7 @@ model ClassShift {
   id     Int  @id @default(autoincrement())
   roomId Int?
   timeId Int
-
+  classSession ClassSession[]
   @@index([roomId])
   @@index([timeId])
 }
@@ -88,7 +82,8 @@ model Course {
   totalCost         Int
   recommendCourseId Int?
   thumbnail         String?
-
+  classSession      ClassSession[]
+  courseDetails     CourseDetails[]
   @@index([BandScoreId])
   @@index([moduleId])
 }
@@ -105,6 +100,7 @@ model Facility {
 
   @@index([roomId])
 }
+ 
 
 model Assignment {
   id                       Int                       @id @default(autoincrement())
@@ -121,8 +117,10 @@ model Assignment {
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
   MultipleChoiceQuestions  MultipleChoiceQuestion[]
+    @@index([moduleId])
+      @@index([skillId])
+         @@index([bandScoreId])
 }
-
 model MultipleChoiceQuestion {
   id           Int        @id @default(autoincrement())
   assignmentId Int
@@ -141,6 +139,7 @@ model MultipleChoiceQuestion {
 model Module {
   id   Int    @id @default(autoincrement())
   name String
+  Assignment Assignment[]
 }
 
 model Room {
@@ -153,7 +152,7 @@ model Room {
   capacity   Int
   floor      Int
   toilet     Int
-
+  classSession ClassSession[]
   @@index([typeId])
 }
 
@@ -165,11 +164,13 @@ model RoomType {
 model Skill {
   id   Int    @id @default(autoincrement())
   name String
+  Assignment Assignment[]
 }
 
 model TimeShift {
   id   Int    @id @default(autoincrement())
   time String
+  ClassSession ClassSession[]
 }
 
 model User {
@@ -183,4 +184,15 @@ model User {
   birthDay    DateTime?
   indexSalary Int?
   level       Int?
+  salary      Int?
+  classSession ClassSession[]
+}
+model CourseDetails {
+  id          Int     @id @default(autoincrement())
+  courseId    Int
+  subtitle    String  @db.LongText
+  description String? @db.LongText
+  course      Course  @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
 }

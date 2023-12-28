@@ -3,14 +3,14 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '@/assets/Icons';
+// import { Icons } from '@/assets/Icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Loader from '@/components/Loader';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import getCurrentUser from '@/actions/getCurrentUser';
 const formSchema = z.object({
   email: z.string().min(1, {
     message: 'Email is required',
@@ -55,13 +55,23 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
       password: data.password,
       redirect: false,
     });
+    console.log('🚀 ~ file: Login.tsx:58 ~ onSubmit ~ res:', res);
     setIsLoading(false);
     if (res?.error) {
       toast.error(res?.error);
       return;
     }
 
-    if (!res?.error) router.replace('/');
+    if (!res?.error) {
+      // // await alreadyLoggedIn();
+      // const currentUser = await getCurrentUser(data.email);
+      // console.log(
+      //   '🚀 ~ file: Login.tsx:68 ~ onSubmit ~ currentUser:',
+      //   currentUser
+      // );
+
+      router.push('/');
+    }
     setIsLoading(false);
     console.log(res);
   }
@@ -143,7 +153,7 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
           </form>
         </Form>
 
-        <div className="relative">
+        {/* <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -180,15 +190,15 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
             </div>{' '}
             Discord
           </Button>
-        </div>
+        </div> */}
       </div>
 
-      <p className="mt-10 px-8 text-center text-sm text-muted-foreground">
+      {/* <p className="mt-10 px-8 text-center text-sm text-muted-foreground">
         Don't have an account?{' '}
         <Link className="font-bold underline text-black" href="/auth/register">
           Register
         </Link>
-      </p>
+      </p> */}
     </div>
   );
 };
