@@ -19,15 +19,14 @@ export default function page({ params }: { params: { slug: any } }) {
   };
 
   // Fetch review data
-  const {
-    data: assignmentData,
-    isFetched,
-    isFetching,
-    refetch,
-  } = useQuery(fetchFileByIdKey, fetchFileByIdKeyData, {
-    staleTime: 1000 * 60 * 1,
-    keepPreviousData: true,
-  });
+  const { data: assignmentData } = useQuery(
+    fetchFileByIdKey,
+    fetchFileByIdKeyData,
+    {
+      staleTime: 1000 * 60 * 1,
+      keepPreviousData: true,
+    }
+  );
   console.log('🚀 ~ file: page.tsx:33 ~ page ~ data:', assignmentData);
 
   return (
