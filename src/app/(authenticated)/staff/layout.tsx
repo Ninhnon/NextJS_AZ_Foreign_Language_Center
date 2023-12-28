@@ -1,5 +1,4 @@
 import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
 import AdminHeader from '@/components/header/AdminHeader';
 import { getSession, mustBeStaff } from '@/lib/auth';
 

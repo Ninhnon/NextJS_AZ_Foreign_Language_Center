@@ -1,6 +1,6 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
-import { getSession, mustBeRole } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 
 export default async function Layout({
   children,

@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import getCurrentUser from '@/actions/getCurrentUser';
+// import getCurrentUser from '@/actions/getCurrentUser';
 const formSchema = z.object({
   email: z.string().min(1, {
     message: 'Email is required',
