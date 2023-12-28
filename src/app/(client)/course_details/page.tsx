@@ -157,7 +157,7 @@ const page = () => {
       {/* End course info */}
 
       {/* Start teacher info */}
-      <div className="mt-auto bg-old-lace p-4">Phần teacher của em Quân</div>
+
       {/* End teacher info */}
 
       {/* Start review info & explaination*/}
