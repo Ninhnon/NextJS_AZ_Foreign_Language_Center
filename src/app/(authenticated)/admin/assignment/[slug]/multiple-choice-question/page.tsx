@@ -45,6 +45,7 @@ function page() {
 
   //Index the questions
   const [questionsMap, setQuestionsMap] = useState(new Map());
+  console.log('🚀 ~ file: page.tsx:48 ~ page ~ questionsMap:', questionsMap);
   const { onGetMultipleChoiceQuestion, onPostMultipleChoiceQuestion } =
     useAssignment();
   //useForm
