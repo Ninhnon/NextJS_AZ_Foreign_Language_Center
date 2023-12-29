@@ -195,6 +195,7 @@ model Assignment_User {
   id           Int        @id @default(autoincrement())
   userId       Int
   assignmentId Int
+  score       Float?    
   user         User       @relation(fields: [userId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 

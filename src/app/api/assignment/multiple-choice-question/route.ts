@@ -44,7 +44,6 @@ export async function POST(request: Request) {
   const res = await prisma.multipleChoiceQuestion.create({
     data: {
       question: re.question,
-      name: re.name,
       assignmentId: re.assignmentId,
       answer: re.answer,
       option1: re.option1,

@@ -5,10 +5,19 @@ import { Button, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FaCircleQuestion } from 'react-icons/fa6';
+import { getSession } from 'next-auth/react';
 
 export default function page({ params }: { params: { slug: any } }) {
   const { slug } = params;
   const router = useRouter();
+
+  //Get session (to check if user is logged in)
+  const onGetUserSession = async () => {
+    const session = await getSession();
+    if (!session) {
+      router.push('/auth/login');
+    }
+  };
   const { onGetAssignmentById } = useAssignment();
 
   // Define a query key and fetch function for fetching review rating data
@@ -66,8 +75,9 @@ export default function page({ params }: { params: { slug: any } }) {
                 radius="sm"
                 startContent={<FaCircleQuestion />}
                 onClick={() => {
+                  onGetUserSession();
                   router.push(
-                    `/admin/assignment/${assignmentData.data.id}/multiple-choice-question?id=${assignmentData.data.id}`
+                    `/entrance_examination/assignment_detail/${assignmentData.data.id}/multiple_choice_question?id=${assignmentData.data.id}`
                   );
                 }}
               >
