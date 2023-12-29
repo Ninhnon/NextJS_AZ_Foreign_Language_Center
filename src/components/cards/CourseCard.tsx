@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { HiUserGroup } from 'react-icons/hi';
 import { AiOutlineClockCircle, AiOutlineCalendar } from 'react-icons/ai';
 import { Button } from '@nextui-org/react';
+import Link from 'next/link';
 
 const CourseCard = ({ data }) => {
   return (
@@ -13,14 +14,16 @@ const CourseCard = ({ data }) => {
       {/* Start Description Image */}
 
       <div className=" rounded-xl bg-neutral-400 max-h-[50%] row-span-1">
-        <Image
-          className="object-cover rounded-xl"
-          src={data.thumbnail}
-          alt="hero banner"
-          width={300}
-          height={300}
-          loading="lazy"
-        />
+        <Link href={`/course_details/${data.id}`}>
+          <Image
+            className="object-cover rounded-xl"
+            src={data.thumbnail}
+            alt="hero banner"
+            width={300}
+            height={300}
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       {/* Stop Description Image */}
