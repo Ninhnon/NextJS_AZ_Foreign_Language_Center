@@ -24,6 +24,7 @@ import { Button } from '../ui/button';
 import { Icons } from '@/assets/Icons';
 import { ImageCustom } from '../ImageCustom';
 import { ScrollArea } from '@/components/ui/scroll-area';
+// import Image from 'next/image';
 // FIXME Your proposed upload exceeds the maximum allowed size, this should trigger toast.error too
 type FileWithPreview = FileWithPath & {
   preview: string;
