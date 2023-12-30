@@ -14,12 +14,10 @@ import Loader from '@/components/Loader';
 
 export const AddAddress = ({ isModalOpen, setIsModalOpen }) => {
   const session = useSession();
-  const [addressValue, setAddressValue] = React.useState('');
   const [selectedProvince, setSelectedProvince] = React.useState(new Set([]));
   const [selectedDistrict, setSelectedDistrict] = React.useState(new Set([]));
   const [selectedWard, setSelectedWard] = React.useState(new Set([]));
 
-  const [diaChiTouched] = React.useState(false);
   const [provinceTouched, setProvinceTouched] = React.useState(false);
   const [districtTouched, setDistrictTouched] = React.useState(false);
   const [wardTouched, setWardTouched] = React.useState(false);

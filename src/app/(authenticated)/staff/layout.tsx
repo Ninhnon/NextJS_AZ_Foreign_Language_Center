@@ -1,4 +1,3 @@
-import { Footer } from '@/components/footer';
 import StaffHeader from '@/components/header/StaffHeader';
 import { getSession, mustBeStaff } from '@/lib/auth';
 

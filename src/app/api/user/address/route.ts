@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 
-export async function GET(req: Request, res: Response) {
+export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const id = searchParams.get('id');
@@ -28,7 +28,7 @@ export async function GET(req: Request, res: Response) {
   return new Response(JSON.stringify(newAddresses));
 }
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const body = await req.json();
   const selectedAddress = await prisma.address.findFirst({
     where: {

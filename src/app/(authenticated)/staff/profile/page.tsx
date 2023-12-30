@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import { Skeleton } from '@nextui-org/react';
 import { MdOutlineEmail, MdPermIdentity } from 'react-icons/md';
 import { IoIosPhonePortrait } from 'react-icons/io';
 import { CiLocationOn } from 'react-icons/ci';
@@ -28,7 +27,7 @@ function page() {
     },
     enabled: !!session?.data?.user?.id,
   });
-  const { data: userAddresses, isLoading: isLoadingUserAddresses } = useQuery(
+  const { data: userAddresses } = useQuery(
     ['userAddresses', session?.data?.user?.id],
     async () => {
       const res = await getRequest({

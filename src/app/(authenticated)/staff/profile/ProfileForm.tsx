@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectItem } from '@nextui-org/react';
-import { Address, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import React, { useEffect } from 'react';
 import { AddAddress } from './AddAddress';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getRequest, postRequest } from '@/lib/fetch';
+import { useQueryClient } from '@tanstack/react-query';
+import { postRequest } from '@/lib/fetch';
 import { Zoom } from '@/components/ui/zoom-image';
 import { FileDialog } from '@/components/FileDialog';
 import toast from 'react-hot-toast';
@@ -31,8 +31,8 @@ const ProfileForm = ({
     new Set([userAddresses?.[0]?.id?.toString()])
   );
   const [avatarImageFiles, setAvatarImageFiles] = React.useState([]);
-  const [defaultAvatar, setDefaultAvatar] = React.useState(user?.avatar);
-  const { isUploading, startUpload } = useUploadThing('imageUploader');
+  const [defaultAvatar] = React.useState(user?.avatar);
+  const { startUpload } = useUploadThing('imageUploader');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   console.log('🚀 ~ file: ProfileForm.tsx:23 ~ selectedType:', selectedType);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
