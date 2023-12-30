@@ -1,5 +1,5 @@
 import { Footer } from '@/components/footer';
-import AdminHeader from '@/components/header/AdminHeader';
+import StaffHeader from '@/components/header/StaffHeader';
 import { getSession, mustBeStaff } from '@/lib/auth';
 
 export default async function Layout({
@@ -12,9 +12,8 @@ export default async function Layout({
   await mustBeStaff();
   return (
     <div className={`w-full h-full`}>
-      <AdminHeader session={session} />
+      <StaffHeader session={session} />
       {children}
-      <Footer />
     </div>
   );
 }
