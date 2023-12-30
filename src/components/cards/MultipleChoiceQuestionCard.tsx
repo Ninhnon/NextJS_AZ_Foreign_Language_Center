@@ -9,6 +9,8 @@ const MultipleChoiceQuestionCard = ({
   questionsMap,
   setQuestionsMap,
   isSuccess,
+  selectedAnswer,
+  setSelectedAnswer,
 }) => {
   //Get the correct answer
   const correctAnswer = () => {
@@ -23,7 +25,7 @@ const MultipleChoiceQuestionCard = ({
         return data.option4;
     }
   };
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
+
   console.log(
     '🚀 ~ file: MultipleChoiceQuestionCard.tsx:28 ~ selectedAnswer:',
     selectedAnswer

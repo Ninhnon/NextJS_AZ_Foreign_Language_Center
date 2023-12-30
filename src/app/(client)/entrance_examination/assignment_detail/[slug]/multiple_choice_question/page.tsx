@@ -30,6 +30,9 @@ export default function page() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  //Set selected answers
+  const [selectedAnswers, setSelectedAnswers] = useState(new Map());
+
   //Score
   const [score, setScore] = useState(0.0);
   console.log('🚀 ~ file: page.tsx:25 ~ page ~ score:', score);
@@ -223,6 +226,12 @@ export default function page() {
                         className="w-full h-fit flex flex-row items-center justify-between px-16 my-2"
                       >
                         <MultipleChoiceQuestionCard
+                          selectedAnswer={selectedAnswers.get(overallIndex)}
+                          setSelectedAnswer={(value) =>
+                            setSelectedAnswers(
+                              (prev) => new Map(prev.set(overallIndex, value))
+                            )
+                          }
                           data={question}
                           setScore={setScore}
                           index={overallIndex}
