@@ -1,9 +1,14 @@
 import React from 'react';
 import { Checkbox, Image } from '@nextui-org/react';
-
+import Link from 'next/link';
 const AdminCourseCard = ({ data }) => {
+  const href = '/admin/course-list/' + data.id;
   return (
-    <div className="w-full h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center">
+    <Link
+      aria-label="Products"
+      href={href}
+      className="w-full h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center"
+    >
       <div className="w-fit h-full flex flex-row items-center">
         <Checkbox radius="sm" />
         <Image
@@ -19,7 +24,7 @@ const AdminCourseCard = ({ data }) => {
         </div>
       </div>
       <div className="mr-8 font-bold">{data.BandScoreId}.0</div>
-    </div>
+    </Link>
   );
 };
 

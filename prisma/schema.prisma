@@ -19,13 +19,9 @@ model User {
   birthDay         DateTime?
   indexSalary      Int?
   level            Int?
+  salary           Int?
   assignment_users Assignment_User[]
   classSessions    ClassSession[]
-}
-
-model IndexSalary {
-  id    Int @id @default(autoincrement())
-  value Int
 }
 
 model Module {
@@ -87,6 +83,8 @@ model ClassSession {
   @@index([timeId])
   @@index([courseId])
   @@index([classShiftId])
+  @@index([roomId])
+  @@index([teacherId])
 }
 
 model TimeShift {
@@ -161,6 +159,10 @@ model Assignment {
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
   MultipleChoiceQuestions  MultipleChoiceQuestion[]
+
+  @@index([bandScoreId])
+  @@index([moduleId])
+  @@index([skillId])
 }
 
 model MultipleChoiceQuestion {
@@ -193,9 +195,46 @@ model Assignment_User {
   id           Int        @id @default(autoincrement())
   userId       Int
   assignmentId Int
+  score       Float?    
   user         User       @relation(fields: [userId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 
   @@index([assignmentId])
   @@index([userId])
+}
+
+model CourseDetails {
+  id          Int     @id @default(autoincrement())
+  courseId    Int
+  subtitle    String  @db.LongText
+  description String? @db.LongText
+
+  @@index([courseId])
+}
+
+model AssignmentToAssignment_ClassSession {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_AssignmentToAssignment_ClassSession_AB_unique")
+  @@index([B], map: "_AssignmentToAssignment_ClassSession_B_index")
+  @@map("_AssignmentToAssignment_ClassSession")
+}
+
+model AssignmentToAssignment_User {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_AssignmentToAssignment_User_AB_unique")
+  @@index([B], map: "_AssignmentToAssignment_User_B_index")
+  @@map("_AssignmentToAssignment_User")
+}
+
+model Assignment_ClassSessionToClassSession {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_Assignment_ClassSessionToClassSession_AB_unique")
+  @@index([B], map: "_Assignment_ClassSessionToClassSession_B_index")
+  @@map("_Assignment_ClassSessionToClassSession")
 }

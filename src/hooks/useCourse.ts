@@ -10,5 +10,14 @@ export const useCourse = () => {
     return res;
   };
 
-  return { onGetCourse };
+  // Lấy top n khóa học mới nhất
+  const onGetTopCourse = async (top: number) => {
+    const res = await getRequest({
+      endPoint: `/api/course/top?top=${top}`,
+    });
+
+    return new Response(JSON.stringify(res), { status: 200 });
+  };
+
+  return { onGetCourse, onGetTopCourse };
 };
