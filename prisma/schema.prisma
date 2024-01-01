@@ -192,7 +192,7 @@ model User {
   level        Int?
   salary       Int?
   classSession ClassSession[]
-  addresss     Address[]
+  addresses     Address[]
 }
 
 model CourseDetails {

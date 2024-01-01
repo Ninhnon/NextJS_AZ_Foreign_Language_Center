@@ -77,7 +77,7 @@ const StaffHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'/staff/course-list'}>
+                <Link href={'/staff/add_courses'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaSquarePlus />
                     <div className="ml-2">Tạo khoá học mới</div>

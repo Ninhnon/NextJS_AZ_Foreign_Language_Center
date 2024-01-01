@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Key, useState } from 'react';
+import React, { Key, useState, useEffect } from 'react';
 import {
   Tabs,
   Tab,
@@ -27,43 +27,67 @@ import { Zoom } from '@/components/ui/zoom-image';
 import { AiFillHome } from 'react-icons/ai';
 import { RiAdminFill } from 'react-icons/ri';
 import { BsFillBookmarkPlusFill } from 'react-icons/bs';
+// import { getRequest, postRequest } from '@/lib/fetch';
 
 export default function AddCourseCard() {
   // Image
   type FileWithPreview = FileWithPath & {
     preview: string;
   };
-  const [files, setFiles] = React.useState<FileWithPreview[]>([]);
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const [selectedCourse, setSelectedCourse] = useState(new Set([]));
+  const [selectBand, setSelectBand] = useState(new Set([]));
+  const [selectedTKB, setSelectedTKB] = useState(new Set([]));
+  const [selectedHour, setSelectedHour] = useState(new Set([]));
+  const [selectedRoom, setSelectedRoom] = useState(new Set([]));
 
-  const levels = [
-    { label: 'Beginner', value: 'beginner' },
-    { label: 'Intermediate', value: 'intermediate' },
-    { label: 'Advanced', value: 'advanced' },
+  const [courseTouched, setCourseTouched] = useState(false);
+  const [bandTouched, setBandTouched] = useState(false);
+  const [TKBTouched, setTKBTouched] = useState(false);
+  const [HourTouched, setHourTouched] = useState(false);
+  const [RoomTouched, setRoomTouched] = useState(false);
+
+  // const [isLoadingRooom, setIsLoadingRoom] = useState(false);
+
+  const [rooms, setRooms] = useState<any[]>([]);
+
+  const [courseNameValue, setCourseNameValue] = useState('');
+  const [countSessionValue, setCountSessionValue] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  const modules = [
+    { id: 1, module: 'IELTS' },
+    { id: 2, module: 'TOEIC' },
   ];
+  const bands = [
+    { id: 1, moduleId: 1, band: '5.0' },
+    { id: 2, moduleId: 1, band: '6.0' },
+    { id: 3, moduleId: 1, band: '7.0' },
+    { id: 4, moduleId: 1, band: '8.0' },
+    { id: 5, moduleId: 2, band: '500' },
+    { id: 6, moduleId: 2, band: '600' },
+    { id: 7, moduleId: 2, band: '700' },
+    { id: 8, moduleId: 2, band: '800' },
+  ];
+
+  const isCourseValid = selectedCourse.size > 0;
+  const isBandValid = selectBand.size > 0;
+  const isTKBValid = selectedTKB.size > 0;
+  const isHourValid = selectedHour.size > 0;
+  const isRoomValid = selectedRoom.size > 0;
 
   const schedules = [
-    { label: 'Thứ 2, 4, 6', value: '246' },
-    { label: 'Thứ 3, 5, 7', value: '357' },
-    { label: 'Thứ 7, CN', value: '78' },
-  ];
-
-  const courseTypes = [
-    { label: 'Luyện thi Ielts', value: 'ielts' },
-    { label: 'Luyện thi Toeic', value: 'toeic' },
-    { label: 'Luyện thi VSTEP', value: 'vstep' },
-    { label: 'Luyện thi TOEFL', value: 'toefl' },
+    { id: 1, label: 'Thứ 2, 4, 6' },
+    { id: 2, label: 'Thứ 3, 5, 7' },
+    { id: 3, label: 'Thứ 7, CN' },
   ];
 
   const classTimetables = [
-    { label: '18:00 - 19:30', value: '18-19:30' },
-    { label: '19:30 - 21:00', value: '19:30-21:00' },
-    { label: '21:00 - 22:30', value: '21:00-22:30' },
-  ];
-
-  const mainClassrooms = [
-    { label: 'Phòng B102', value: 'B102' },
-    { label: 'Phòng B104', value: 'B104' },
-    { label: 'Phòng B106', value: 'B106' },
+    { id: 1, value: '07:00-09:00' },
+    { id: 2, value: '09:00-11:00' },
+    { id: 3, value: '13:00-15:00' },
+    { id: 1, value: '15:00-17:00' },
+    { id: 2, value: '17:00-19:00' },
+    { id: 3, value: '19:00-21:00' },
   ];
 
   const subClassrooms = [
@@ -77,6 +101,81 @@ export default function AddCourseCard() {
     { label: 'Nguyễn Văn B', value: 'Nguyễn Văn B' },
     { label: 'Nguyễn Văn C', value: 'Nguyễn Văn C' },
   ];
+  //Query Gender
+  useEffect(() => {
+    const getRooms = async () => {
+      try {
+        const res = await fetch('/api/room');
+        const data = await res.json();
+        console.log(res);
+        setRooms(data.data);
+      } catch (error) {
+        // Handle fetch or parsing errors here
+        console.error('Error fetching or parsing data:', error);
+      }
+    };
+    getRooms();
+  }, []);
+  // const skills = [
+  //   { id: 1, skill: 'Reading' },
+  //   { id: 2, skill: 'Listening' },
+  //   { id: 3, skill: 'Writing' },
+  //   { id: 4, skill: 'Speaking' },
+  // ];
+  const onSubmit1 = async () => {
+    const valuesArrayCourse = Array.from(selectedCourse);
+    const provinceCode = valuesArrayCourse[0];
+    const CourseValue = modules.find(
+      (province) => province.id == provinceCode
+    )?.id;
+
+    const valuesArrayBand = Array.from(selectBand);
+    const bandCode = valuesArrayBand[0];
+    const bandValue = modules.find((band) => band.id == bandCode)?.id;
+
+    const valuesArrayTKB = Array.from(selectedTKB);
+    const TKBCode = valuesArrayTKB[0];
+    const TKBValue = modules.find((TKB) => TKB.id == TKBCode)?.id;
+
+    const valuesArrayHour = Array.from(selectedTKB);
+    const HourCode = valuesArrayHour[0];
+    const HourValue = modules.find((Hour) => Hour.id == HourCode)?.id;
+
+    const valuesArrayRoom = Array.from(selectedTKB);
+    const RoomCode = valuesArrayRoom[0];
+    const RoomValue = modules.find((Room) => Room.id == RoomCode)?.id;
+
+    const numberSession = parseInt(countSessionValue);
+    console.log(
+      courseNameValue,
+      CourseValue,
+      bandValue,
+      numberSession,
+
+      TKBValue,
+      HourValue,
+      RoomValue,
+      date
+    );
+    setCurrentTab('course_detail');
+    // setIsLoading(true);
+    // const res = await postRequest({
+    //   endPoint: '/api/user/address',
+    //   formData: {
+    //     city: CourseValue,
+    //     TKB: TKBValue,
+    //     Hour: HourValue,
+    //     street: streetValue,
+    //     houseNumber: countSessionValue,
+    //     userId: session?.data?.user?.id,
+    //   },
+    //   isFormData: false,
+    // });
+    // setIsLoading(false);
+    // if (res?.message === 'success') {
+    //   toast.success('Add address successfully');
+    // }
+  };
 
   const [date, setDate] = useState<Date>();
   const [currentTab, setCurrentTab] = useState<Key>('basic_info');
@@ -139,27 +238,38 @@ export default function AddCourseCard() {
                 </div>
                 {/* End Image */}
 
-                {/* Start level */}
+                {/* Start course type */}
                 <div className="row-start-3 row-span-1 col-span-1 flex flex-col">
                   <Select
-                    label="Trình độ"
-                    placeholder="Lựa chọn trình độ"
+                    isRequired
+                    label="Loại khóa học"
+                    placeholder="Lựa chọn loại khóa học"
                     labelPlacement="outside"
                     radius="sm"
+                    isInvalid={isCourseValid || !courseTouched ? false : true}
+                    errorMessage={
+                      isCourseValid || !courseTouched
+                        ? ''
+                        : 'Vui lòng chọn loại khóa học'
+                    }
+                    autoFocus={false}
+                    selectedKeys={selectedCourse}
+                    onSelectionChange={setSelectedCourse}
+                    onClose={() => setCourseTouched(true)}
                     className="w-full font-bold"
                     classNames={{
-                      trigger: 'bg-old-lace hover:bg-parchment',
+                      trigger: 'bg-old-lace',
                       value: 'font-normal text-black',
                     }}
                   >
-                    {levels.map((level) => (
-                      <SelectItem key={level.value} value={level.value}>
-                        {level.label}
+                    {modules?.map((c) => (
+                      <SelectItem key={c.id} value={c.module}>
+                        {c.module}
                       </SelectItem>
                     ))}
                   </Select>
                 </div>
-                {/* End level */}
+                {/* End course type */}
 
                 {/* Start date picker */}
                 <div className="row-start-4 row-span-1 col-span-1 flex flex-col">
@@ -199,12 +309,27 @@ export default function AddCourseCard() {
                 {/* Start number of sessions */}
                 <div className="row-start-5 row-span-1 col-span-1 flex flex-col">
                   <Input
+                    isRequired
+                    type="number"
+                    inputMode="numeric"
                     radius="sm"
                     label="Số buổi học"
                     placeholder="Nhập số buổi học"
                     labelPlacement="outside"
                     classNames={{
                       inputWrapper: 'bg-old-lace',
+                    }}
+                    onChange={(e) => {
+                      const enteredValue = e.target.value;
+
+                      // Allowing only numbers by restricting keystrokes
+                      const onlyNumbers = enteredValue.replace(/\D/g, ''); // Replace any non-digit character with an empty string
+
+                      // Update the input value with only numeric characters
+                      e.target.value = onlyNumbers;
+
+                      // Update the state or perform any other necessary action with the numeric value
+                      setCountSessionValue(onlyNumbers);
                     }}
                   />
                 </div>
@@ -213,10 +338,21 @@ export default function AddCourseCard() {
                 {/* Start schedule */}
                 <div className="row-start-6 row-span-1 col-span-1 flex flex-col">
                   <Select
+                    isRequired
                     label="Lịch học trong tuần"
                     placeholder="Lựa chọn lịch học"
                     labelPlacement="outside"
                     radius="sm"
+                    isInvalid={isTKBValid || !TKBTouched ? false : true}
+                    errorMessage={
+                      isTKBValid || !TKBTouched
+                        ? ''
+                        : 'Vui lòng chọn loại khóa học'
+                    }
+                    autoFocus={false}
+                    selectedKeys={selectedTKB}
+                    onSelectionChange={setSelectedTKB}
+                    onClose={() => setTKBTouched(true)}
                     className="w-full font-bold"
                     classNames={{
                       trigger: 'bg-old-lace',
@@ -224,7 +360,7 @@ export default function AddCourseCard() {
                     }}
                   >
                     {schedules.map((schedule) => (
-                      <SelectItem key={schedule.value} value={schedule.value}>
+                      <SelectItem key={schedule.id} value={schedule.id}>
                         {schedule.label}
                       </SelectItem>
                     ))}
@@ -232,52 +368,17 @@ export default function AddCourseCard() {
                 </div>
                 {/* End schedule */}
 
-                {/* Start course type */}
-                <div className=" row-span-1 col-start-2 col-span-2 flex flex-col">
-                  <Select
-                    label="Loại khóa học"
-                    placeholder="Lựa chọn loại khóa học"
-                    labelPlacement="outside"
-                    radius="sm"
-                    className="w-full font-bold"
-                    classNames={{
-                      trigger: 'bg-old-lace',
-                      value: 'font-normal text-black',
-                    }}
-                  >
-                    {courseTypes.map((courseType) => (
-                      <SelectItem
-                        key={courseType.value}
-                        value={courseType.value}
-                      >
-                        {courseType.label}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                </div>
-                {/* End course type */}
-
-                {/* Start course id */}
-                <div className=" row-start-2 row-span-1 col-start-2 col-span-2 flex flex-col">
-                  <Input
-                    radius="sm"
-                    label="ID khóa học"
-                    placeholder="IELTS1112"
-                    labelPlacement="outside"
-                    classNames={{
-                      inputWrapper: 'bg-old-lace',
-                    }}
-                  />
-                </div>
-                {/* End course id */}
-
                 {/* Start course name */}
                 <div className=" row-start-3 row-span-1 col-start-2 col-span-2 flex flex-col">
                   <Input
+                    isRequired
                     radius="sm"
                     label="Tên khóa học"
                     placeholder="Luyện thi Ielts 6.0"
                     labelPlacement="outside"
+                    onChange={(e) => {
+                      setCourseNameValue(e.target.value);
+                    }}
                     classNames={{
                       inputWrapper: 'bg-old-lace',
                     }}
@@ -287,15 +388,42 @@ export default function AddCourseCard() {
 
                 {/* Start intended course participants */}
                 <div className=" row-start-4 row-span-1 col-start-2 col-span-2 flex flex-col">
-                  <Input
-                    radius="sm"
-                    label="Đối tượng học"
-                    placeholder="Những người vượt qua bài kiểm tra 5.0 đầu vào"
+                  <Select
+                    isRequired
+                    label="Mục tiêu khóa học"
+                    placeholder="IELTS 6.0 || TOEIC 700"
                     labelPlacement="outside"
+                    radius="sm"
+                    isInvalid={isBandValid || !bandTouched ? false : true}
+                    errorMessage={
+                      isBandValid || !bandTouched
+                        ? ''
+                        : 'Vui lòng chọn mục tiêu khóa học'
+                    }
+                    autoFocus={false}
+                    selectedKeys={selectBand}
+                    onSelectionChange={setSelectBand}
+                    onClose={() => setBandTouched(true)}
+                    className="w-full font-bold"
                     classNames={{
-                      inputWrapper: 'bg-old-lace',
+                      trigger: 'bg-old-lace',
+                      value: 'font-normal text-black',
                     }}
-                  />
+                  >
+                    {bands
+                      .filter(
+                        (b) =>
+                          b.moduleId === parseInt(Array.from(selectedCourse)[0])
+                      )
+                      .map((filteredBand) => (
+                        <SelectItem
+                          key={filteredBand.id}
+                          value={filteredBand.id}
+                        >
+                          {filteredBand.band}
+                        </SelectItem>
+                      ))}
+                  </Select>
                 </div>
                 {/* End intended course participants */}
 
@@ -303,7 +431,7 @@ export default function AddCourseCard() {
                 <div className=" row-start-5 row-span-1 col-start-2 col-span-2 flex flex-col">
                   <Input
                     radius="sm"
-                    label="Mô tả khóa học"
+                    label="Mô tả khóa học (tùy chọn)"
                     placeholder="Nâng band cấp tốc"
                     labelPlacement="outside"
                     classNames={{
@@ -316,10 +444,21 @@ export default function AddCourseCard() {
                 {/* Start class timetable */}
                 <div className=" row-start-6 row-span-1 col-start-2 col-span-1 flex flex-col">
                   <Select
+                    isRequired
                     label="Ca học"
                     placeholder="Lựa chọn khung giờ học"
                     labelPlacement="outside"
                     radius="sm"
+                    isInvalid={isHourValid || !HourTouched ? false : true}
+                    errorMessage={
+                      isHourValid || !HourTouched
+                        ? ''
+                        : 'Vui lòng chọn loại khóa học'
+                    }
+                    autoFocus={false}
+                    selectedKeys={selectedHour}
+                    onSelectionChange={setSelectedHour}
+                    onClose={() => setHourTouched(true)}
                     className="w-full font-bold"
                     classNames={{
                       trigger: 'bg-old-lace',
@@ -331,32 +470,7 @@ export default function AddCourseCard() {
                         key={classTimetable.value}
                         value={classTimetable.value}
                       >
-                        {classTimetable.label}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                </div>
-                {/* End class timetable */}
-
-                {/* Start class timetable */}
-                <div className=" row-start-6 row-span-1 col-start-2 col-span-1 flex flex-col">
-                  <Select
-                    label="Ca học"
-                    placeholder="Lựa chọn khung giờ học"
-                    labelPlacement="outside"
-                    radius="sm"
-                    className="w-full font-bold"
-                    classNames={{
-                      trigger: 'bg-old-lace',
-                      value: 'font-normal text-black',
-                    }}
-                  >
-                    {classTimetables.map((classTimetable) => (
-                      <SelectItem
-                        key={classTimetable.value}
-                        value={classTimetable.value}
-                      >
-                        {classTimetable.label}
+                        {classTimetable.value}
                       </SelectItem>
                     ))}
                   </Select>
@@ -366,22 +480,33 @@ export default function AddCourseCard() {
                 {/* Start main classroom */}
                 <div className=" row-start-6 row-span-1 col-start-3 col-span-1 flex flex-col">
                   <Select
+                    isRequired
                     label="Phòng học cố định"
                     placeholder="Lựa chọn phòng cố định"
                     labelPlacement="outside"
                     radius="sm"
+                    isInvalid={isRoomValid || !RoomTouched ? false : true}
+                    errorMessage={
+                      isRoomValid || !RoomTouched
+                        ? ''
+                        : 'Vui lòng chọn loại khóa học'
+                    }
+                    autoFocus={false}
+                    selectedKeys={selectedRoom}
+                    onSelectionChange={setSelectedRoom}
+                    onClose={() => setRoomTouched(true)}
                     className="w-full font-bold"
                     classNames={{
                       trigger: 'bg-old-lace',
                       value: 'font-normal text-black',
                     }}
                   >
-                    {mainClassrooms.map((mainClassroom) => (
+                    {rooms?.map((mainClassroom) => (
                       <SelectItem
-                        key={mainClassroom.value}
-                        value={mainClassroom.value}
+                        key={mainClassroom.id}
+                        value={mainClassroom.id}
                       >
-                        {mainClassroom.label}
+                        {mainClassroom.name}
                       </SelectItem>
                     ))}
                   </Select>
@@ -394,7 +519,16 @@ export default function AddCourseCard() {
                     color="primary"
                     variant="ghost"
                     className="w-[20%]"
-                    onClick={() => setCurrentTab('course_detail')}
+                    disabled={
+                      !isCourseValid ||
+                      !isBandValid ||
+                      !countSessionValue ||
+                      !date ||
+                      !isTKBValid ||
+                      !isHourValid ||
+                      !isRoomValid
+                    }
+                    onClick={onSubmit1}
                   >
                     Lưu và tiếp tục
                   </Button>
@@ -440,6 +574,7 @@ export default function AddCourseCard() {
                   </div>
                   <div className="col-span-2">
                     <Select
+                      isRequired
                       label="Phòng học:"
                       placeholder="Lựa chọn phòng học"
                       labelPlacement="outside-left"
