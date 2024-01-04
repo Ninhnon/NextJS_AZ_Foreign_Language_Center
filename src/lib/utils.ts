@@ -3,6 +3,28 @@ import { twMerge } from 'tailwind-merge';
 import numeral from 'numeral';
 import jwt from 'jsonwebtoken';
 import toast from 'react-hot-toast';
+import { EventRenderedArgs, View } from '@syncfusion/ej2-schedule';
+
+/**
+ * Schedule util
+ */
+
+export function applyCategoryColor(
+  args: EventRenderedArgs,
+  currentView: View
+): void {
+  const categoryColor: string = args.data.CategoryColor as string;
+  if (!args.element || !categoryColor) {
+    return;
+  }
+  if (currentView === 'Agenda') {
+    (args.element.firstChild as HTMLElement).style.borderLeftColor =
+      categoryColor;
+  } else {
+    args.element.style.backgroundColor = categoryColor;
+  }
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

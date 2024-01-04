@@ -8,6 +8,7 @@ export async function GET() {
         teacher: true,
         Room: true,
         time: true,
+        skill: true,
       },
     });
     if (ClassSession)

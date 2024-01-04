@@ -24,7 +24,7 @@ import { AiFillHome } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 const data = {
-  id: 1,
+  id: 12,
   name: 'IELTS 7.0',
   thumbnail:
     'https://utfs.io/f/02a6617a-f53c-4c30-82e2-2b18d1b5f85e-63b65s.png',
@@ -49,12 +49,12 @@ export default function Scheduler() {
 
             return {
               Id: event.id,
-              Subject: event.Course.name,
+              Subject: event.name,
               Location: event.Room.name,
               StartTime: startTime.toISOString(),
               EndTime: endTime.toISOString(),
               CategoryColor: event.CategoryColor,
-              Description: event.teacher.name,
+              Description: event.skill.name,
             };
           });
 
@@ -72,31 +72,6 @@ export default function Scheduler() {
     { id: 2, text: 'Danh sách học viên' },
     { id: 3, text: 'Danh sách giảng viên' },
   ];
-  // const addEventToDatabase = async () => {
-  //   try {
-  //     const response = await fetch('/api/addEvent', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         StartTime: '2023-12-12T17:00:00.000Z', // Replace with actual event data
-  //         EndTime: '2023-12-12T19:00:00.000Z',
-  //         // Other event properties...
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       // Event inserted successfully
-  //       console.log('Event inserted successfully');
-  //     } else {
-  //       // Handle errors
-  //       console.error('Failed to insert event');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error inserting event:', error);
-  //   }
-  // };
 
   const change = (args) => {
     scheduleObj.selectedDate = args.value;
@@ -146,6 +121,34 @@ export default function Scheduler() {
     applyCategoryColor(args, scheduleObj.currentView);
     // You can perform additional actions after event rendering here
   };
+
+  const monthEventTemplate = (props: {
+    [key: string]: object;
+  }): JSX.Element => {
+    const parsedTime = new Date(props.StartTime);
+    const StartTime = parsedTime.toLocaleTimeString('en-US', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    return (
+      <div className="w-full h-full flex flex-col bg-[#fecaca]">
+        <div className="flex flex-col md:flex-row">
+          <div className="ml-0 lg:ml-1 text-black"> {StartTime}</div>
+          <div className="pl-1 font-bold mb-2 sm:mb-0 text-black">
+            {props.Subject}
+          </div>
+        </div>
+        <div className="w-[20%] h-[100%] bottom-0 right-0 absolute flex flex-col md:flex-row">
+          <div className="text-black text-[8px]">{props.Location}</div>
+          {/* <div className=" pr-1 text-black ">{props.Description}</div> */}
+        </div>
+      </div>
+    );
+  };
+
   // const onPopupOpen = (args) => {
   //   console.log(
   //     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
@@ -191,39 +194,12 @@ export default function Scheduler() {
   //   }
   // };
 
-  const monthEventTemplate = (props: {
-    [key: string]: object;
-  }): JSX.Element => {
-    const parsedTime = new Date(props.StartTime.toString());
-    const StartTime = parsedTime.toLocaleTimeString('en-US', {
-      timeZone: 'Asia/Ho_Chi_Minh',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    const parsedTime2 = new Date(props.EndTime.toString());
-    const EndTime = parsedTime2.toLocaleTimeString('en-US', {
-      timeZone: 'Asia/Ho_Chi_Minh',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    return (
-      <div className="w-full h-full month-event-container">
-        <div className="flex flex-row">
-          <div> {StartTime}</div>
-          <div> {EndTime}</div>
-        </div>
-        <div className="month-template-wrap">{props.Location}</div>
-      </div>
-    );
-  };
   const router = useRouter();
   return (
     <div className="flex flex-col w-full h-full py-6 px-32">
       <Breadcrumbs sizes="lg" color="primary">
         <BreadcrumbItem
-          href="/admin/course-list/${data.id}"
+          href="/staff/course-list/${data.id}"
           startContent={<AiFillHome />}
         >
           Khóa học
@@ -258,11 +234,11 @@ export default function Scheduler() {
             radius="sm"
             onClick={() => {
               if (button.id === 1) {
-                router.push(`/admin/course-list/${data.id}/schedule`);
+                router.push(`/staff/course-list/${data.id}/schedule`);
               } else if (button.id === 2) {
-                router.push(`/admin/course-list/${data.id}/student-list`);
+                router.push(`/staff/course-list/${data.id}/student-list`);
               } else if (button.id === 3) {
-                router.push(`/admin/course-list/${data.id}/teacher-list`);
+                router.push(`/staff/course-list/${data.id}/teacher-list`);
               }
             }}
           >

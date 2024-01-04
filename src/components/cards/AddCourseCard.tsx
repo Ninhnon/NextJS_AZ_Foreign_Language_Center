@@ -18,6 +18,7 @@ import {
   BreadcrumbItem,
   Checkbox,
 } from '@nextui-org/react';
+import { applyCategoryColor } from '@/lib/utils';
 import { HiPhoto } from 'react-icons/hi2';
 import { ImageDialog } from '@/components/imageDialog';
 import { Label } from '@radix-ui/react-label';
@@ -35,6 +36,21 @@ import { generateReactHelpers } from '@uploadthing/react/hooks';
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 import * as XLSX from 'xlsx';
 import toast from 'react-hot-toast';
+import {
+  ScheduleComponent,
+  ViewsDirective,
+  ViewDirective,
+  Day,
+  Week,
+  Month,
+  Agenda,
+  Inject,
+  Resize,
+  DragAndDrop,
+} from '@syncfusion/ej2-react-schedule';
+// import { createElement, extend } from '@syncfusion/ej2-base';
+// import { DropDownList } from '@syncfusion/ej2-dropdowns';
+// import './schedule-component.css';
 export default function AddCourseCard() {
   // Image
   type FileWithPreview = FileWithPath & {
@@ -74,6 +90,46 @@ export default function AddCourseCard() {
   const [isOpenWriting, setIsOpenWriting] = useState(false);
   const [isOpenSpeaking, setIsOpenSpeaking] = useState(false);
   const [isOpenReading, setIsOpenReading] = useState(false);
+
+  // Schedule:
+
+  const [scheduleObj, setScheduleObj] = useState();
+  const [scheduleData, setScheduleData] = useState([]);
+
+  const onDragStart = (arg) => {
+    // eslint-disable-next-line no-param-reassign
+    arg.navigation.enable = true;
+  };
+  const onEventRendered = (args) => {
+    applyCategoryColor(args, scheduleObj.currentView);
+    // You can perform additional actions after event rendering here
+  };
+
+  const monthEventTemplate = (props: {
+    [key: string]: object;
+  }): JSX.Element => {
+    const parsedTime = new Date(props.StartTime);
+    const StartTime = parsedTime.toLocaleTimeString('en-US', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return (
+      <div className="w-full h-full flex flex-col bg-[#fecaca]">
+        <div className="flex flex-col md:flex-row">
+          <div className="ml-0 lg:ml-1 text-black"> {StartTime}</div>
+          <div className="pl-1 font-bold mb-2 sm:mb-0 text-black">
+            {props.Subject}
+          </div>
+        </div>
+        <div className="w-[20%] h-[100%] bottom-0 right-0 absolute flex flex-col md:flex-row">
+          <div className="text-black text-[8px]">{props.Location}</div>
+          {/* <div className=" pr-1 text-black ">{props.Description}</div> */}
+        </div>
+      </div>
+    );
+  };
 
   // const [isLoading, setIsLoading] = useState(false);
   const modules = [
@@ -158,10 +214,6 @@ export default function AddCourseCard() {
         return formattedImages ?? null;
       }),
     ]);
-    console.log(
-      '🚀 ~ file: ProfileForm.tsx:57 ~ onSubmit ~ avatarImage:',
-      avatarImage?.[0]?.url
-    );
     const valuesArrayCourse = Array.from(selectedCourse);
     const provinceCode = valuesArrayCourse[0];
     const ModuleValue = modules.find(
@@ -202,23 +254,11 @@ export default function AddCourseCard() {
     const SpeakingCode = valuesArraySpeaking[0];
     const SpeakingValue = teachers.find((Room) => Room.id == SpeakingCode)?.id;
     const numberSession = parseInt(countSessionValue);
-    console.log(
-      courseNameValue,
-      ModuleValue,
-      bandValue,
-      numberSession,
-      thumbnail,
-      TKBValue,
-      HourValue,
-      RoomValue,
-      date
-    );
 
     // setIsLoading(true);
     const res = await postRequest({
-      endPoint: '/api/course/add',
+      endPoint: '/api/course/prepare',
       formData: {
-        city: ModuleValue,
         TKB: TKBValue,
         Hour: HourValue,
         name: courseNameValue,
@@ -244,6 +284,35 @@ export default function AddCourseCard() {
       isFormData: false,
     });
     console.log('🚀 ~ file: AddCourseCard.tsx:243 ~ onSubmit2 ~ res:', res);
+    try {
+      const data = res.data;
+      if (data && Array.isArray(data)) {
+        // Transform the fetched data into the desired format
+        const convertedData = data.map((event) => {
+          console.log(
+            '🚀 ~ file: AddCourseCard.tsx:292 ~ convertedData ~ event:',
+            event
+          );
+          // const startTime1 = new Date(event.StartTime);
+          // const startTime = new Date(startTime1.getTime() - 7 * 60 * 60 * 1000); // Adding 7 hours
+          // const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000); // Adding 2 hours
+
+          // return {
+          //   Subject: event.name,
+          //   Location: event.Room.name,
+          //   StartTime: startTime.toISOString(),
+          //   EndTime: endTime.toISOString(),
+          //   CategoryColor: event.CategoryColor,
+          //   Description: event.skill.name,
+          // };
+        });
+
+        setScheduleData(convertedData);
+      }
+    } catch (error) {
+      // Handle fetch or data processing errors
+      console.error('Error fetching or processing data:', error);
+    }
     // setIsLoading(false);
     if (res?.message === 'success') {
       toast.success('Add Course successfully');
@@ -996,17 +1065,28 @@ export default function AddCourseCard() {
           <Card>
             <CardBody>
               <div className="flex flex-col items-center space-y-4">
-                <Label className="font-semibold">
-                  Khóa học đã được tạo thành công
-                </Label>
-                <Image
-                  className="object-cover rounded-xl"
-                  src={`/tick_icon.png`}
-                  alt="hero banner"
-                  width={100}
-                  height={50}
-                  loading="lazy"
-                />
+                <ScheduleComponent
+                  width="100%"
+                  height="650px"
+                  ref={(schedule) => setScheduleObj(schedule)}
+                  selectedDate={Date.now()}
+                  eventSettings={{
+                    dataSource: scheduleData,
+                  }}
+                  dragStart={onDragStart}
+                  eventRendered={onEventRendered}
+                  // popupOpen={onPopupOpen}
+                >
+                  <ViewsDirective>
+                    <ViewDirective
+                      option="Month"
+                      eventTemplate={monthEventTemplate.bind(this)}
+                    />
+                  </ViewsDirective>
+                  <Inject
+                    services={[Day, Week, Month, Agenda, Resize, DragAndDrop]}
+                  />
+                </ScheduleComponent>
                 <div className="row-span-1 flex justify-center space-x-4 mt-4">
                   <Button
                     color="primary"
