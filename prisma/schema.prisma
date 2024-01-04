@@ -41,32 +41,31 @@ model BandScore {
 
 model ClassSession {
   id                       Int                       @id @default(autoincrement())
+  name                     String?                  @default("Lesson")
   courseId                 Int
   teacherId                Int
+  skillId                  Int?                     @default(1) 
   roomId                   Int
   StartTime                DateTime
   timeId                   Int
-  classShiftId             Int
   CategoryColor            String                    @default("#fecaca")
   teacher                  User                      @relation(fields: [teacherId], references: [id])
+  skill                    Skill?                     @relation(fields: [skillId], references: [id])
   Room                     Room?                     @relation(fields: [roomId], references: [id])
   time                     TimeShift                 @relation(fields: [timeId], references: [id])
   Course                   Course                    @relation(fields: [courseId], references: [id])
-  classShift               ClassShift                @relation(fields: [classShiftId], references: [id])
   Assignment_ClassSessions Assignment_ClassSession[]
 
   @@index([teacherId])
   @@index([roomId])
   @@index([timeId])
   @@index([courseId])
-  @@index([classShiftId])
 }
 
 model ClassShift {
   id           Int            @id @default(autoincrement())
   roomId       Int?
   timeId       Int
-  classSession ClassSession[]
 
   @@index([roomId])
   @@index([timeId])
@@ -168,9 +167,10 @@ model RoomType {
 }
 
 model Skill {
-  id         Int          @id @default(autoincrement())
-  name       String
-  Assignment Assignment[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  ClassSession ClassSession[]
+  Assignment   Assignment[]
 }
 
 model TimeShift {
@@ -192,7 +192,7 @@ model User {
   level        Int?
   salary       Int?
   classSession ClassSession[]
-  addresses     Address[]
+  addresses    Address[]
 }
 
 model CourseDetails {
@@ -233,14 +233,15 @@ model Assignment_ClassSessionToClassSession {
 }
 
 model Address {
-  id                Int        @id  @default(autoincrement())
-  city              String    
-  district          String
-  selected          Boolean    @default(false)  
-  ward              String
-  street            String
-  houseNumber       String
-  userId            Int
-  user              User         @relation(fields: [userId], references: [id])
+  id          Int     @id @default(autoincrement())
+  city        String
+  district    String
+  selected    Boolean @default(false)
+  ward        String
+  street      String
+  houseNumber String
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
+
   @@index([userId])
 }
