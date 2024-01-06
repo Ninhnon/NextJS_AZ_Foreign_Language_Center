@@ -22,7 +22,7 @@ const LoginPage = async () => {
                 Welcome back!
               </h1>
               <p className="text-sm text-muted-foreground">
-                Explore the entirely new collection of fashion
+                Explore the entirely new learning with A&Z.
               </p>
             </div>
             <Login providers={providers} />

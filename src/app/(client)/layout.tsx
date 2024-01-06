@@ -7,6 +7,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
+  // await mustBeRole();
   const session = await getSession();
   console.log(session);
   return (
