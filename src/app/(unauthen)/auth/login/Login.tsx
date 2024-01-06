@@ -61,17 +61,15 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
       toast.error(res?.error);
       return;
     }
+    // // await alreadyLoggedIn();
+    // const currentUser = await getCurrentUser(data.email);
+    // console.log(
+    //   '🚀 ~ file: Login.tsx:68 ~ onSubmit ~ currentUser:',
+    //   currentUser
+    // );
 
-    if (!res?.error) {
-      // // await alreadyLoggedIn();
-      // const currentUser = await getCurrentUser(data.email);
-      // console.log(
-      //   '🚀 ~ file: Login.tsx:68 ~ onSubmit ~ currentUser:',
-      //   currentUser
-      // );
+    router.push('/');
 
-      router.push('/');
-    }
     setIsLoading(false);
     console.log(res);
   }
