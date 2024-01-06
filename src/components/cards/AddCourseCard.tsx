@@ -83,7 +83,7 @@ export default function AddCourseCard() {
 
   return (
     <div className="flex w-full flex-col p-4">
-      <Breadcrumbs sizes="lg" color="primary">
+      <Breadcrumbs size="lg" color="primary">
         <BreadcrumbItem startContent={<AiFillHome />}>Home</BreadcrumbItem>
         <BreadcrumbItem startContent={<RiAdminFill />}>Admin</BreadcrumbItem>
         <BreadcrumbItem startContent={<BsFillBookmarkPlusFill />}>

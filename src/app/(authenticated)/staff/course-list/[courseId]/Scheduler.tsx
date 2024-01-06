@@ -221,7 +221,7 @@ export default function Scheduler() {
   const router = useRouter();
   return (
     <div className="flex flex-col w-full h-full py-6 px-32">
-      <Breadcrumbs sizes="lg" color="primary">
+      <Breadcrumbs size="lg" color="primary">
         <BreadcrumbItem
           href="/admin/course-list/${data.id}"
           startContent={<AiFillHome />}
