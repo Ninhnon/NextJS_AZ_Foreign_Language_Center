@@ -57,14 +57,15 @@ export async function POST(req: Request) {
       );
 
       const skillId = skillMap[body.sessions[sessionsCount].Skill];
-      const teacherId = teacherMap[skillId];
+      const teacher = teacherMap[skillId];
       const classSession = {
-        skillId: skillId,
-        teacherId: teacherId,
+        id: sessionsCount,
+        skill: body.sessions[sessionsCount].Skill,
+        teacher: teacher,
         StartTime: startTime,
-        roomId: body.RoomValue,
-        timeId: body.Hour,
+        room: body.RoomValue,
         name: body.sessions[sessionsCount].Name,
+        categoryColor: '#fecaca',
       };
       classSessions.push(classSession);
       sessionsCount++;
