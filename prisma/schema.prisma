@@ -15,8 +15,10 @@ model Assignment_ClassSession {
   Assignment     Assignment[]
   classSession   ClassSession[]
 
-  @@index([assignmentId])
-  @@index([classSessionId])
+model Skill {
+  id          Int          @id @default(autoincrement())
+  name        String
+  assignments Assignment[]
 }
 
 model Assignment_User {
@@ -26,9 +28,9 @@ model Assignment_User {
   score        Float?
   Assignment   Assignment[]
 
-  @@index([assignmentId])
-  @@index([userId])
+  @@index([moduleId])
 }
+
 
 model BandScore {
   id         Int          @id @default(autoincrement())
@@ -36,7 +38,9 @@ model BandScore {
   name       String
   Assignment Assignment[]
 
+
   @@index([moduleId])
+  @@index([BandScoreId])
 }
 
 model ClassSession {
@@ -87,8 +91,13 @@ model Course {
   classSession      ClassSession[]
   courseDetails     CourseDetails[]
 
-  @@index([BandScoreId])
-  @@index([moduleId])
+  @@index([typeId])
+}
+
+model RoomType {
+  id    Int    @id @default(autoincrement())
+  name  String
+  rooms Room[]
 }
 
 model Facility {
@@ -100,6 +109,7 @@ model Facility {
   chair         Int
   table         Int
   waterPurifier Int
+  room          Room   @relation(fields: [roomId], references: [id])
 
   @@index([roomId])
 }
@@ -119,6 +129,7 @@ model Assignment {
   Assignment_ClassSessions Assignment_ClassSession[]
   Assignment_Users         Assignment_User[]
   MultipleChoiceQuestions  MultipleChoiceQuestion[]
+
 
   @@index([moduleId])
   @@index([skillId])
@@ -158,12 +169,17 @@ model Room {
   toilet       Int
   classSession ClassSession[]
 
-  @@index([typeId])
+  @@index([assignmentId])
+  @@index([userId])
 }
 
-model RoomType {
-  id   Int    @id @default(autoincrement())
-  name String
+model CourseDetails {
+  id          Int     @id @default(autoincrement())
+  courseId    Int
+  subtitle    String  @db.LongText
+  description String? @db.LongText
+
+  @@index([courseId])
 }
 
 model Skill {
@@ -244,4 +260,5 @@ model Address {
   user        User    @relation(fields: [userId], references: [id])
 
   @@index([userId])
+
 }

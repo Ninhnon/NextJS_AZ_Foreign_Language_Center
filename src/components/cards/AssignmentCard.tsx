@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaRegEye } from 'react-icons/fa6';
 
-const AssignmentCard = ({ data }) => {
+const AssignmentCard = ({ data, route }) => {
   console.log('🚀 ~ file: AssignmentCard.tsx:7 ~ AssignmentCard ~ data:', data);
 
   const router = useRouter();
@@ -32,7 +32,7 @@ const AssignmentCard = ({ data }) => {
             className="border-1 rounded-3xl bg-bossanova text-white"
             startContent={<FaRegEye />}
             onClick={() => {
-              router.push(`/admin/assignment/${data.id}`);
+              router.push(route + data.id);
             }}
           >
             Xem bài tập
