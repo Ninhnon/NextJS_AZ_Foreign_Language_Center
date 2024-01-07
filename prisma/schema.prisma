@@ -21,6 +21,8 @@ model User {
   level       Int?
   salary      Int?
   addresses   Address[]
+  classsessions ClassSession[]
+  assignment_users Assignment_User[]
 }
 
 model Address {
@@ -47,6 +49,13 @@ model Assignment {
   files            String?  @db.LongText
   lastModifiedTime DateTime @default(now())
 
+  module                   Module                    @relation(fields: [moduleId], references: [id])
+  skill                    Skill                     @relation(fields: [skillId], references: [id])
+  bandScore                BandScore                 @relation(fields: [bandScoreId], references: [id])
+  Assignment_ClassSessions Assignment_ClassSession[]
+  Assignment_Users         Assignment_User[]
+  MultipleChoiceQuestions  MultipleChoiceQuestion[]
+
   @@index([bandScoreId])
   @@index([moduleId])
   @@index([skillId])
@@ -57,6 +66,8 @@ model Assignment_ClassSession {
   classSessionId Int
   assignmentId   Int
 
+  classSession   ClassSession @relation(fields: [classSessionId], references: [id])
+  assignment     Assignment   @relation(fields: [assignmentId], references: [id])
   @@index([assignmentId])
   @@index([classSessionId])
 }
@@ -67,6 +78,8 @@ model Assignment_User {
   assignmentId Int
   score        Float?
 
+  user         User       @relation(fields: [userId], references: [id])
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
   @@index([assignmentId])
   @@index([userId])
 }
@@ -75,7 +88,7 @@ model BandScore {
   id       Int    @id @default(autoincrement())
   moduleId Int
   name     String
-
+  assignments Assignment[]
   @@index([moduleId])
 }
 
@@ -89,7 +102,14 @@ model ClassSession {
   timeId        Int
   CategoryColor String   @default("#fecaca")
   name          String?  @default("Lesson")
-
+  skill                    Skill?                    @relation(fields: [skillId], references: [id])
+  teacher                  User                      @relation(fields: [teacherId], references: [id])
+  Room                     Room?                     @relation(fields: [roomId], references: [id])
+  time                     TimeShift                 @relation(fields: [timeId], references: [id])
+  Course                   Course                    @relation(fields: [courseId], references: [id])
+  classshifts              ClassShift[]
+  assigment_classsessions  Assignment_ClassSession[]
+  @@index([skillId])
   @@index([courseId])
   @@index([roomId])
   @@index([teacherId])
@@ -100,7 +120,9 @@ model ClassShift {
   id     Int  @id @default(autoincrement())
   roomId Int?
   timeId Int
-
+  time          TimeShift      @relation(fields: [timeId], references: [id])
+  classsessions ClassSession[]
+  Room          Room?          @relation(fields: [roomId], references: [id])
   @@index([roomId])
   @@index([timeId])
 }
@@ -119,6 +141,7 @@ model Course {
   recommendCourseId Int?
   thumbnail         String?
 
+  classsessions ClassSession[]
   @@index([BandScoreId])
   @@index([moduleId])
 }
@@ -142,12 +165,14 @@ model Facility {
   table         Int
   waterPurifier Int
 
+  room          Room   @relation(fields: [roomId], references: [id])
   @@index([roomId])
 }
 
 model Module {
   id   Int    @id @default(autoincrement())
   name String
+  assignments Assignment[]
 }
 
 model MultipleChoiceQuestion {
@@ -161,6 +186,7 @@ model MultipleChoiceQuestion {
   option4      String
   audio        String?
 
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
   @@index([assignmentId])
 }
 
@@ -174,23 +200,31 @@ model Room {
   capacity   Int
   floor      Int
   toilet     Int
-
+  type          RoomType       @relation(fields: [typeId], references: [id])
+  facilities    Facility[]
+  classsessions ClassSession[]
+  classshifts   ClassShift[]
   @@index([typeId])
 }
 
 model RoomType {
   id   Int    @id @default(autoincrement())
   name String
+  room Room[]
 }
 
 model Skill {
   id   Int    @id @default(autoincrement())
   name String
+  classsessions ClassSession[]
+  assignments Assignment[]
 }
 
 model TimeShift {
   id   Int    @id @default(autoincrement())
   time String
+  classsessions ClassSession[]
+  classshifts ClassShift[]
 }
 
 model AssignmentToAssignment_ClassSession {
