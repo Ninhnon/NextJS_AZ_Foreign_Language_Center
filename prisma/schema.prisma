@@ -102,12 +102,14 @@ model ClassSession {
   timeId        Int
   CategoryColor String   @default("#fecaca")
   name          String?  @default("Lesson")
+  skill                    Skill?                    @relation(fields: [skillId], references: [id])
   teacher                  User                      @relation(fields: [teacherId], references: [id])
   Room                     Room?                     @relation(fields: [roomId], references: [id])
   time                     TimeShift                 @relation(fields: [timeId], references: [id])
   Course                   Course                    @relation(fields: [courseId], references: [id])
   classshifts              ClassShift[]
   assigment_classsessions  Assignment_ClassSession[]
+  @@index([skillId])
   @@index([courseId])
   @@index([roomId])
   @@index([teacherId])
@@ -214,6 +216,7 @@ model RoomType {
 model Skill {
   id   Int    @id @default(autoincrement())
   name String
+  classsessions ClassSession[]
   assignments Assignment[]
 }
 

@@ -22,7 +22,7 @@ export async function GET(req: Request) {
         },
       },
       include: {
-        classSessions: true,
+        classsessions: true,
       },
       orderBy: {
         id: 'asc',
@@ -53,7 +53,7 @@ export async function GET(req: Request) {
         },
       },
       include: {
-        classSessions: true,
+        classsessions: true,
       },
       orderBy: {
         id: 'asc',
@@ -84,7 +84,7 @@ export async function GET(req: Request) {
         },
       },
       include: {
-        classSessions: true,
+        classsessions: true,
       },
       orderBy: {
         id: 'asc',
