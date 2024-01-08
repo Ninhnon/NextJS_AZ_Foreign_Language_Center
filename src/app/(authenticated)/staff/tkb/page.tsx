@@ -17,22 +17,17 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 // import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import './schedule-component.css';
 import { applyCategoryColor } from './helper';
-import { useSession } from 'next-auth/react';
 // import { scheduleData } from './dummy';
-import { Button } from '@/components/ui/button';
 
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 
 const Scheduler = () => {
-  const session = useSession();
   const [scheduleObj, setScheduleObj] = useState();
   const [scheduleData, setScheduleData] = useState([]);
   useEffect(() => {
     const getScheduleData = async () => {
       try {
-        const res = await fetch(
-          `/api/classSession/user?userId=${session.data?.user?.id}`
-        );
+        const res = await fetch('/api/classSession');
         const data = await res.json();
         if (data && Array.isArray(data)) {
           // Transform the fetched data into the desired format
@@ -111,6 +106,51 @@ const Scheduler = () => {
     applyCategoryColor(args, scheduleObj.currentView);
     // You can perform additional actions after event rendering here
   };
+  // const onPopupOpen = (args) => {
+  //   console.log(
+  //     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
+  //     scheduleData
+  //   );
+
+  //   if (args.type === 'Editor') {
+  //     args.data.CategoryColor = '#fecaca';
+  //     console.log('🚀 ~ file: page.tsx:65 ~ onPopupOpen ~ args', args);
+  //     // Create required custom elements in initial time
+  //     if (!args.element.querySelector('.custom-field-row')) {
+  //       let row = createElement('div', { className: 'custom-field-row' });
+  //       let formElement = args.element.querySelector('.e-schedule-form');
+  //       formElement.firstChild.insertBefore(
+  //         row,
+  //         formElement.firstChild.firstChild
+  //       );
+  //       let container = createElement('div', {
+  //         className: 'custom-field-container',
+  //       });
+  //       let inputEle = createElement('input', {
+  //         className: 'e-field',
+  //         attrs: { name: 'EventType' },
+  //       });
+  //       container.appendChild(inputEle);
+  //       row.appendChild(container);
+  //       let dropDownList = new DropDownList({
+  //         dataSource: [
+  //           { text: 'Public Event', value: 'public-event' },
+  //           { text: 'Maintenance', value: 'maintenance' },
+  //           { text: 'Commercial Event', value: 'commercial-event' },
+  //           { text: 'Family Event', value: 'family-event' },
+  //         ],
+  //         fields: { text: 'text', value: 'value' },
+  //         value: args.data.EventType as string,
+  //         floatLabelType: 'Always',
+  //         placeholder: 'Event Type',
+  //       });
+  //       dropDownList.appendTo(inputEle);
+  //       inputEle.setAttribute('name', 'EventType');
+  //       args.data.CategoryColor = '#fecaca';
+  //     }
+  //   }
+  // };
+
   const monthEventTemplate = (props: {
     [key: string]: object;
   }): JSX.Element => {
@@ -140,16 +180,7 @@ const Scheduler = () => {
   };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-4 bg-white rounded-3xl">
-      <Button
-        onClick={() =>
-          console.log(
-            '🚀 ~ file: page.tsx:28 ~ Scheduler ~ scheduleData:',
-            scheduleData
-          )
-        }
-      >
-        Add
-      </Button>
+      {/* <Button onClick={() => console.log(scheduleData)}>TT</Button> */}
       <ScheduleComponent
         width="100%"
         height="650px"
@@ -198,47 +229,3 @@ const Scheduler = () => {
 };
 
 export default Scheduler;
-// const onPopupOpen = (args) => {
-//   console.log(
-//     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
-//     scheduleData
-//   );
-
-//   if (args.type === 'Editor') {
-//     args.data.CategoryColor = '#fecaca';
-//     console.log('🚀 ~ file: page.tsx:65 ~ onPopupOpen ~ args', args);
-//     // Create required custom elements in initial time
-//     if (!args.element.querySelector('.custom-field-row')) {
-//       let row = createElement('div', { className: 'custom-field-row' });
-//       let formElement = args.element.querySelector('.e-schedule-form');
-//       formElement.firstChild.insertBefore(
-//         row,
-//         formElement.firstChild.firstChild
-//       );
-//       let container = createElement('div', {
-//         className: 'custom-field-container',
-//       });
-//       let inputEle = createElement('input', {
-//         className: 'e-field',
-//         attrs: { name: 'EventType' },
-//       });
-//       container.appendChild(inputEle);
-//       row.appendChild(container);
-//       let dropDownList = new DropDownList({
-//         dataSource: [
-//           { text: 'Public Event', value: 'public-event' },
-//           { text: 'Maintenance', value: 'maintenance' },
-//           { text: 'Commercial Event', value: 'commercial-event' },
-//           { text: 'Family Event', value: 'family-event' },
-//         ],
-//         fields: { text: 'text', value: 'value' },
-//         value: args.data.EventType as string,
-//         floatLabelType: 'Always',
-//         placeholder: 'Event Type',
-//       });
-//       dropDownList.appendTo(inputEle);
-//       inputEle.setAttribute('name', 'EventType');
-//       args.data.CategoryColor = '#fecaca';
-//     }
-//   }
-// };
