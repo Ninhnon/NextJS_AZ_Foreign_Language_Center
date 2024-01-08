@@ -29,7 +29,6 @@ import { columns, statusOptions } from './data';
 import { capitalize } from './utils';
 import { useUser } from '@/hooks/useUser';
 import type { User } from '@/models';
-import { AxiosResponse } from 'axios';
 
 const statusColorMap: Record<string, ChipProps['color']> = {
   'đang hoạt động': 'success',
@@ -40,28 +39,9 @@ const statusColorMap: Record<string, ChipProps['color']> = {
 const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'role', 'status', 'actions'];
 
 export default function TeacherTable({ onOpen }) {
-  const [users, setUsers] = React.useState<User[]>([]);
-  const { onGetUser } = useUser();
-  const [isLoading, setIsLoading] = React.useState(false);
+  // const [users, setUsers] = React.useState<User[]>([]);
+  const { users, isUsersLoading, isUsersFetching } = useUser();
 
-  React.useEffect(() => {
-    const getAllUser = async () => {
-      try {
-        setIsLoading(true);
-        const res: AxiosResponse<User[]> = await onGetUser();
-        setUsers(res.data);
-        console.log(
-          '🚀 ~ file: TeacherTable.tsx:349 ~ getAllUser ~ users:',
-          res.data
-        );
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
-      }
-    };
-
-    getAllUser();
-  }, []);
   const [filterValue, setFilterValue] = React.useState('');
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([])
@@ -289,7 +269,7 @@ export default function TeacherTable({ onOpen }) {
                 endContent={<PlusIcon width={20} height={20} />}
                 onClick={onOpen}
               >
-                Add New
+                Thêm mới
               </Button>
             </div>
           </div>
@@ -327,8 +307,8 @@ export default function TeacherTable({ onOpen }) {
       <div className="py-2 px-2 flex justify-between items-center">
         <span className="w-[30%] text-small text-default-400">
           {selectedKeys === 'all'
-            ? 'All items selected'
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
+            ? `Tất cả ${filteredItems.length} đã được chọn`
+            : `${selectedKeys.size} trên ${filteredItems.length} đã được chọn`}
         </span>
         <Pagination
           isCompact
@@ -393,7 +373,7 @@ export default function TeacherTable({ onOpen }) {
         </TableHeader>
         <TableBody
           emptyContent={
-            isLoading ? (
+            isUsersLoading || isUsersFetching ? (
               <div className="flex flex-col items-center justify-center">
                 <Spinner />
                 <p className="text-lg">
@@ -401,7 +381,7 @@ export default function TeacherTable({ onOpen }) {
                 </p>
               </div>
             ) : (
-              'No users found'
+              'Không tìm thấy dữ liệu'
             )
           }
           items={sortedItems}

@@ -203,7 +203,7 @@ const confirmationHTML = (fullname, username, password) => {
       </html>`;
 };
 
-export async function POST() {
+export async function POST(req: Request) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.forwardemail.net',
@@ -218,13 +218,18 @@ export async function POST() {
     console.log('Khởi tạo transporter thành công');
     console.log(process.env.EMAIL_USERNAME, process.env.EMAIL_PASSWORD);
   }
+  const requestJSON = await req.json();
 
   try {
     const info = await transporter.sendMail({
       from: 'UIT Ielts Center <uitieltscenter@gmail.com>',
-      to: 'ngoctin0809@gmail.com',
+      to: requestJSON.email,
       subject: '[UIT Ielts Center - Xác nhận đăng ký tài khoản]',
-      html: confirmationHTML('Tín', 'ngoctin0809@gmail.com', '123'),
+      html: confirmationHTML(
+        requestJSON.fullName,
+        requestJSON.email,
+        requestJSON.password
+      ),
     });
     console.log('🚀 ~ file: route.ts:228 ~ POST ~ info:', info);
 

@@ -63,6 +63,7 @@
     "cmdk": "^0.2.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.4",
+    "generate-password": "^1.7.1",
     "howler": "^2.2.4",
     "husky": "^8.0.3",
     "jsonwebtoken": "^9.0.2",
@@ -98,6 +99,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
     "uploadthing": "^5.5.2",
+    "validator": "^13.11.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
