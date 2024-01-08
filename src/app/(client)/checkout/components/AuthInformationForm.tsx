@@ -11,8 +11,8 @@ const AuthInformationForm = ({
   setUserFullname,
   setUserEmail,
 }) => {
-  const [fullName, setFullName] = useState(user?.name);
-  const [email, setEmail] = useState(user?.email);
+  const [fullName] = useState(user?.name);
+  const [email] = useState(user?.email);
   return user ? (
     <div className="flex flex-col h-full justify-between">
       <div className="w-[95%] h-full flex flex-col gap-y-6">

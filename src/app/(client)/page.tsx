@@ -21,10 +21,10 @@ const page = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setSelectedProduct(null);
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setSelectedProduct(null);
+  //   setIsModalOpen(false);
+  // };
   const { onGetTopCourse } = useCourse();
   const [courseData, setCourseData] = useState(null);
   const teacherData = [

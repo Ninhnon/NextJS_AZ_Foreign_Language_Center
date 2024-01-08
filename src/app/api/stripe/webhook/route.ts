@@ -75,6 +75,7 @@ export async function POST(request: Request) {
         orderId: orderItems.id,
       },
     });
+    console.log('🚀 ~ file: route.ts:78 ~ POST ~ res:', res);
     // for (const item of orderItems) {
     //   await prisma.productSize.updateMany({
     //     where: {
