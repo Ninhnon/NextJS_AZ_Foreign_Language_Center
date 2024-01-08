@@ -20,7 +20,7 @@ model User {
   indexSalary      Int?
   level            Int?
   salary           Int?
-  phoneNumber      String            @unique
+  phoneNumber      String            @default("0905384726")
   addresses        Address[]
   classsessions    ClassSession[]
   assignment_users Assignment_User[]

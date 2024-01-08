@@ -2,9 +2,11 @@
 import ProvideExplainationCard from '@/components/ProvideExplainationCard';
 import RegisterForm from '@/components/RegisterForm';
 import ReviewSwiper from '@/components/swipers/ReviewSwiper';
-import Image from 'next/image';
+import { useCourse } from '@/hooks/useCourse';
+import { useEffect, useState } from 'react';
+import { CourseDetails } from '@/models';
 
-const page = () => {
+const page = ({ params: { slug } }: { params: { slug: string } }) => {
   const userData = [
     {
       id: 1,
@@ -62,6 +64,20 @@ const page = () => {
         'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
     },
   ];
+  const { onGetCourseDetails } = useCourse();
+  const [courseDetails, setCourseDetails] = useState<CourseDetails>();
+
+  useEffect(() => {
+    const getCourseDetails = async () => {
+      const res = await onGetCourseDetails(slug);
+      const data = await res.json();
+      console.log(data, 'Du lieuuuuu');
+      setCourseDetails(data);
+    };
+
+    getCourseDetails();
+  }, [slug]);
+
   return (
     <div className="h-full w-full">
       <div>
@@ -102,7 +118,7 @@ const page = () => {
 
       {/* Start course info */}
       <div className="min-h-full bg-white grid-rows-6 p-4 ml-20 lg:w-1/2">
-        <div className="flex flex-row items-center space-x-10">
+        {/* <div className="flex flex-row items-center space-x-10">
           <span className="text-xl font-medium">Thông tin khóa học</span>
           <Image
             className="object-cover"
@@ -152,7 +168,13 @@ const page = () => {
             trình độ chuyên môn ưu tú và đã tham gia các dự án phát triển nguồn
             học liệu và phương pháp sư phạm tại A&Z.
           </span>
-        </div>
+        </div> */}
+
+        {courseDetails && (
+          <div
+            dangerouslySetInnerHTML={{ __html: courseDetails.description }}
+          />
+        )}
       </div>
       {/* End course info */}
 

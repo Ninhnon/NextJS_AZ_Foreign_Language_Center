@@ -19,5 +19,13 @@ export const useCourse = () => {
     return new Response(JSON.stringify(res), { status: 200 });
   };
 
-  return { onGetCourse, onGetTopCourse };
+  const onGetCourseDetails = async (slug: string) => {
+    const res = await getRequest({
+      endPoint: `/api/course/course_details?courseId=${slug}`,
+    });
+
+    return new Response(JSON.stringify(res), { status: 200 });
+  };
+
+  return { onGetCourse, onGetTopCourse, onGetCourseDetails };
 };
