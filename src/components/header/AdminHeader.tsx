@@ -22,6 +22,7 @@ import {
   FaBook,
   FaBookOpen,
   FaCalendarDays,
+  FaCartShopping,
   FaClipboardList,
   FaCommentDots,
   FaDoorClosed,
@@ -144,7 +145,16 @@ const AdminHeader = ({ session }) => {
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'admin/order-list'}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <FaCartShopping />
+                    <div className="ml-2">Danh sách đơn hàng</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem>
+                <Link href={'admin/report'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaClipboardList />
                     <div className="ml-2">Báo cáo</div>

@@ -27,7 +27,7 @@ const PurchasedCourseCard = ({ data }) => {
         className="object-cover rounded-xl"
         src={data.thumbnail}
         alt=""
-        width={200}
+        width={220}
         height={150}
         loading="lazy"
       />
@@ -36,8 +36,8 @@ const PurchasedCourseCard = ({ data }) => {
       {/* Stop Description Image */}
 
       {/* Start Description Text */}
-      <div className="row-span-1">
-        <div>
+      <div className="w-full row-span-1 flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between items-center mt-8">
             <div>
               <span className="text-silver-chalice text-lg font-medium">
@@ -48,7 +48,7 @@ const PurchasedCourseCard = ({ data }) => {
 
           <p>
             <span className="text-black text-base font-medium">
-              {data.totalCost}
+              {data.totalCost.toLocaleString('vi-VN')}VNĐ
             </span>
             <br />
           </p>
