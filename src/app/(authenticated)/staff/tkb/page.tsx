@@ -18,7 +18,6 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import './schedule-component.css';
 import { applyCategoryColor } from './helper';
 // import { scheduleData } from './dummy';
-import { Button } from '@/components/ui/button';
 
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 
