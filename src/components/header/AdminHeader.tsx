@@ -144,7 +144,7 @@ const AdminHeader = ({ session }) => {
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'admin/report'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaClipboardList />
                     <div className="ml-2">Báo cáo</div>
