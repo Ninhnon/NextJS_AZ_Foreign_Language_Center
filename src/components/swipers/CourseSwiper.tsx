@@ -8,7 +8,11 @@ import 'swiper/css/pagination';
 import Loader from '../Loader';
 import CourseCard from '../cards/CourseCard';
 
-const CourseSwiper = ({ data }) => {
+const CourseSwiper = ({ data, openModal }) => {
+  const handleProductClick = (product) => {
+    // Pass the clicked product to the openModal function in the parent component
+    openModal(product);
+  };
   return (
     <div className="h-full w-[75%] flex justify-center items-center shadow-none">
       <Swiper
@@ -48,7 +52,10 @@ const CourseSwiper = ({ data }) => {
         {data ? (
           data?.map((course) => (
             <SwiperSlide key={course.id} className="mb-8">
-              <CourseCard data={course} />
+              <CourseCard
+                data={course}
+                onClick={() => handleProductClick(course)}
+              />
             </SwiperSlide>
           ))
         ) : (

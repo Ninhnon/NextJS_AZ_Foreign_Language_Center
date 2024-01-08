@@ -11,10 +11,20 @@ import CourseSwiper from '@/components/swipers/CourseSwiper';
 import QuestionBox from '@/components/ui/QuestionBox';
 import { Button } from '@nextui-org/react';
 import { useCourse } from '@/hooks/useCourse';
-
+import CheckoutModal from '@/app/(client)/checkout/CheckoutModal';
 const page = () => {
   const windowWidth = useRef(window?.innerWidth);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setSelectedProduct(null);
+    setIsModalOpen(false);
+  };
   const { onGetTopCourse } = useCourse();
   const [courseData, setCourseData] = useState(null);
   const teacherData = [
@@ -224,6 +234,15 @@ const page = () => {
 
   return (
     <div className="flex flex-col h-full w-full">
+      {isModalOpen && selectedProduct && (
+        <CheckoutModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          checkedItems={selectedProduct}
+          total={selectedProduct.totalCost}
+          // Other props as needed
+        />
+      )}
       <div
         className="flex flex-col lg:flex-row space-between
       h-fit w-full bg-no-repeat bg-cover bg-hero-pattern bg-[#FDF8EE]"
@@ -273,7 +292,7 @@ const page = () => {
         <div className="text-sm text-gray-500">
           Top 3 khóa học được đăng ký nhiều nhất tại A&Z{' '}
         </div>
-        <CourseSwiper data={courseData} />
+        <CourseSwiper data={courseData} openModal={openModal} />
       </div>
 
       <div className="w-full h-fit flex flex-col lg:flex-row bg-[#FDF8EE] p-8 items-center">

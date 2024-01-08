@@ -1,5 +1,7 @@
 import React from 'react';
-import { Checkbox, Image } from '@nextui-org/react';
+import Image from 'next/image';
+
+import { Checkbox } from '@nextui-org/react';
 import Link from 'next/link';
 const StaffCourseCard = ({ data }) => {
   const href = '/staff/course-list/' + data.id;
@@ -11,13 +13,18 @@ const StaffCourseCard = ({ data }) => {
     >
       <div className="w-fit h-full flex flex-row items-center">
         <Checkbox radius="sm" />
-        <Image
-          alt="Card background"
-          className="object-cover rounded-xl"
-          src={data.thumbnail}
-          width={75}
-          height={75}
-        />
+        <div
+          className="relative rounded-xl bg-neutral-400 row-span-1"
+          style={{ width: '75px', height: '75px' }}
+        >
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={data.thumbnail}
+            layout="fill"
+            loading="lazy"
+          />
+        </div>
         <div className="w-fit h-full flex flex-col justify-center ml-3">
           <div className="font-bold">{data.name}</div>
           <div>ID:{data.id}</div>

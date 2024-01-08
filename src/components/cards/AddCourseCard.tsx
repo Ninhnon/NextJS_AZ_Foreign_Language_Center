@@ -343,7 +343,7 @@ export default function AddCourseCard() {
             StartTime: startTime.toISOString(),
             EndTime: endTime.toISOString(),
             CategoryColor: event.categoryColor,
-            Description: event.skill,
+            Description: event.teacher,
           };
         });
         setScheduleData(convertedData);
