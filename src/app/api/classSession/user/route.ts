@@ -1,7 +1,20 @@
 import prisma from '@/lib/prisma';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+
+    const userId = parseInt(searchParams.get('userId') || '6');
+    const courses = await prisma.order.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        orderId: true,
+      },
+    });
+    console.log('🚀 ~ file: route.tsx:22 ~ GET ~ courses:', courses);
+    const orderIds = courses.map((order) => order.orderId);
     const currentTime = new Date().toISOString();
     const all = await prisma.course.findMany({
       where: {
@@ -10,6 +23,9 @@ export async function GET() {
         },
         endTime: {
           gte: currentTime,
+        },
+        id: {
+          in: orderIds.filter((orderId) => orderId !== null) as number[],
         },
       },
       select: {

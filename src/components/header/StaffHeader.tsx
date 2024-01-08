@@ -101,7 +101,7 @@ const StaffHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/tkb'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCalendarDays />
                     <div className="ml-2">Thời khóa biểu</div>
