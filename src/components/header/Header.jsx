@@ -70,28 +70,30 @@ const NavigationMenuDemo = ({ session }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  onClick={() => signOut({ callbackUrl: '/personal_profile' })}
                   className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
                 >
                   <div className="">{AuthSvg.book()}</div>
                   Danh sách khóa học
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  onClick={() =>
+                    signOut({ callbackUrl: '/personal_assignments' })
+                  }
                   className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
                 >
                   <div className="">{AuthSvg.exercise()}</div>
                   Bài tập
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  onClick={() => signOut({ callbackUrl: '/chat' })}
                   className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
                 >
                   <div className="">{AuthSvg.chat()}</div>
                   Hỏi đáp
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
+                  onClick={() => signOut({ callbackUrl: '/tkb' })}
                   className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
                 >
                   <div className="">{AuthSvg.date()}</div>
@@ -182,7 +184,7 @@ const NavigationMenuDemo = ({ session }) => {
             </DropdownMenu>
           </div>
         ) : (
-          <Button className="w-[150px] ml-8 h-4 text-white hover:bg-pink-700 bg-[#4D2C5E]">
+          <Button className="w-[150px] ml-8 h-8 text-white hover:bg-pink-700 bg-[#4D2C5E]">
             <Link href={'/auth/login'}>Đăng nhập</Link>
           </Button>
         )}

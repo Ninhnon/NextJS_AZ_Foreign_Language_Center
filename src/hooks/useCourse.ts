@@ -19,5 +19,18 @@ export const useCourse = () => {
     return new Response(JSON.stringify(res), { status: 200 });
   };
 
-  return { onGetCourse, onGetTopCourse };
+  const onGetCourseFromId = async (
+    page: number,
+    limit: number,
+    type: string,
+    userId: number
+  ) => {
+    const currentTime = new Date().toISOString();
+    const res = await getRequest({
+      endPoint: `/api/course/all1?page=${page}&limit=${limit}&currentTime=${currentTime}&type=${type}&userId=${userId}`,
+    });
+
+    return res;
+  };
+  return { onGetCourse, onGetTopCourse, onGetCourseFromId };
 };
