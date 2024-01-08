@@ -5,21 +5,30 @@ export async function GET(req: Request) {
 
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '3');
-  const search = searchParams.get('search') || '';
+  const search = searchParams.get('search') || '1';
   const type = parseInt(searchParams.get('type') || '1');
 
   const all = await prisma.room.findMany({
     skip: (page - 1) * limit,
     take: limit,
     where: {
-      name: {
-        contains: search,
-      },
+      OR: [
+        {
+          name: {
+            contains: search,
+          },
+        },
+        {
+          id: parseInt(search),
+        },
+      ],
+
       typeId: type,
     },
     include: {
-      classShifts: true,
-      facility: true,
+      classsessions: true,
+      classshifts: true,
+      facilities: true,
     },
     orderBy: {
       id: 'asc',
@@ -27,9 +36,17 @@ export async function GET(req: Request) {
   });
   const total = await prisma.room.count({
     where: {
-      name: {
-        contains: search,
-      },
+      OR: [
+        {
+          name: {
+            contains: search,
+          },
+        },
+        {
+          id: parseInt(search),
+        },
+      ],
+
       typeId: type,
     },
   });
