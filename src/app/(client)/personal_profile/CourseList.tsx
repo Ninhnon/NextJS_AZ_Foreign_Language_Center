@@ -111,7 +111,7 @@ export default function CourseList() {
           </div>
         </div>
       </div>
-      <div className="relative w-fit h-fit flex flex-col items-center">
+      <div className="relative w-fit h-fit flex flex-row items-center">
         {courseListData ? (
           <>
             {' '}
@@ -123,17 +123,16 @@ export default function CourseList() {
                 labelColor="warning"
               />
             ) : (
-              <div className="h-fit mt-20 grid grid-cols-3 gap-10 items-center">
+              <div className="h-[50%] mt-20 grid grid-cols-3 gap-10 items-center">
                 {courseListData?.data.map((item) => (
                   <div
                     key={item.id}
-                    className="w-full h-32 flex flex-row items-center justify-between px-16"
+                    className="flex flex-row h-32 items-center justify-between px-16"
                   >
                     <PurchasedCourseCard data={item} />
                   </div>
                 ))}
                 <Pagination
-                  className="relative mt-100"
                   color="warning"
                   showControls
                   total={totalPage}

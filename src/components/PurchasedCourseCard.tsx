@@ -16,24 +16,22 @@ const PurchasedCourseCard = ({ data }) => {
     //   href={href}
     //   className="w-fit h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center"
     // >
-    <div
-      className="relative rounded-xl p-4 bg-white w-full min-h-0 m-8 mx-auto
-    drop-shadow-xl grid-rows-2 gap-4 break-words overflow-auto"
-    >
+    <div className="w-full h-fit flex flex-col justify-between shadow-md rounded-md p-2 m-3 items-center gap-4 break-words">
       {/* Start Description Image */}
 
-      <div
+      {/* <div
         className="relative rounded-xl bg-neutral-400 row-span-1"
-        style={{ width: '200px', height: '120px' }}
-      >
-        <Image
-          className="object-cover rounded-xl"
-          src={data.thumbnail}
-          alt="hero banner"
-          layout="fill"
-          loading="lazy"
-        />
-      </div>
+        style={{ width: '200px', height: '150px' }}
+      > */}
+      <Image
+        className="object-cover rounded-xl"
+        src={data.thumbnail}
+        alt=""
+        width={200}
+        height={150}
+        loading="lazy"
+      />
+      {/* </div> */}
 
       {/* Stop Description Image */}
 
@@ -43,14 +41,14 @@ const PurchasedCourseCard = ({ data }) => {
           <div className="flex justify-between items-center mt-8">
             <div>
               <span className="text-silver-chalice text-lg font-medium">
-                Beginner
+                {data.name}
               </span>
             </div>
           </div>
 
           <p>
             <span className="text-black text-base font-medium">
-              {data.name}
+              {data.totalCost}
             </span>
             <br />
           </p>
