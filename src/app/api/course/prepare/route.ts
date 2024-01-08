@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   );
   const course = {
     moduleId: body.moduleId,
-    BandScoreId: body.BandScoreId,
+    BandScoreId: body.bandScoreId,
     name: body.name,
     totalSession: parseInt(body.totalSession),
     totalAttendance: parseInt(body.totalAttendance),
