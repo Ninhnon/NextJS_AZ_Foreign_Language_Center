@@ -4,12 +4,12 @@ import axios from 'axios';
 
 export const useEmail = () => {
   const onConfirmationEmail = async (
-    fullname: any,
+    fullName: any,
     email: any,
     password: any
   ) => {
     const res = await axios.post(`/api/user/registration_email`, {
-      fullname: fullname,
+      fullName: fullName,
       email: email,
       password: password,
     });
