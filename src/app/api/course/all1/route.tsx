@@ -19,6 +19,7 @@ export async function GET(req: Request) {
       orderId: true,
     },
   });
+  console.log('🚀 ~ file: route.tsx:22 ~ GET ~ courses:', courses);
   const orderIds = courses.map((order) => order.orderId);
   //Đang diễn ra
   if (type === 'open') {
@@ -45,8 +46,14 @@ export async function GET(req: Request) {
     });
     const total = await prisma.course.count({
       where: {
+        startTime: {
+          lte: currentTime,
+        },
         endTime: {
           gte: currentTime,
+        },
+        id: {
+          in: orderIds.filter((orderId) => orderId !== null) as number[],
         },
       },
     });
@@ -82,6 +89,9 @@ export async function GET(req: Request) {
         endTime: {
           lt: currentTime,
         },
+        id: {
+          in: orderIds.filter((orderId) => orderId !== null) as number[],
+        },
       },
     });
     const totalPage = Math.ceil(total / limit);
@@ -115,6 +125,9 @@ export async function GET(req: Request) {
       where: {
         startTime: {
           gt: currentTime,
+        },
+        id: {
+          in: orderIds.filter((orderId) => orderId !== null) as number[],
         },
       },
     });
