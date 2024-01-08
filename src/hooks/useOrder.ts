@@ -11,5 +11,13 @@ export const useOrder = () => {
     return [];
   };
 
-  return { onGetOrderFromRange };
+  const onGetOrders = async (page: number, limit: number, search: string) => {
+    const res = await getRequest({
+      endPoint: `/api/order?page=${page}&limit=${limit}&search=${search}`,
+    });
+
+    return res;
+  };
+
+  return { onGetOrderFromRange, onGetOrders };
 };
