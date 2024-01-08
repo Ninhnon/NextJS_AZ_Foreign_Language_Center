@@ -20,10 +20,11 @@ model User {
   indexSalary      Int?
   level            Int?
   salary           Int?
-  phoneNumber      String            @default("0544239584")
+  phoneNumber      String            @default("0905384726")
   addresses        Address[]
   classsessions    ClassSession[]
   assignment_users Assignment_User[]
+  orders           Order[]
 }
 
 model Address {
@@ -103,6 +104,7 @@ model ClassSession {
   timeId                  Int
   CategoryColor           String                    @default("#fecaca")
   name                    String?                   @default("Lesson")
+  skill                   Skill?                    @relation(fields: [skillId], references: [id])
   teacher                 User                      @relation(fields: [teacherId], references: [id])
   Room                    Room?                     @relation(fields: [roomId], references: [id])
   time                    TimeShift                 @relation(fields: [timeId], references: [id])
@@ -142,7 +144,7 @@ model Course {
   recommendCourseId Int?
   thumbnail         String?
   classsessions     ClassSession[]
-
+  orders            Order[]
   @@index([BandScoreId])
   @@index([moduleId])
 }
@@ -216,9 +218,10 @@ model RoomType {
 }
 
 model Skill {
-  id          Int          @id @default(autoincrement())
-  name        String
-  assignments Assignment[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  classsessions ClassSession[]
+  assignments   Assignment[]
 }
 
 model TimeShift {
@@ -263,18 +266,19 @@ model ClassSessionToClassShift {
   @@index([B], map: "_ClassSessionToClassShift_B_index")
   @@map("_ClassSessionToClassShift")
 }
-
 model Order {
-  id                 Int      @id @default(autoincrement())
-  orderDate          DateTime @default(now())
+  id                 Int         @id @default(autoincrement())
+  orderDate          DateTime    @default(now())
   total              Float
   userId             Int?
-  status             String   @default("Pending")
+  status             String      @default("Pending")
   anonymousUser      String?
   anonymousUserEmail String?
   anonymousUserName  String?
-  orderId            Int?
+  user               User?       @relation(fields: [userId], references: [id])
+  orderId            Int?        
+  orderItem         Course?       @relation(fields: [orderId], references: [id])
 
-  @@index([orderId])
   @@index([userId])
+  @@index([orderId])
 }

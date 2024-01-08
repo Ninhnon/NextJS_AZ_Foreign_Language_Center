@@ -1,5 +1,5 @@
 'use client';
-import AdminCourseCard from '@/components/cards/AdminCourseCard';
+import StaffCourseCard from '@/components/cards/StaffCourseCard';
 import { useCourse } from '@/hooks/useCourse';
 import { Button, Pagination, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
@@ -127,7 +127,7 @@ export default function CourseList() {
                     key={item.id}
                     className="w-full h-32 flex flex-row items-center justify-between px-16"
                   >
-                    <AdminCourseCard data={item} />
+                    <StaffCourseCard data={item} />
                   </div>
                 ))}
                 <Pagination

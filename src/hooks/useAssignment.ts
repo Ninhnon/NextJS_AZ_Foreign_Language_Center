@@ -68,11 +68,21 @@ export const useAssignment = () => {
     return question;
   };
 
+  const onPostMultipleChoiceQuestionResult = async (data) => {
+    const answer = await postRequest({
+      endPoint: '/api/assignment/multiple-choice-question/result',
+      formData: data,
+      isFormData: true,
+    });
+    return answer;
+  };
+
   return {
     onGetAssignment,
     onGetAssignmentById,
     onUpdateAssignment,
     onGetMultipleChoiceQuestion,
     onPostMultipleChoiceQuestion,
+    onPostMultipleChoiceQuestionResult,
   };
 };
