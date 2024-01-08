@@ -111,9 +111,9 @@ export default function CourseList() {
           </div>
         </div>
       </div>
-      <div className="relative w-fit h-fit flex flex-row items-center">
+      <div className="w-full h-fit flex flex-col items-center gap-3">
         {courseListData ? (
-          <>
+          <div className="w-full flex flex-col items-center justify-center">
             {' '}
             {isFetching ? (
               <Spinner
@@ -123,28 +123,28 @@ export default function CourseList() {
                 labelColor="warning"
               />
             ) : (
-              <div className="h-[50%] mt-20 grid grid-cols-3 gap-10 items-center">
+              <div className="w-full h-fit grid grid-cols-3 items-center">
                 {courseListData?.data.map((item) => (
                   <div
                     key={item.id}
-                    className="flex flex-row h-32 items-center justify-between px-16"
+                    className="w-full h-fit flex flex-row items-center justify-between px-16"
                   >
                     <PurchasedCourseCard data={item} />
                   </div>
                 ))}
-                <Pagination
-                  color="warning"
-                  showControls
-                  total={totalPage}
-                  initialPage={1}
-                  onChange={(page) => {
-                    onPageChange(page);
-                  }}
-                  page={currentPage}
-                />
               </div>
             )}
-          </>
+            <Pagination
+              color="warning"
+              showControls
+              total={totalPage}
+              initialPage={1}
+              onChange={(page) => {
+                onPageChange(page);
+              }}
+              page={currentPage}
+            />
+          </div>
         ) : null}
       </div>
     </div>
