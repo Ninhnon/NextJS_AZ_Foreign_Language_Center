@@ -21,6 +21,14 @@ const StudentAssignmentCard = ({ data, route }) => {
               {data.score === 0 ? '0' : data.score}
             </span>
           </div>
+        ) : data.comment ? (
+          <div className="w-fit h-fit flex flex-row text-red">
+            <span>Đã được đánh giá</span>
+          </div>
+        ) : data.files ? (
+          <div className="w-fit h-fit flex flex-row text-red">
+            <span>Đang chờ đánh giá</span>
+          </div>
         ) : (
           <div className="w-fit h-fit flex flex-row text-red">
             <span>Nhanh làm thôi</span>

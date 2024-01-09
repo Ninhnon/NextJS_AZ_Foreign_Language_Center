@@ -97,7 +97,9 @@ const StudentAssignmentList = ({ id, userId }) => {
               <div className="w-full h-fit grid grid-cols-1 gap-1 items-center">
                 {orderListData.data
                   .filter(
-                    (order) => !filterByUserIdNull || order.score === null
+                    (order) =>
+                      !filterByUserIdNull ||
+                      (!order.files && order.score === null)
                   )
                   .map((order) => (
                     <div key={order.id}>
