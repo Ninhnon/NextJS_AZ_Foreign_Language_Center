@@ -6,58 +6,62 @@ import {
   AiOutlineArrowRight,
 } from 'react-icons/ai';
 import { BsFillPatchCheckFill } from 'react-icons/bs';
-import { Label } from '@radix-ui/react-label';
+import { format } from 'date-fns';
 
-const PurchasedCourseCard = () => {
+const PurchasedCourseCard = ({ data }) => {
+  // const href = '/staff/course-list/' + data.id;
   return (
-    <div
-      className="relative rounded-xl p-4 bg-white w-full min-h-0 m-8 mx-auto
-    drop-shadow-xl grid-rows-2 gap-4 break-words overflow-auto"
-    >
+    // <Link
+    //   aria-label="Products"
+    //   href={href}
+    //   className="w-fit h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center"
+    // >
+    <div className="w-full h-fit flex flex-col justify-between shadow-md rounded-md p-2 m-3 items-center gap-4 break-words">
       {/* Start Description Image */}
 
-      <div className=" rounded-xl bg-neutral-400 max-h-[50%] row-span-1">
-        <Image
-          className="object-cover rounded-xl"
-          src={`/writing.png`}
-          alt="hero banner"
-          width={window.innerWidth / 2}
-          height={window.innerWidth / 4}
-          loading="lazy"
-        />
-      </div>
+      {/* <div
+        className="relative rounded-xl bg-neutral-400 row-span-1"
+        style={{ width: '200px', height: '150px' }}
+      > */}
+      <Image
+        className="object-cover rounded-xl"
+        src={data.thumbnail}
+        alt=""
+        width={220}
+        height={150}
+        loading="lazy"
+      />
+      {/* </div> */}
 
       {/* Stop Description Image */}
 
       {/* Start Description Text */}
-      <div className="row-span-1">
-        <div>
+      <div className="w-full row-span-1 flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between items-center mt-8">
             <div>
               <span className="text-silver-chalice text-lg font-medium">
-                Beginner
+                {data.name}
               </span>
-            </div>
-
-            <div className="flex justify-end my-2">
-              <Label className="rounded-sm text-white bg-orange font-medium p-1">
-                Đang diễn ra
-              </Label>
             </div>
           </div>
 
           <p>
             <span className="text-black text-base font-medium">
-              Luyện thi Ielts 4.5
+              {data.totalCost.toLocaleString('vi-VN')}VNĐ
             </span>
             <br />
           </p>
 
           <div className="flex items-center space-x-1">
             <BsFillPatchCheckFill className="fill-orange" />
-            <span className="text-orange font-medium text-sm">12/09/2023</span>
+            <span className="text-orange font-medium text-sm">
+              {format(new Date(data.startTime), 'M/d/yy')}
+            </span>
             <AiOutlineArrowRight className="fill-orange" />
-            <span className="text-orange font-medium text-sm">13/10/2023</span>
+            <span className="text-orange font-medium text-sm">
+              {format(new Date(data.endTime), 'M/d/yy')}
+            </span>
           </div>
         </div>
 
@@ -67,20 +71,21 @@ const PurchasedCourseCard = () => {
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineClockCircle />
             <span className=" text-silver-chalice text-sm font-light">
-              1h30p/buổi
+              2h/buổi
             </span>
           </div>
 
           <div className="flex flex-wrap flex-shrink-0 min-w-[30%] items-center space-x-1">
             <AiOutlineCalendar />
             <span className="text-silver-chalice text-sm font-light">
-              34 buổi
+              {data.TotalSession}
             </span>
           </div>
         </div>
       </div>
       {/* Stop Description Text */}
     </div>
+    // </Link>
   );
 };
 

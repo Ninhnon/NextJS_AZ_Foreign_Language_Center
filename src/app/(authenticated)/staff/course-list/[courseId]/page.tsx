@@ -1,9 +1,9 @@
 import React from 'react';
 import Scheduler from './Scheduler';
-const page = () => {
+const page = ({ params: { courseId } }: { params: { courseId: string } }) => {
   return (
     <div>
-      <Scheduler />
+      <Scheduler courseId={courseId} />
     </div>
   );
 };

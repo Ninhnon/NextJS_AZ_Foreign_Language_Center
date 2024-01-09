@@ -17,18 +17,22 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 // import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import './schedule-component.css';
 import { applyCategoryColor } from './helper';
+import { useSession } from 'next-auth/react';
 // import { scheduleData } from './dummy';
 import { Button } from '@/components/ui/button';
 
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 
 const Scheduler = () => {
+  const session = useSession();
   const [scheduleObj, setScheduleObj] = useState();
   const [scheduleData, setScheduleData] = useState([]);
   useEffect(() => {
     const getScheduleData = async () => {
       try {
-        const res = await fetch('/api/classSession');
+        const res = await fetch(
+          `/api/classSession/user?userId=${session.data?.user?.id}`
+        );
         const data = await res.json();
         if (data && Array.isArray(data)) {
           // Transform the fetched data into the desired format
@@ -59,33 +63,6 @@ const Scheduler = () => {
     };
     getScheduleData();
   }, []);
-
-  // const addEventToDatabase = async () => {
-  //   try {
-  //     const response = await fetch('/api/addEvent', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         StartTime: '2023-12-12T17:00:00.000Z', // Replace with actual event data
-  //         EndTime: '2023-12-12T19:00:00.000Z',
-  //         // Other event properties...
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       // Event inserted successfully
-  //       console.log('Event inserted successfully');
-  //     } else {
-  //       // Handle errors
-  //       console.error('Failed to insert event');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error inserting event:', error);
-  //   }
-  // };
-
   const change = (args) => {
     scheduleObj.selectedDate = args.value;
     scheduleObj.dataBind();
@@ -134,51 +111,6 @@ const Scheduler = () => {
     applyCategoryColor(args, scheduleObj.currentView);
     // You can perform additional actions after event rendering here
   };
-  // const onPopupOpen = (args) => {
-  //   console.log(
-  //     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
-  //     scheduleData
-  //   );
-
-  //   if (args.type === 'Editor') {
-  //     args.data.CategoryColor = '#fecaca';
-  //     console.log('🚀 ~ file: page.tsx:65 ~ onPopupOpen ~ args', args);
-  //     // Create required custom elements in initial time
-  //     if (!args.element.querySelector('.custom-field-row')) {
-  //       let row = createElement('div', { className: 'custom-field-row' });
-  //       let formElement = args.element.querySelector('.e-schedule-form');
-  //       formElement.firstChild.insertBefore(
-  //         row,
-  //         formElement.firstChild.firstChild
-  //       );
-  //       let container = createElement('div', {
-  //         className: 'custom-field-container',
-  //       });
-  //       let inputEle = createElement('input', {
-  //         className: 'e-field',
-  //         attrs: { name: 'EventType' },
-  //       });
-  //       container.appendChild(inputEle);
-  //       row.appendChild(container);
-  //       let dropDownList = new DropDownList({
-  //         dataSource: [
-  //           { text: 'Public Event', value: 'public-event' },
-  //           { text: 'Maintenance', value: 'maintenance' },
-  //           { text: 'Commercial Event', value: 'commercial-event' },
-  //           { text: 'Family Event', value: 'family-event' },
-  //         ],
-  //         fields: { text: 'text', value: 'value' },
-  //         value: args.data.EventType as string,
-  //         floatLabelType: 'Always',
-  //         placeholder: 'Event Type',
-  //       });
-  //       dropDownList.appendTo(inputEle);
-  //       inputEle.setAttribute('name', 'EventType');
-  //       args.data.CategoryColor = '#fecaca';
-  //     }
-  //   }
-  // };
-
   const monthEventTemplate = (props: {
     [key: string]: object;
   }): JSX.Element => {
@@ -189,20 +121,18 @@ const Scheduler = () => {
       hour: '2-digit',
       minute: '2-digit',
     });
-    const parsedTime2 = new Date(props.EndTime.toString());
-    const EndTime = parsedTime2.toLocaleTimeString('en-US', {
-      timeZone: 'Asia/Ho_Chi_Minh',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
     return (
-      <div className="w-full h-full month-event-container">
-        <div className="flex flex-row">
-          <div> {StartTime}</div>
-          <div> {EndTime}</div>
+      <div className="w-full h-full flex flex-col bg-[#fecaca]">
+        <div className="flex flex-col md:flex-row">
+          <div className="ml-0 lg:ml-1 text-black"> {StartTime}</div>
+          <div className="pl-1 font-bold mb-2 sm:mb-0 text-black">
+            {props.Subject}
+          </div>
         </div>
-        <div className="month-template-wrap">{props.Location}</div>
+        <div className="w-[20%] h-[100%] bottom-0 right-0 absolute flex flex-col md:flex-row">
+          <div className="text-black text-[8px]">{props.Location}</div>
+          {/* <div className=" pr-1 text-black ">{props.Description}</div> */}
+        </div>
       </div>
     );
   };
@@ -266,3 +196,47 @@ const Scheduler = () => {
 };
 
 export default Scheduler;
+// const onPopupOpen = (args) => {
+//   console.log(
+//     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
+//     scheduleData
+//   );
+
+//   if (args.type === 'Editor') {
+//     args.data.CategoryColor = '#fecaca';
+//     console.log('🚀 ~ file: page.tsx:65 ~ onPopupOpen ~ args', args);
+//     // Create required custom elements in initial time
+//     if (!args.element.querySelector('.custom-field-row')) {
+//       let row = createElement('div', { className: 'custom-field-row' });
+//       let formElement = args.element.querySelector('.e-schedule-form');
+//       formElement.firstChild.insertBefore(
+//         row,
+//         formElement.firstChild.firstChild
+//       );
+//       let container = createElement('div', {
+//         className: 'custom-field-container',
+//       });
+//       let inputEle = createElement('input', {
+//         className: 'e-field',
+//         attrs: { name: 'EventType' },
+//       });
+//       container.appendChild(inputEle);
+//       row.appendChild(container);
+//       let dropDownList = new DropDownList({
+//         dataSource: [
+//           { text: 'Public Event', value: 'public-event' },
+//           { text: 'Maintenance', value: 'maintenance' },
+//           { text: 'Commercial Event', value: 'commercial-event' },
+//           { text: 'Family Event', value: 'family-event' },
+//         ],
+//         fields: { text: 'text', value: 'value' },
+//         value: args.data.EventType as string,
+//         floatLabelType: 'Always',
+//         placeholder: 'Event Type',
+//       });
+//       dropDownList.appendTo(inputEle);
+//       inputEle.setAttribute('name', 'EventType');
+//       args.data.CategoryColor = '#fecaca';
+//     }
+//   }
+// };

@@ -18,7 +18,6 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import './schedule-component.css';
 import { applyCategoryColor } from './helper';
 // import { scheduleData } from './dummy';
-import { Button } from '@/components/ui/button';
 
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 
@@ -59,33 +58,6 @@ const Scheduler = () => {
     };
     getScheduleData();
   }, []);
-
-  // const addEventToDatabase = async () => {
-  //   try {
-  //     const response = await fetch('/api/addEvent', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         StartTime: '2023-12-12T17:00:00.000Z', // Replace with actual event data
-  //         EndTime: '2023-12-12T19:00:00.000Z',
-  //         // Other event properties...
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       // Event inserted successfully
-  //       console.log('Event inserted successfully');
-  //     } else {
-  //       // Handle errors
-  //       console.error('Failed to insert event');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error inserting event:', error);
-  //   }
-  // };
-
   const change = (args) => {
     scheduleObj.selectedDate = args.value;
     scheduleObj.dataBind();
@@ -189,35 +161,24 @@ const Scheduler = () => {
       hour: '2-digit',
       minute: '2-digit',
     });
-    const parsedTime2 = new Date(props.EndTime.toString());
-    const EndTime = parsedTime2.toLocaleTimeString('en-US', {
-      timeZone: 'Asia/Ho_Chi_Minh',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
     return (
-      <div className="w-full h-full month-event-container">
-        <div className="flex flex-row">
-          <div> {StartTime}</div>
-          <div> {EndTime}</div>
+      <div className="w-full h-full flex flex-col bg-[#fecaca]">
+        <div className="flex flex-col md:flex-row">
+          <div className="ml-0 lg:ml-1 text-black"> {StartTime}</div>
+          <div className="pl-1 font-bold mb-2 sm:mb-0 text-black">
+            {props.Subject}
+          </div>
         </div>
-        <div className="month-template-wrap">{props.Location}</div>
+        <div className="w-[20%] h-[100%] bottom-0 right-0 absolute flex flex-col md:flex-row">
+          <div className="text-black text-[8px]">{props.Location}</div>
+          {/* <div className=" pr-1 text-black ">{props.Description}</div> */}
+        </div>
       </div>
     );
   };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-4 bg-white rounded-3xl">
-      <Button
-        onClick={() =>
-          console.log(
-            '🚀 ~ file: page.tsx:28 ~ Scheduler ~ scheduleData:',
-            scheduleData
-          )
-        }
-      >
-        Add
-      </Button>
+      {/* <Button onClick={() => console.log(scheduleData)}>TT</Button> */}
       <ScheduleComponent
         width="100%"
         height="650px"

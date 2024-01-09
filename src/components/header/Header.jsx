@@ -19,7 +19,6 @@ import {
 import AuthSvg from '@/assets/AuthSvg';
 import { MobileNav } from './MobileNavBar';
 import { CommonSvg } from '@/assets/CommonSvg';
-
 import Logo from '../logo';
 const NavigationMenuDemo = ({ session }) => {
   const [user] = useState(session?.user);
@@ -69,33 +68,29 @@ const NavigationMenuDemo = ({ session }) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
-                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
-                >
-                  <div className="">{AuthSvg.book()}</div>
-                  Danh sách khóa học
+                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                  <Link href="/personal_profile">
+                    <div className="">{AuthSvg.book()}</div>
+                    Danh sách khóa học
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
-                  className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
-                >
-                  <div className="">{AuthSvg.exercise()}</div>
-                  Bài tập
+                <DropdownMenuItem className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                  <Link href="/personal_assignments">
+                    <div className="">{AuthSvg.exercise()}</div>
+                    Bài tập
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
-                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
-                >
-                  <div className="">{AuthSvg.chat()}</div>
-                  Hỏi đáp
+                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                  <Link href="/chat">
+                    <div className="">{AuthSvg.chat()}</div>
+                    Hỏi đáp
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: '/auth/login' })}
-                  className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]"
-                >
-                  <div className="">{AuthSvg.date()}</div>
-                  Thời khóa biểu
+                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                  <Link href="/tkb">
+                    <div className="">{AuthSvg.date()}</div>
+                    Thời khóa biểu
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -169,8 +164,12 @@ const NavigationMenuDemo = ({ session }) => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/user/profile">Hồ sơ</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={'/' + user.role}>{user.role}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => signOut({ callbackUrl: '/auth/login' })}
                   className="border-solid border-t-2 mt-2  gap-2"
@@ -182,7 +181,7 @@ const NavigationMenuDemo = ({ session }) => {
             </DropdownMenu>
           </div>
         ) : (
-          <Button className="w-[150px] ml-8 h-4 text-white hover:bg-pink-700 bg-[#4D2C5E]">
+          <Button className="w-[150px] ml-8 h-8 text-white hover:bg-pink-700 bg-[#4D2C5E]">
             <Link href={'/auth/login'}>Đăng nhập</Link>
           </Button>
         )}

@@ -101,7 +101,7 @@ const StaffHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/tkb'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCalendarDays />
                     <div className="ml-2">Thời khóa biểu</div>
@@ -185,7 +185,7 @@ const StaffHeader = ({ session }) => {
             </DropdownMenu>
           </div>
         ) : (
-          <Button className="w-[150px] ml-8 h-4 text-white hover:bg-pink-700 bg-[#4D2C5E]">
+          <Button className="w-[150px] ml-8 h-8 text-white hover:bg-pink-700 bg-[#4D2C5E]">
             <Link href={'/auth/login'}>Đăng nhập</Link>
           </Button>
         )}

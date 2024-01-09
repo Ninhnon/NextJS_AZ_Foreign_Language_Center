@@ -2,7 +2,27 @@ import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
+    const currentTime = new Date().toISOString();
+    const all = await prisma.course.findMany({
+      where: {
+        startTime: {
+          lte: currentTime,
+        },
+        endTime: {
+          gte: currentTime,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+    const courseIds = all.map((order) => order.id);
     const ClassSession = await prisma.classSession.findMany({
+      where: {
+        courseId: {
+          in: courseIds.filter((orderId) => orderId !== null) as number[],
+        },
+      },
       include: {
         Course: true,
         teacher: true,
