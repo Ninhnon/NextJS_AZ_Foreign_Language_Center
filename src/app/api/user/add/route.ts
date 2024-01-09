@@ -12,6 +12,26 @@ export async function POST(req: Request) {
       phoneNumber: requestJSON.phoneNumber,
     },
   });
+  if (user) {
+    const ordersToUpdate = await prisma.order.findMany({
+      where: {
+        anonymousUserEmail: user.email,
+      },
+    });
+
+    if (ordersToUpdate && ordersToUpdate.length > 0) {
+      for (const order of ordersToUpdate) {
+        await prisma.order.update({
+          where: {
+            id: order.id,
+          },
+          data: {
+            userId: user.id,
+          },
+        });
+      }
+    }
+  }
 
   if (user) {
     return new Response(JSON.stringify(user), { status: 200 });
