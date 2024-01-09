@@ -113,8 +113,8 @@ const CheckoutModal = ({
               <Tab key={'3'} title="Hoàn tất">
                 <Card>
                   <CardBody>
-                    Xin cảm ơn quý khách vì đã đăng ký khóa học! Chúc quý khách
-                    đạt được mục tiêu của mình kỳ vọng!
+                    Xin cảm ơn quý học viên vì đã đăng ký khóa học! Chúc học
+                    viên đạt được mục tiêu của mình kỳ vọng!
                   </CardBody>
                 </Card>
               </Tab>

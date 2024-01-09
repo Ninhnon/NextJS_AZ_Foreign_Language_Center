@@ -164,8 +164,12 @@ const NavigationMenuDemo = ({ session }) => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/user/profile">Hồ sơ</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={'/' + user.role}>{user.role}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => signOut({ callbackUrl: '/auth/login' })}
                   className="border-solid border-t-2 mt-2  gap-2"

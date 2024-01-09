@@ -9,6 +9,9 @@ import { CiLocationOn } from 'react-icons/ci';
 import { useSession } from 'next-auth/react';
 import { useUser } from '@/hooks/useUser';
 import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import DialogCustom from '@/components/ui/dialogCustom';
+import ProfileForm from './ProfileForm';
 import { getRequest } from '@/lib/fetch';
 
 function page() {
@@ -35,6 +38,7 @@ function page() {
     },
     { enabled: !!session?.data?.user?.id }
   );
+  const [isOpen, setIsOpen] = React.useState(false);
   const { onGetUserDetail } = useUser();
   if (!isLoaded)
     return (
@@ -46,6 +50,13 @@ function page() {
   return (
     <div>
       <h1 className="text-xl font-medium">Profile</h1>
+      <Button
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        Edit Profile
+      </Button>
       <Card className="bg-white p-6 rounded-lg shadow-md relative mt-4">
         <div className="flex flex-col gap-6 mt-4">
           <div className="w-full flex justify-center">
@@ -93,6 +104,20 @@ function page() {
           </div>
         </div>
       </Card>
+      {userInfo && userAddresses && isOpen && (
+        <DialogCustom
+          className="w-full lg:w-[40%] h-[80%] lg:h-[95%] flex items-center justify-center"
+          isModalOpen={isOpen}
+          setIsModalOpen={setIsOpen}
+          // notShowClose={false}
+        >
+          <ProfileForm
+            setEditing={setIsOpen}
+            user={userInfo}
+            userAddresses={userAddresses}
+          />
+        </DialogCustom>
+      )}
     </div>
   );
 }

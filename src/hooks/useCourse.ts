@@ -19,6 +19,20 @@ export const useCourse = () => {
     return new Response(JSON.stringify(res), { status: 200 });
   };
 
+  const onGetCourseDetails = async (slug: string) => {
+    const res = await getRequest({
+      endPoint: `/api/course/course_details?courseId=${slug}`,
+    });
+
+    return new Response(JSON.stringify(res), { status: 200 });
+  };
+  const onGetCourseInfo = async (slug: string) => {
+    const res = await getRequest({
+      endPoint: `/api/course/info?courseId=${slug}`,
+    });
+
+    return new Response(JSON.stringify(res), { status: 200 });
+  };
   const onGetCourseFromId = async (
     page: number,
     limit: number,
@@ -32,5 +46,11 @@ export const useCourse = () => {
 
     return res;
   };
-  return { onGetCourse, onGetTopCourse, onGetCourseFromId };
+  return {
+    onGetCourse,
+    onGetTopCourse,
+    onGetCourseDetails,
+    onGetCourseInfo,
+    onGetCourseFromId,
+  };
 };

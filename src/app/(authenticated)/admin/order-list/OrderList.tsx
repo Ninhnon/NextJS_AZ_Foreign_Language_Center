@@ -52,7 +52,7 @@ const OrderList = () => {
   };
   return (
     <div className="w-full h-full flex flex-col py-6 px-20">
-      <div className="font-bold">Danh sách đơn hàng</div>
+      <div className="font-bold">Danh sách đăng ký</div>
       <div className="w-full h-fit flex flex-row gap-4 items-center">
         <Input
           className="bg-[#FDF8EE] h-10 text-black border-0 mr-4"
