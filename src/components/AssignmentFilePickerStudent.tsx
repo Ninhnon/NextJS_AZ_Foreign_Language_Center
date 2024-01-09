@@ -25,14 +25,14 @@ const AssignmentFilePickerStudent = ({ data }) => {
   //uploadthing
   const { startUpload } = useUploadThing('courseAttachment');
   //Update to db
-  const { onUpdateAssignment } = useAssignment();
+  const { onUpdateAssignmentUp } = useAssignment();
 
   useLayoutEffect(() => {
     const initData = async () => {
       if (data?.files?.length) {
         await setFiles(JSON.parse(data?.files));
       }
-      await setLastModifiedTime(new Date(data?.lastModifiedTime));
+      await setLastModifiedTime(new Date(data?.createdAt));
     };
     initData();
   }, []);
@@ -74,10 +74,10 @@ const AssignmentFilePickerStudent = ({ data }) => {
     //Files with url, name, id
     data.files = JSON.stringify([...oldFiles, ...jsonFiles]);
     //Last modified time
-    data.lastModifiedTime = lastModifiedTime;
+    data.createdAt = lastModifiedTime;
 
     //Update to db
-    const res = await onUpdateAssignment(data);
+    const res = await onUpdateAssignmentUp(data);
     console.log(
       '🚀 ~ file: AssignmentFilePickerStudent.tsx:79 ~ onSubmit ~ res',
       res
