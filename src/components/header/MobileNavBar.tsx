@@ -13,52 +13,32 @@ import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { CommonSvg } from '@/assets/CommonSvg';
 import Link from 'next/link';
-const sidebarNavItems = [
-  {
-    title: 'Account',
-    href: '/dashboard/account',
-    icon: 'user',
-    items: [],
-  },
-  {
-    title: 'Stores',
-    href: '/dashboard/stores',
-    icon: 'store',
-    items: [],
-  },
-  {
-    title: 'Add Product',
-    href: '/admin/add-product',
-    icon: 'billing',
-    items: [],
-  },
-  {
-    title: 'Purchases',
-    href: '/dashboard/purchases',
-    icon: 'dollarSign',
-    items: [],
-  },
-];
 const mainNavItems = [
   {
     title: 'Lobby',
     items: [
       {
-        title: 'Products',
-        href: '/products',
+        title: 'Hồ sơ',
+        href: '/user/profile',
         description: 'All the products we have to offer.',
         items: [],
       },
       {
-        title: 'Build a Board',
-        href: '/build-a-board',
-        description: 'Build your own custom skateboard.',
+        title: 'Giới thiệu',
+        href: '/introduction',
+        description: 'All the products we have to offer.',
         items: [],
       },
       {
-        title: 'Blog',
-        href: '/blog',
-        description: 'Read our latest blog posts.',
+        title: 'Khóa học',
+        href: '/course_details',
+        description: 'All the products we have to offer.',
+        items: [],
+      },
+      {
+        title: 'Thi thử',
+        href: '/entrance_examination',
+        description: 'All the products we have to offer.',
         items: [],
       },
     ],
@@ -84,12 +64,12 @@ export function MobileNav() {
       <SheetContent side="left" className="pl-1 pr-0">
         <div className="px-7">
           <Link
-            aria-label="Home"
+            aria-label="Trang chủ"
             href="/"
             className="flex items-center"
             onClick={() => setIsOpen(false)}
           >
-            <span className="font-bold">{'thuong'}</span>
+            <span className="font-bold">{'Trang chủ'}</span>
           </Link>
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
@@ -126,7 +106,7 @@ export function MobileNav() {
                   </AccordionContent>
                 </AccordionItem>
               ))}
-              <AccordionItem value="sidebar">
+              {/* <AccordionItem value="sidebar">
                 <AccordionTrigger className="text-sm">
                   Sidebar Menu
                 </AccordionTrigger>
@@ -154,7 +134,7 @@ export function MobileNav() {
                     )}
                   </div>
                 </AccordionContent>
-              </AccordionItem>
+              </AccordionItem> */}
             </Accordion>
           </div>
         </ScrollArea>

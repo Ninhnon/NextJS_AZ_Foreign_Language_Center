@@ -52,7 +52,7 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
       <div className="hidden lg:flex py-5  ">
-        {user.role === 'user' ? (
+        {user === 'user' ? (
           <div className="flex flex-row gap-5 items-center justify-center">
             <DropdownMenu className="bg-[#FDF8EE]">
               <DropdownMenuTrigger>
