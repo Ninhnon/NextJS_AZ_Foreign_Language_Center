@@ -29,6 +29,7 @@ import { capitalize } from './utils';
 import { useUser } from '@/hooks/useUser';
 import type { User } from '@/models';
 import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 /* const statusColorMap: Record<string, ChipProps['color']> = {
   'đang hoạt động': 'success',
@@ -48,10 +49,12 @@ const INITIAL_VISIBLE_COLUMNS = [
 export default function TeacherTable({
   onOpen,
   onEditOpen,
+  onEditCourseOpen,
   setSelectedUser,
   setModalStatus,
 }) {
   const { users, isUsersLoading, isUsersFetching, onDeleteUser } = useUser();
+  const queryClient = useQueryClient();
 
   const [filterValue, setFilterValue] = React.useState('');
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
@@ -120,16 +123,32 @@ export default function TeacherTable({
 
   const handleDeleteUser = (user) => {
     if (user) {
-      onDeleteUser(user?.id);
-      toast.success('Xóa người dùng thành công', {
+      toast.promise(
+        onDeleteUser(user.id).then(() =>
+          queryClient.invalidateQueries(['users'])
+        ),
+        {
+          loading: 'Đang xóa ...',
+          success: 'Xóa người dùng thành công!',
+          error: 'Không thể xóa người dùng.',
+        },
+        {
+          style: {
+            minWidth: '200px',
+            minHeight: '50px',
+          },
+          position: 'bottom-right',
+        }
+      );
+    } else {
+      console.error('Không thể xóa: Đối tượng người dùng không hợp lệ');
+      toast.error('Không thể xóa: Đối tượng người dùng không hợp lệ', {
         style: {
-          minWidth: '300px',
+          minWidth: '200px',
           minHeight: '50px',
         },
         position: 'bottom-right',
       });
-    } else {
-      console.error('Không thể xóa: Đối tượng người dùng không hợp lệ');
     }
   };
 
@@ -206,6 +225,13 @@ export default function TeacherTable({
                   }}
                 >
                   Xóa
+                </DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    onEditCourseOpen();
+                  }}
+                >
+                  Chỉnh sửa khóa học
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

@@ -5,6 +5,7 @@ import AddUserDialog from './AddUserDialog';
 import { useDisclosure } from '@nextui-org/react';
 import EditUserDialog from './EditUserDialog';
 import { User } from '@/models';
+import EditUserCourse from './EditUserCourse';
 
 const page = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -18,6 +19,13 @@ const page = () => {
     onClose: onEditClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isEditCourseOpen,
+    onOpen: onEditCourseOpen,
+    onOpenChange: onEditCourseOpenChange,
+    onClose: onEditCourseClose,
+  } = useDisclosure();
+
   React.useEffect(() => {
     console.log('🚀 ~ file: page.tsx:11 ~ selectedUser:', selectedUser);
   }, [selectedUser]);
@@ -27,6 +35,7 @@ const page = () => {
       <TeacherTable
         onOpen={onOpen}
         onEditOpen={onEditOpen}
+        onEditCourseOpen={onEditCourseOpen}
         setSelectedUser={setSelectedUser}
         setModalStatus={setModalStatus}
       />
@@ -41,6 +50,13 @@ const page = () => {
         onClose={onEditClose}
         selectedUser={selectedUser}
         modalStatus={modalStatus}
+      />
+
+      <EditUserCourse
+        selectedUser={selectedUser}
+        isOpen={isEditCourseOpen}
+        onOpenChange={onEditCourseOpenChange}
+        onClose={onEditCourseClose}
       />
     </div>
   );

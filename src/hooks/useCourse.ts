@@ -1,6 +1,26 @@
+'use client';
+
 import { getRequest } from '@/lib/fetch';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export const useCourse = () => {
+  const fetchAllCourses = async () => {
+    const res = await axios.get(
+      `/api/staff/user_management/course_management/get_all_courses`
+    );
+    return res.data;
+  };
+
+  const {
+    data: courses,
+    isLoading: isCoursesLoading,
+    isFetching: isCoursesFetching,
+  } = useQuery({
+    queryKey: ['courses'],
+    queryFn: () => fetchAllCourses(),
+  });
+
   const onGetCourse = async (page: number, limit: number, type: string) => {
     const currentTime = new Date().toISOString();
     const res = await getRequest({
@@ -27,5 +47,25 @@ export const useCourse = () => {
     return new Response(JSON.stringify(res), { status: 200 });
   };
 
-  return { onGetCourse, onGetTopCourse, onGetCourseDetails };
+  const onCheckOrder = async (courseId: string, userId: string) => {
+    const res = await axios.post(
+      `/api/staff/user_management/course_management/check_order?courseId=${courseId}&userId=${userId}`
+    );
+    if (res) {
+      console.log(res.status, 'Status');
+      console.log(res.data, 'Dữ liệu');
+    }
+
+    return res;
+  };
+
+  return {
+    onGetCourse,
+    onGetTopCourse,
+    onGetCourseDetails,
+    onCheckOrder,
+    courses,
+    isCoursesLoading,
+    isCoursesFetching,
+  };
 };

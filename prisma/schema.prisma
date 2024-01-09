@@ -84,8 +84,8 @@ model Assignment_User {
   files        String?    @db.LongText
   teacherId    Int?
   createdAt    DateTime   @default(now())
-  courseId     Int?        @default(12)
-  course       Course?     @relation(fields: [courseId], references: [id])
+  courseId     Int?       @default(12)
+  course       Course?    @relation(fields: [courseId], references: [id])
   user         User       @relation(fields: [userId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 
@@ -142,14 +142,14 @@ model ClassShift {
 }
 
 model Course {
-  id                Int            @id @default(autoincrement())
-  moduleId          Int            @default(1)
-  BandScoreId       Int            @default(1)
-  name              String         @default("online")
-  totalSession      Int            @default(0)
+  id                Int               @id @default(autoincrement())
+  moduleId          Int               @default(1)
+  BandScoreId       Int               @default(1)
+  name              String            @default("online")
+  totalSession      Int               @default(0)
   startTime         DateTime
   endTime           DateTime
-  totalAttendance   Int            @default(0)
+  totalAttendance   Int               @default(0)
   tuitionFee        Int
   totalCost         Int
   recommendCourseId Int?
