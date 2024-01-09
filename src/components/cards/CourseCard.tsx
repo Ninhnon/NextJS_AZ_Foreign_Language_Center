@@ -7,23 +7,22 @@ import React from 'react';
 import Link from 'next/link';
 const CourseCard = ({ data, onClick }) => {
   return (
-    <Link
-      href={`/courseList/${data.id}`}
-      className="relative rounded-xl p-4 bg-white w-fit max-w-full min-h-0 m-8 mx-auto drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words"
-    >
+    <div className="relative rounded-xl p-4 bg-white w-fit max-w-full min-h-0 m-8 mx-auto drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words">
       {/* Image Container */}
-      <div
-        className="relative rounded-xl bg-neutral-400 row-span-1"
-        style={{ width: '300px', height: '200px' }}
-      >
-        <Image
-          className="object-cover rounded-xl"
-          src={data.thumbnail}
-          alt="hero banner"
-          layout="fill"
-          loading="lazy"
-        />
-      </div>
+      <Link href={`/courseList/${data.id}`}>
+        <div
+          className="relative rounded-xl bg-neutral-400 row-span-1"
+          style={{ width: '300px', height: '200px' }}
+        >
+          <Image
+            className="object-cover rounded-xl"
+            src={data.thumbnail}
+            alt="hero banner"
+            layout="fill"
+            loading="lazy"
+          />
+        </div>
+      </Link>
 
       {/* Stop Description Image */}
 
@@ -78,7 +77,7 @@ const CourseCard = ({ data, onClick }) => {
           </Button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

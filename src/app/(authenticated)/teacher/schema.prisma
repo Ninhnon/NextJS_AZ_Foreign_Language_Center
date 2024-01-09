@@ -1,0 +1,300 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id                       Int               @id @default(autoincrement())
+  name                     String
+  email                    String            @unique
+  password                 String
+  role                     String?           @default("user")
+  avatar                   String?           @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  address                  String?           @default("VietNam")
+  birthDay                 DateTime?
+  indexSalary              Int?
+  level                    Int?
+  salary                   Int?
+  phoneNumber              String            @default("0544239584")
+  isDisabled               Boolean?          @default(false)
+  addresses                Address[]
+  classsessions            ClassSession[]
+  assignment_users         Assignment_User[] @relation("UserRelation")
+  assignment_user_teachers Assignment_User[] @relation("TeacherRelation")
+  orders                   Order[]
+}
+
+model Address {
+  id          Int     @id @default(autoincrement())
+  city        String
+  district    String
+  selected    Boolean @default(false)
+  ward        String
+  street      String
+  houseNumber String
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Assignment {
+  id                       Int                       @id @default(autoincrement())
+  name                     String
+  moduleId                 Int
+  skillId                  Int
+  bandScoreId              Int
+  startTime                DateTime
+  files                    String?                   @db.LongText
+  lastModifiedTime         DateTime                  @default(now())
+  module                   Module                    @relation(fields: [moduleId], references: [id])
+  skill                    Skill                     @relation(fields: [skillId], references: [id])
+  bandScore                BandScore                 @relation(fields: [bandScoreId], references: [id])
+  Assignment_ClassSessions Assignment_ClassSession[]
+  Assignment_Users         Assignment_User[]
+  MultipleChoiceQuestions  MultipleChoiceQuestion[]
+
+  @@index([bandScoreId])
+  @@index([moduleId])
+  @@index([skillId])
+}
+
+model Assignment_ClassSession {
+  id             Int          @id @default(autoincrement())
+  classSessionId Int
+  assignmentId   Int
+  deadline       DateTime     @default(dbgenerated("'2025-12-12 00:00:00.000'"))
+  classSession   ClassSession @relation(fields: [classSessionId], references: [id])
+  assignment     Assignment   @relation(fields: [assignmentId], references: [id])
+
+  @@index([assignmentId])
+  @@index([classSessionId])
+}
+
+model Assignment_User {
+  id           Int        @id @default(autoincrement())
+  userId       Int
+  assignmentId Int
+  score        Float?
+  comment      String?
+  files        String?    @db.LongText
+  teacherId    Int?
+  createdAt    DateTime   @default(now())
+  courseId     Int?       @default(12)
+  teacher      User?      @relation("TeacherRelation", fields: [teacherId], references: [id])
+  user         User       @relation("UserRelation", fields: [userId], references: [id])
+  course       Course?    @relation(fields: [courseId], references: [id])
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+
+  @@index([teacherId])
+  @@index([assignmentId])
+  @@index([userId])
+  @@index([courseId])
+}
+
+model BandScore {
+  id          Int          @id @default(autoincrement())
+  moduleId    Int
+  name        String
+  assignments Assignment[]
+
+  @@index([moduleId])
+}
+
+model ClassSession {
+  id                      Int                       @id @default(autoincrement())
+  courseId                Int
+  teacherId               Int
+  skillId                 Int?                      @default(1)
+  roomId                  Int
+  StartTime               DateTime
+  timeId                  Int
+  CategoryColor           String                    @default("#fecaca")
+  name                    String?                   @default("Lesson")
+  skill                   Skill?                    @relation(fields: [skillId], references: [id])
+  teacher                 User                      @relation(fields: [teacherId], references: [id])
+  Room                    Room?                     @relation(fields: [roomId], references: [id])
+  time                    TimeShift                 @relation(fields: [timeId], references: [id])
+  Course                  Course                    @relation(fields: [courseId], references: [id])
+  classshifts             ClassShift[]
+  assigment_classsessions Assignment_ClassSession[]
+
+  @@index([courseId])
+  @@index([roomId])
+  @@index([teacherId])
+  @@index([timeId])
+  @@index([skillId])
+}
+
+model ClassShift {
+  id            Int            @id @default(autoincrement())
+  roomId        Int?
+  timeId        Int
+  time          TimeShift      @relation(fields: [timeId], references: [id])
+  classsessions ClassSession[]
+  Room          Room?          @relation(fields: [roomId], references: [id])
+
+  @@index([roomId])
+  @@index([timeId])
+}
+
+model Course {
+  id                Int               @id @default(autoincrement())
+  moduleId          Int               @default(1)
+  BandScoreId       Int               @default(1)
+  name              String            @default("online")
+  totalSession      Int               @default(0)
+  startTime         DateTime
+  endTime           DateTime
+  totalAttendance   Int               @default(0)
+  tuitionFee        Int
+  totalCost         Int
+  recommendCourseId Int?
+  thumbnail         String?
+  assignmentUsers   Assignment_User[]
+  classsessions     ClassSession[]
+  orders            Order[]
+
+  @@index([BandScoreId])
+  @@index([moduleId])
+}
+
+model CourseDetails {
+  id          Int     @id @default(autoincrement())
+  courseId    Int
+  subtitle    String  @db.LongText
+  description String? @db.LongText
+
+  @@index([courseId])
+}
+
+model Facility {
+  id            Int    @id @default(autoincrement())
+  name          String
+  roomId        Int    @unique
+  broom         Int
+  ceilingFan    Int
+  chair         Int
+  table         Int
+  waterPurifier Int
+  room          Room   @relation(fields: [roomId], references: [id])
+
+  @@index([roomId])
+}
+
+model Module {
+  id          Int          @id @default(autoincrement())
+  name        String
+  assignments Assignment[]
+}
+
+model MultipleChoiceQuestion {
+  id           Int        @id @default(autoincrement())
+  assignmentId Int
+  question     String
+  answer       Int
+  option1      String
+  option2      String
+  option3      String
+  option4      String
+  audio        String?
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+
+  @@index([assignmentId])
+}
+
+model Room {
+  id            Int            @id @default(autoincrement())
+  name          String
+  status        String?        @default("Free")
+  typeId        Int
+  note          String?
+  attendance    Int
+  capacity      Int
+  floor         Int
+  toilet        Int
+  type          RoomType       @relation(fields: [typeId], references: [id])
+  facilities    Facility[]
+  classsessions ClassSession[]
+  classshifts   ClassShift[]
+
+  @@index([typeId])
+}
+
+model RoomType {
+  id   Int    @id @default(autoincrement())
+  name String
+  room Room[]
+}
+
+model Skill {
+  id            Int            @id @default(autoincrement())
+  name          String
+  classsessions ClassSession[]
+  assignments   Assignment[]
+}
+
+model TimeShift {
+  id            Int            @id @default(autoincrement())
+  time          String
+  classsessions ClassSession[]
+  classshifts   ClassShift[]
+}
+
+model AssignmentToAssignment_ClassSession {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_AssignmentToAssignment_ClassSession_AB_unique")
+  @@index([B], map: "_AssignmentToAssignment_ClassSession_B_index")
+  @@map("_AssignmentToAssignment_ClassSession")
+}
+
+model AssignmentToAssignment_User {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_AssignmentToAssignment_User_AB_unique")
+  @@index([B], map: "_AssignmentToAssignment_User_B_index")
+  @@map("_AssignmentToAssignment_User")
+}
+
+model Assignment_ClassSessionToClassSession {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_Assignment_ClassSessionToClassSession_AB_unique")
+  @@index([B], map: "_Assignment_ClassSessionToClassSession_B_index")
+  @@map("_Assignment_ClassSessionToClassSession")
+}
+
+model ClassSessionToClassShift {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_ClassSessionToClassShift_AB_unique")
+  @@index([B], map: "_ClassSessionToClassShift_B_index")
+  @@map("_ClassSessionToClassShift")
+}
+
+model Order {
+  id                 Int      @id @default(autoincrement())
+  orderDate          DateTime @default(now())
+  total              Float
+  userId             Int?
+  status             String   @default("Pending")
+  anonymousUser      String?
+  anonymousUserEmail String?
+  anonymousUserName  String?
+  orderId            Int?
+  user               User?    @relation(fields: [userId], references: [id])
+  orderItem          Course?  @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+  @@index([orderId])
+}
