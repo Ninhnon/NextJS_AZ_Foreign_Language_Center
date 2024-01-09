@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-
+import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 // import { Icons } from '@/assets/Icons';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,7 @@ const formSchema = z.object({
 const Login = ({ className }: { className?: string; providers: unknown }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [users, setUsers] = React.useState<any[]>([]);
   const [show, setShow] = React.useState({
     showPass: false,
   });
@@ -46,6 +47,23 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
       password: '',
     },
   });
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const res = await fetch('/api/user/all');
+        const data = await res.json();
+        console.log('🚀 ~ file: Login.tsx:55 ~ getUsers ~ data:', data);
+        setUsers(data.data);
+
+        // Perform login attempt here after fetching user data
+        // Example:
+        // performLogin();
+      } catch (error) {
+        console.error('Error fetching or parsing data:', error);
+      }
+    };
+    getUsers();
+  }, []);
   async function onSubmit(data) {
     console.log(data);
 
@@ -61,17 +79,20 @@ const Login = ({ className }: { className?: string; providers: unknown }) => {
       toast.error(res?.error);
       return;
     }
+    console.log('🚀 ~ file: Login.tsx:58 ~ onSubmit ~ users:', users);
+    const role = users.find((user) => user.email === data.email)?.role;
+    // // await alreadyLoggedIn();
+    // const currentUser = await getCurrentUser(data.email);
+    // console.log(
+    //   '🚀 ~ file: Login.tsx:68 ~ onSubmit ~ currentUser:',
+    //   currentUser
+    // );
+    if (role === 'admin') router.push('/admin/');
+    else if (role === 'user') router.push('/user/');
+    else if (role === 'teacher') router.push('/teacher/');
+    else if (role === 'staff') router.push('/staff/');
+    else router.push('/');
 
-    if (!res?.error) {
-      // // await alreadyLoggedIn();
-      // const currentUser = await getCurrentUser(data.email);
-      // console.log(
-      //   '🚀 ~ file: Login.tsx:68 ~ onSubmit ~ currentUser:',
-      //   currentUser
-      // );
-
-      router.push('/');
-    }
     setIsLoading(false);
     console.log(res);
   }

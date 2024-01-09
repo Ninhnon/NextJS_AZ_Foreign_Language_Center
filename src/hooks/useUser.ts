@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { User } from '@/models';
 import { useQuery } from '@tanstack/react-query';
-
+import { getRequest } from '@/lib/fetch';
 export const useUser = () => {
   // Get all user
   const fetchAllUser = async (): Promise<User[]> => {
@@ -31,6 +31,14 @@ export const useUser = () => {
 
     return res;
   };
+  const onGetUserDetail = async (userId) => {
+    const productDetail = await getRequest({
+      endPoint: `/api/user?userId=${userId}`,
+    });
+    // const data = await productDetail?.json();
+
+    return productDetail;
+  };
 
   const onUpdateUser = async (userId: any, values: any) => {
     const res = await axios.put(`/api/staff/user_management/edit`, {
@@ -52,6 +60,7 @@ export const useUser = () => {
   };
 
   return {
+    onGetUserDetail,
     onAddUser,
     onUpdateUser,
     onDeleteUser,

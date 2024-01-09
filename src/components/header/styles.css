@@ -15,7 +15,9 @@ const blackA = { blackA1: '#00000003', blackA2: '#00000006', blackA3: '#0000000e
 /* reset */
 button,
 p {
-  all: unset;
+  margin: 0;
+  padding: 0;
+  background: none;
 }
 
 .NavigationMenuRoot {
