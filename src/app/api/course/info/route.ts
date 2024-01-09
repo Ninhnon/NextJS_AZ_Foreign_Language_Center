@@ -19,7 +19,6 @@ export async function GET(req: Request) {
     }
   } catch (error) {
     console.log(error);
-  } finally {
-    await prisma.$disconnect();
+    return new Response(JSON.stringify(error), { status: 500 });
   }
 }
