@@ -77,6 +77,19 @@ export const useAssignment = () => {
     return answer;
   };
 
+  const onGetAssignmentFromUserIdAndCourseId = async (
+    page: number,
+    limit: number,
+    search: string,
+    userId: number,
+    courseId: number
+  ) => {
+    const res = await getRequest({
+      endPoint: `/api/assignment/user?page=${page}&limit=${limit}&search=${search}&userId=${userId}&courseId=${courseId}`,
+    });
+
+    return res;
+  };
   return {
     onGetAssignment,
     onGetAssignmentById,
@@ -84,5 +97,6 @@ export const useAssignment = () => {
     onGetMultipleChoiceQuestion,
     onPostMultipleChoiceQuestion,
     onPostMultipleChoiceQuestionResult,
+    onGetAssignmentFromUserIdAndCourseId,
   };
 };

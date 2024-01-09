@@ -69,8 +69,8 @@ export default function page({ params }: { params: { slug: any } }) {
                   {new Date(assignmentData.data.startTime).toLocaleString()}
                 </span>
               </div>
-              {(assignmentData.data.skill.name === 'Listening' ||
-                assignmentData.data.skill.name === 'Reading') && (
+              {(assignmentData.data.skill.name === 'Writing' ||
+                assignmentData.data.skill.name === 'Speaking') && (
                 <Button
                   className="font-bold text-orange flex flex-row w-fit end-4"
                   variant="light"

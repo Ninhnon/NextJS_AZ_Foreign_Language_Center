@@ -9,23 +9,24 @@ datasource db {
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  name             String
-  email            String            @unique
-  password         String
-  role             String?           @default("user")
-  avatar           String?           @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
-  address          String?           @default("VietNam")
-  birthDay         DateTime?
-  indexSalary      Int?
-  level            Int?
-  salary           Int?
-  phoneNumber      String            @default("0544239584")
-  isDisabled       Boolean?          @default(false)
-  addresses        Address[]
-  classsessions    ClassSession[]
-  assignment_users Assignment_User[]
-  orders           Order[]
+  id                       Int               @id @default(autoincrement())
+  name                     String
+  email                    String            @unique
+  password                 String
+  role                     String?           @default("user")
+  avatar                   String?           @default("https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1")
+  address                  String?           @default("VietNam")
+  birthDay                 DateTime?
+  indexSalary              Int?
+  level                    Int?
+  salary                   Int?
+  phoneNumber              String            @default("0544239584")
+  isDisabled               Boolean?          @default(false)
+  addresses                Address[]
+  classsessions            ClassSession[]
+  assignment_users         Assignment_User[] @relation("UserRelation")
+  assignment_user_teachers Assignment_User[] @relation("TeacherRelation")
+  orders                   Order[]
 }
 
 model Address {
@@ -67,6 +68,7 @@ model Assignment_ClassSession {
   id             Int          @id @default(autoincrement())
   classSessionId Int
   assignmentId   Int
+  deadline       DateTime     @default(dbgenerated("'2025-12-12 00:00:00.000'"))
   classSession   ClassSession @relation(fields: [classSessionId], references: [id])
   assignment     Assignment   @relation(fields: [assignmentId], references: [id])
 
@@ -79,11 +81,19 @@ model Assignment_User {
   userId       Int
   assignmentId Int
   score        Float?
-  user         User       @relation(fields: [userId], references: [id])
+  comment      String?
+  files        String?    @db.LongText
+  teacherId    Int?
+  createdAt    DateTime   @default(now())
+  courseId     Int?       @default(12)
+  teacher      User?      @relation("TeacherRelation", fields: [teacherId], references: [id])
+  user         User       @relation("UserRelation", fields: [userId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 
+  @@index([teacherId])
   @@index([assignmentId])
   @@index([userId])
+  @@index([courseId])
 }
 
 model BandScore {
@@ -117,6 +127,7 @@ model ClassSession {
   @@index([roomId])
   @@index([teacherId])
   @@index([timeId])
+  @@index([skillId])
 }
 
 model ClassShift {

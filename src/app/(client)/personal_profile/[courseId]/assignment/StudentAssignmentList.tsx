@@ -1,13 +1,11 @@
-import OrderCard from '@/components/cards/OrderCard';
+'use client';
+import StudentAssignmentCard from '@/components/cards/StudentAssignmentCard';
 import { Input } from '@/components/ui/input';
-import { useOrder } from '@/hooks/useOrder';
+import { useAssignment } from '@/hooks/useAssignment';
 import { Button, Pagination, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-
-const OrderList = () => {
-  //Set selected option button
-
+const StudentAssignmentList = ({ id, userId }) => {
   const [search, setSearch] = useState('');
   //Get first n items of data
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,13 +13,19 @@ const OrderList = () => {
   const [totalPage, setTotalPage] = useState(10);
   const [filterByUserIdNull, setFilterByUserIdNull] = useState(false); // New state for filter
 
-  const { onGetOrders } = useOrder();
+  const { onGetAssignmentFromUserIdAndCourseId } = useAssignment();
   //Get review data per page from API-
   // Define a query key and fetch function for fetching review data
   const orderDataQueryKey = ['orderPage', currentPage];
 
   const fetchOrderListData = async () => {
-    const orderList = await onGetOrders(currentPage, itemsPerPage, search);
+    const orderList = await onGetAssignmentFromUserIdAndCourseId(
+      currentPage,
+      itemsPerPage,
+      search,
+      parseInt(userId),
+      id
+    );
     return orderList;
   };
   const onFilterByUserIdNull = () => {
@@ -43,9 +47,8 @@ const OrderList = () => {
       setTotalPage(orderListData.totalPage);
     }
   }, [orderListData]);
-
   console.log(
-    '🚀 ~ file: RoomList.tsx:58 ~ RoomList ~ roomListData:',
+    '🚀 ~ file: StudentAssignmentList.tsx:52 ~ StudentAssignmentList ~ orderListData:',
     orderListData
   );
 
@@ -54,7 +57,6 @@ const OrderList = () => {
   };
   return (
     <div className="w-full h-full flex flex-col py-6 px-20">
-      <div className="font-bold">Danh sách đăng ký</div>
       <div className="w-full h-fit flex flex-row gap-4 items-center">
         <Input
           className="bg-[#FDF8EE] h-10 text-black border-0 mr-4"
@@ -75,7 +77,7 @@ const OrderList = () => {
             radius="sm"
             onClick={onFilterByUserIdNull} // Call the function to toggle the filter
           >
-            {filterByUserIdNull ? 'Hủy lọc' : 'Đăng ký chưa có tài khoản'}
+            {filterByUserIdNull ? 'Hủy lọc' : 'Chưa làm'}
           </Button>
         </div>
       </div>
@@ -92,14 +94,17 @@ const OrderList = () => {
                 labelColor="warning"
               />
             ) : (
-              <div className="w-full h-fit grid grid-cols-1 gap-2 items-center">
+              <div className="w-full h-fit grid grid-cols-1 gap-1 items-center">
                 {orderListData.data
                   .filter(
-                    (order) => !filterByUserIdNull || order.userId === null
+                    (order) => !filterByUserIdNull || order.score === null
                   )
                   .map((order) => (
                     <div key={order.id}>
-                      <OrderCard data={order}></OrderCard>
+                      <StudentAssignmentCard
+                        data={order}
+                        route={'/entrance_examination/assignment_detail/'}
+                      ></StudentAssignmentCard>
                     </div>
                   ))}
                 <Pagination
@@ -121,4 +126,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default StudentAssignmentList;
