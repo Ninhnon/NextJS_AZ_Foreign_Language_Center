@@ -12,6 +12,9 @@ export async function GET(request: Request) {
     where: {
       teacherId: teacherId,
       assignment: {
+        files: {
+          not: null,
+        }, // chỉ lấy những bài tập có file
         skill: {
           name: 'Writing', // chỉ lấy những bài tập có kỹ năng là 'Writing'
         },

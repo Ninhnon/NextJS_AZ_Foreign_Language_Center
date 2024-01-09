@@ -19,7 +19,6 @@ import {
   SortDescriptor,
   User as UserInfo,
   Spinner,
-  Link,
   Tooltip,
 } from '@nextui-org/react';
 import { FaEdit as EditIcon } from 'react-icons/fa';
@@ -29,6 +28,7 @@ import { columns, statusOptions } from './data';
 import { capitalize } from './utils';
 import { useTeacher } from '@/hooks/useTeacher';
 import type { Assignment_User, User } from '@/models';
+import AssignmentCard from './AssignmentCard';
 
 const INITIAL_VISIBLE_COLUMNS = [
   'id',
@@ -175,19 +175,40 @@ export default function GradingTable({ onOpen, setSelectedAssignment }) {
             </Chip>
           );
         case 'score':
-          return <p>{cellValue || 'Chưa chấm'}</p>;
-        case 'files':
-          // cellValue là một chuỗi chứa đường link
-          return (
-            <div className="items-center justify-center">
-              <Link href={cellValue}>Xem</Link>
-            </div>
-          );
+          return <p>{cellValue ? `${cellValue} điểm` : 'Chưa chấm'}</p>;
+        case 'files': {
+          let fileElements = null;
+          if (assignment?.files) {
+            try {
+              // Parse chuỗi JSON để chuyển thành một mảng các đối tượng
+              const filesArray = JSON.parse(
+                assignment?.files.replace(/\\r\\n/g, '')
+              );
+              // Sử dụng FileCard để hiển thị từng file
+              fileElements = filesArray.map((file, index) => (
+                <AssignmentCard
+                  key={file.id}
+                  i={index}
+                  file={{
+                    ...file,
+                    preview: file.url, // Giả sử rằng 'url' là đường dẫn để xem trước file
+                  }}
+                  files={filesArray}
+                />
+              ));
+            } catch (error) {
+              console.error('Có lỗi khi parse JSON:', error);
+              fileElements = <p>Lỗi khi hiển thị file</p>;
+            }
+          }
+          return <div>{fileElements}</div>;
+        }
+
         case 'actions':
           return (
             <div className="relative flex justify-end items-center gap-2">
               <Tooltip content="Chấm điểm học viên">
-                <Button isIconOnly color="primary">
+                <Button isIconOnly color="primary" onClick={onOpen}>
                   <EditIcon width={30} height={30} />
                 </Button>
               </Tooltip>
@@ -301,7 +322,7 @@ export default function GradingTable({ onOpen, setSelectedAssignment }) {
             Tổng cộng {assignments?.length} bài tập
           </span>
           <label className="flex items-center text-default-400 text-small">
-            Rows per page:
+            Số dòng mỗi trang:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}

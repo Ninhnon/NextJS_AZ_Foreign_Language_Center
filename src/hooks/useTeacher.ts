@@ -23,5 +23,23 @@ export const useTeacher = () => {
     enabled: !!session?.user.id, // Chỉ enable query khi session?.user.id có giá trị
   });
 
-  return { assignments, isAssignmentsLoading, isAssignmentsFetching };
+  const onUpdateAssignmentGrading = async (
+    assignmentId: number,
+    values: { comment?: string; score?: number }
+  ) => {
+    console.log(assignmentId, values, 'Cac gia tri');
+    const res = await axios.put(`/api/user/teacher/edit-grade`, {
+      id: assignmentId,
+      comment: values.comment,
+      score: values.score,
+    });
+    return res;
+  };
+
+  return {
+    assignments,
+    isAssignmentsLoading,
+    isAssignmentsFetching,
+    onUpdateAssignmentGrading,
+  };
 };
