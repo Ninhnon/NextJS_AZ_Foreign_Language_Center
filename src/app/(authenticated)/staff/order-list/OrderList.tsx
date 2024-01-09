@@ -4,7 +4,6 @@ import { useOrder } from '@/hooks/useOrder';
 import { Button, Pagination, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { FaTrash } from 'react-icons/fa6';
 
 const OrderList = () => {
   //Set selected option button
@@ -72,21 +71,11 @@ const OrderList = () => {
         />
         <div className="relative w-fit h-fit flex flex-row mr-4 items-center">
           <Button
-            className="bg-[#FDF8EE] h-10 text-black w-32"
+            className="bg-[#FDF8EE] h-10 text-black w-64"
             radius="sm"
             onClick={onFilterByUserIdNull} // Call the function to toggle the filter
           >
             {filterByUserIdNull ? 'Hủy lọc' : 'Đăng ký chưa có tài khoản'}
-          </Button>
-          <Button
-            isIconOnly
-            color="warning"
-            variant="light"
-            size="lg"
-            className="text-black"
-            aria-label="Take a photo"
-          >
-            <FaTrash />
           </Button>
         </div>
       </div>

@@ -127,7 +127,7 @@ const AssignmentDetails = ({ data, router }) => {
         startContent={<FaCircleQuestion />}
         onClick={() => {
           router.push(
-            `/admin/assignment/${data.id}/multiple-choice-question?id=${data.id}`
+            `/staff/assignment/${data.id}/multiple-choice-question?id=${data.id}`
           );
         }}
       >

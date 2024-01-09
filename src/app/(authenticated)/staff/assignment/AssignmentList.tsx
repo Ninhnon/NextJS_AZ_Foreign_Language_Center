@@ -10,6 +10,7 @@ const AssignmentList = ({
   totalPage,
   onSubmit,
   isLoading,
+  route,
 }) => {
   return (
     <>
@@ -57,7 +58,7 @@ const AssignmentList = ({
                 {data?.map((item) => (
                   <div key={item.id}>
                     <div>
-                      <AssignmentCard data={item} />
+                      <AssignmentCard data={item} route={route} />
                     </div>
                   </div>
                 ))}
