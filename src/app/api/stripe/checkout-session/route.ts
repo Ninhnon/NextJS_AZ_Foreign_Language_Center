@@ -1,6 +1,6 @@
 import { getSession } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { getUserSubscriptionPlan, stripe } from '@/lib/stripe';
+import { stripe } from '@/lib/stripe';
 
 export async function POST(request: Request) {
   const session = await getSession();
@@ -13,21 +13,21 @@ export async function POST(request: Request) {
 
   const body = await request.json();
   if (!body?.product?.id) return new Response('Unauthorized', { status: 401 });
-  const subscriptionPlan = await getUserSubscriptionPlan();
+  // const subscriptionPlan = await getUserSubscriptionPlan();
 
-  //handle if the user already has a subscription
-  //it will be renew, and call invoice.payment_succeeded webhook
-  if (subscriptionPlan && user.stripeCustomerId) {
-    const stripeSession = await stripe.billingPortal.sessions.create({
-      customer: user.stripeCustomerId,
-      return_url: billing_url,
-    });
+  // //handle if the user already has a subscription
+  // //it will be renew, and call invoice.payment_succeeded webhook
+  // if (subscriptionPlan && user.stripeCustomerId) {
+  //   const stripeSession = await stripe.billingPortal.sessions.create({
+  //     customer: user.stripeCustomerId,
+  //     return_url: billing_url,
+  //   });
 
-    return new Response(JSON.stringify({ url: stripeSession.url }), {
-      status: 200,
-    });
-  }
-  console.log('body in checkout-session', body);
+  //   return new Response(JSON.stringify({ url: stripeSession.url }), {
+  //     status: 200,
+  //   });
+  // }
+  // console.log('body in checkout-session', body);
 
   //handle if the user doesn't have a subscription
   //it will be create a new subscription, and call checkout.session.completed webhook
