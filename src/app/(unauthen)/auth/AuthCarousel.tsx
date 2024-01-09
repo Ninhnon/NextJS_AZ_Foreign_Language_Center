@@ -16,7 +16,7 @@ function AuthCarousel() {
       >
         <div className="h-screen w-full">
           <Image
-            src="https://utfs.io/f/f9aebee1-dffd-4761-8471-a0fb076d61c2-aclqkq.png"
+            src="https://utfs.io/f/108d4057-8e86-4662-86aa-19b5552cc6fd-3locdn.jpg"
             alt="Auth background"
             layout="fill"
             objectFit="cover"
@@ -38,7 +38,7 @@ function AuthCarousel() {
         </div>
         <div>
           <Image
-            src="https://utfs.io/f/108d4057-8e86-4662-86aa-19b5552cc6fd-3locdn.jpg"
+            src="https://utfs.io/f/82f5f85e-060f-4580-9c32-ab50ee729faa-xnew8.jpg"
             alt="Auth background"
             layout="fill"
             objectFit="cover"

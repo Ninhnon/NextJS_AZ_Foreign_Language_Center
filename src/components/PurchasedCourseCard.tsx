@@ -7,7 +7,7 @@ import {
 } from 'react-icons/ai';
 import { BsFillPatchCheckFill } from 'react-icons/bs';
 import { format } from 'date-fns';
-
+import Link from 'next/link';
 const PurchasedCourseCard = ({ data }) => {
   // const href = '/staff/course-list/' + data.id;
   return (
@@ -16,22 +16,24 @@ const PurchasedCourseCard = ({ data }) => {
     //   href={href}
     //   className="w-fit h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center"
     // >
-    <div className="w-full h-fit flex flex-col justify-between shadow-md rounded-md p-2 m-3 items-center gap-4 break-words">
+    <Link
+      href={'/personal_profile/' + data.id}
+      className="w-full h-fit flex flex-col justify-between shadow-md rounded-md p-2 m-3 items-center gap-4 break-words"
+    >
       {/* Start Description Image */}
 
-      {/* <div
-        className="relative rounded-xl bg-neutral-400 row-span-1"
-        style={{ width: '200px', height: '150px' }}
-      > */}
-      <Image
-        className="object-cover rounded-xl"
-        src={data.thumbnail}
-        alt=""
-        width={220}
-        height={150}
-        loading="lazy"
-      />
-      {/* </div> */}
+      <div
+        className="relative rounded-xl row-span-1"
+        style={{ width: '220px', height: '150px' }}
+      >
+        <Image
+          className="object-cover rounded-xl"
+          src={data.thumbnail}
+          alt=""
+          layout="fill"
+          loading="lazy"
+        />
+      </div>
 
       {/* Stop Description Image */}
 
@@ -84,7 +86,7 @@ const PurchasedCourseCard = ({ data }) => {
         </div>
       </div>
       {/* Stop Description Text */}
-    </div>
+    </Link>
     // </Link>
   );
 };
