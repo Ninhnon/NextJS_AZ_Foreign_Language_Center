@@ -77,6 +77,27 @@ export const useAssignment = () => {
     return answer;
   };
 
+  const onGetAssignmentFromUserIdAndCourseId = async (
+    page: number,
+    limit: number,
+    search: string,
+    userId: number,
+    courseId: number
+  ) => {
+    const res = await getRequest({
+      endPoint: `/api/assignment/user?page=${page}&limit=${limit}&search=${search}&userId=${userId}&courseId=${courseId}`,
+    });
+
+    return res;
+  };
+  const onUpdateAssignmentUp = async (data: any) => {
+    const res = await postRequest({
+      endPoint: `/api/assignment/up`,
+      isFormData: false,
+      formData: data,
+    });
+    return res;
+  };
   return {
     onGetAssignment,
     onGetAssignmentById,
@@ -84,5 +105,7 @@ export const useAssignment = () => {
     onGetMultipleChoiceQuestion,
     onPostMultipleChoiceQuestion,
     onPostMultipleChoiceQuestionResult,
+    onGetAssignmentFromUserIdAndCourseId,
+    onUpdateAssignmentUp,
   };
 };

@@ -6,17 +6,32 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import { getSession } from 'next-auth/react';
-
+import React from 'react';
+import AssignmentFilePickerStudent from '@/components/AssignmentFilePickerStudent';
 export default function page({ params }: { params: { slug: any } }) {
   const { slug } = params;
   const router = useRouter();
-
+  const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState(null);
   //Get session (to check if user is logged in)
   const onGetUserSession = async () => {
     const session = await getSession();
     if (!session) {
       router.push('/auth/login');
     }
+    return session;
+  };
+  const onOpen = async () => {
+    const session = await onGetUserSession();
+    console.log('🚀 ~ file: page.tsx:33 ~ page ~ session:', session?.user.id);
+    const userId = session?.user.id;
+    const ret = await fetch(
+      '/api/assignment/assignment?userId=' + userId + '&assignId=' + slug
+    );
+    const data = await ret.json();
+    console.log('🚀 ~ file: page.tsx:32 ~ onOpen ~ data:', data);
+    setData(data);
+    setOpen(true);
   };
   const { onGetAssignmentById } = useAssignment();
 
@@ -69,25 +84,46 @@ export default function page({ params }: { params: { slug: any } }) {
                   {new Date(assignmentData.data.startTime).toLocaleString()}
                 </span>
               </div>
-              <Button
-                className="font-bold text-orange flex flex-row w-fit end-4"
-                variant="light"
-                radius="sm"
-                startContent={<FaCircleQuestion />}
-                onClick={() => {
-                  onGetUserSession();
-                  router.push(
-                    `/entrance_examination/assignment_detail/${assignmentData.data.id}/multiple_choice_question?id=${assignmentData.data.id}`
-                  );
-                }}
-              >
-                Làm câu hỏi trắc nghiệm
-              </Button>
+              {(assignmentData.data.skill.name === 'Listening' ||
+                assignmentData.data.skill.name === 'Reading') && (
+                <Button
+                  className="font-bold text-orange flex flex-row w-fit end-4"
+                  variant="light"
+                  radius="sm"
+                  startContent={<FaCircleQuestion />}
+                  onClick={() => {
+                    onGetUserSession();
+                    router.push(
+                      `/entrance_examination/assignment_detail/${assignmentData.data.id}/multiple_choice_question?id=${assignmentData.data.id}`
+                    );
+                  }}
+                >
+                  Làm câu hỏi trắc nghiệm
+                </Button>
+              )}
             </div>
             <div className="ml-4">
               <AssignmentFileList
                 assignmentFileList={JSON.parse(assignmentData.data.files)}
               />
+            </div>
+            <div>
+              {(assignmentData.data.skill.name === 'Writing' ||
+                assignmentData.data.skill.name === 'Speaking') && (
+                <div>
+                  <Button
+                    className="font-bold text-orange flex flex-row w-fit end-4"
+                    variant="light"
+                    radius="sm"
+                    startContent={<FaCircleQuestion />}
+                    onClick={onOpen}
+                  >
+                    Làm bài
+                  </Button>
+                  {open && <AssignmentFilePickerStudent data={data} />}
+                </div>
+                //
+              )}
             </div>
           </div>
         ) : (

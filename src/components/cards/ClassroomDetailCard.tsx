@@ -90,23 +90,25 @@ const ClassroomDetailCard = ({
           <ScrollArea className="h-[13rem] w-fit rounded-md border-0 p-2">
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Quạt trần</span>
-              <span className="font-bold">{data.facility.ceilingFan}</span>
+              <span className="font-bold">{data.facilities[0].ceilingFan}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Bàn</span>
-              <span className="font-bold">{data.facility.table}</span>
+              <span className="font-bold">{data.facilities[0].table}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Ghế</span>
-              <span className="font-bold">{data.facility.chair}</span>
+              <span className="font-bold">{data.facilities[0].chair}</span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Máy lọc nước</span>
-              <span className="font-bold">{data.facility.waterPurifier}</span>
+              <span className="font-bold">
+                {data.facilities[0].waterPurifier}
+              </span>
             </div>
             <div className="h-fit w-44 p-2 flex flex-row justify-between bg-old-lace rounded-md border-0 my-1">
               <span>Chổi</span>
-              <span className="font-bold">{data.facility.broom}</span>
+              <span className="font-bold">{data.facilities[0].broom}</span>
             </div>
           </ScrollArea>
         </div>

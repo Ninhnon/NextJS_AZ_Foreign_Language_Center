@@ -15,8 +15,8 @@ const AssignmentDetails = ({ data, router }) => {
     { id: 2, module: 'TOEIC' },
   ];
   const skills = [
-    { id: 1, skill: 'Reading' },
-    { id: 2, skill: 'Listening' },
+    { id: 1, skill: 'Listening' },
+    { id: 2, skill: 'Reading' },
     { id: 3, skill: 'Writing' },
     { id: 4, skill: 'Speaking' },
   ];
@@ -127,7 +127,7 @@ const AssignmentDetails = ({ data, router }) => {
         startContent={<FaCircleQuestion />}
         onClick={() => {
           router.push(
-            `/admin/assignment/${data.id}/multiple-choice-question?id=${data.id}`
+            `/staff/assignment/${data.id}/multiple-choice-question?id=${data.id}`
           );
         }}
       >

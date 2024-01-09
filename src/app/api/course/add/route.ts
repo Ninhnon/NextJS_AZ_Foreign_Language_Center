@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         currentDate.getFullYear(),
         currentDate.getMonth(),
         currentDate.getDate(),
-        selectedHour + 7,
+        selectedHour,
         0,
         0,
         0

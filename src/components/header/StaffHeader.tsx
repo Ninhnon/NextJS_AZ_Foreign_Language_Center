@@ -23,9 +23,9 @@ import {
   FaBookOpen,
   FaCalendarDays,
   FaClipboardList,
-  FaCommentDots,
   FaDoorClosed,
   FaSquarePlus,
+  FaCartShopping,
 } from 'react-icons/fa6';
 import { Button } from '../ui/button';
 const StaffHeader = ({ session }) => {
@@ -69,6 +69,14 @@ const StaffHeader = ({ session }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#FDF8EE] ml-16 p-4 shadow-none font-bold text-lg">
               <DropdownMenuItem>
+                <Link href={'/staff/order-list'}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <FaCartShopping />
+                    <div className="ml-2">Danh sách đăng ký</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
                 <Link href={'/staff/course-list'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaBook />
@@ -92,16 +100,16 @@ const StaffHeader = ({ session }) => {
                   </div>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/staff/course-list'}>
+              {/* <DropdownMenuItem>
+                <Link href={'/staff/chat'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCommentDots />
                     <div className="ml-2">Hỏi đáp</div>
                   </div>
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/tkb'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCalendarDays />
                     <div className="ml-2">Thời khóa biểu</div>
@@ -109,7 +117,7 @@ const StaffHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/teacher_management'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <Image
                       src={'/teacher.png'}
@@ -117,20 +125,7 @@ const StaffHeader = ({ session }) => {
                       width={15}
                       height={15}
                     />
-                    <div className="ml-2">Danh sách giảng viên</div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={''}>
-                  <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <Image
-                      src={'/student.png'}
-                      alt="student"
-                      width={15}
-                      height={15}
-                    />
-                    <div className="ml-2">Danh sách học sinh</div>
+                    <div className="ml-2">Danh sách giảng viên và học viên</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
@@ -167,13 +162,14 @@ const StaffHeader = ({ session }) => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={'/staff/add-product'}>Add Product</Link>
+                  <Link href="/user/profile">Hồ sơ</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={'/' + user.role}>{user.role}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => signOut({ callbackUrl: '/auth/login' })}
                   className="border-solid border-t-2 mt-2  gap-2"
@@ -185,7 +181,7 @@ const StaffHeader = ({ session }) => {
             </DropdownMenu>
           </div>
         ) : (
-          <Button className="w-[150px] ml-8 h-4 text-white hover:bg-pink-700 bg-[#4D2C5E]">
+          <Button className="w-[150px] ml-8 h-8 text-white hover:bg-pink-700 bg-[#4D2C5E]">
             <Link href={'/auth/login'}>Đăng nhập</Link>
           </Button>
         )}

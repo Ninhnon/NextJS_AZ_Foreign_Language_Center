@@ -1,7 +1,7 @@
 import AssignmentCard from '@/components/cards/AssignmentCard';
-import { Button, Pagination, Spinner } from '@nextui-org/react';
+import { Pagination, Spinner } from '@nextui-org/react';
 import React from 'react';
-import { FaTrash } from 'react-icons/fa';
+// import { FaTrash } from 'react-icons/fa';
 
 const AssignmentList = ({
   data,
@@ -10,6 +10,7 @@ const AssignmentList = ({
   totalPage,
   onSubmit,
   isLoading,
+  route,
 }) => {
   return (
     <>
@@ -25,7 +26,7 @@ const AssignmentList = ({
           ) : (
             <div className="w-full h-full flex flex-col gap-4">
               <div className="w-full h-fit flex flex-row justify-between tems-center">
-                <div className="relative w-fit h-fit flex flex-col md:flex-row gap-4">
+                {/* <div className="relative w-fit h-fit flex flex-col md:flex-row gap-4">
                   <Button className="bg-orange text-white w-32" radius="sm">
                     Lọc dữ liệu
                   </Button>
@@ -51,13 +52,13 @@ const AssignmentList = ({
                   >
                     <FaTrash />
                   </Button>
-                </div>
+                </div> */}
               </div>
               <div className="w-full h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
                 {data?.map((item) => (
                   <div key={item.id}>
                     <div>
-                      <AssignmentCard data={item} />
+                      <AssignmentCard data={item} route={route} />
                     </div>
                   </div>
                 ))}

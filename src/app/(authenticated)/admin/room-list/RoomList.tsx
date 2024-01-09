@@ -35,7 +35,9 @@ const RoomList = () => {
   //Function return whether a time is available or not
   //(check if this classroom has booked this time or not)
   const isTimeAvailable = (dataItem, dataItemTime) => {
-    return dataItem?.classShifts.some((time) => time.timeId == dataItemTime.id);
+    return dataItem?.classsessions.some(
+      (time) => time.timeId == dataItemTime.id
+    );
   };
 
   const { onGetRoom } = useRoom();
@@ -50,6 +52,7 @@ const RoomList = () => {
       search,
       selectedRoomListOption
     );
+
     return roomList;
   };
 

@@ -10,7 +10,10 @@ export const useRoom = () => {
     const res = await getRequest({
       endPoint: `/api/room/all?page=${page}&limit=${limit}&search=${search}&type=${type}`,
     });
-
+    console.log(
+      '🚀 ~ file: RoomList.tsx:58 ~ fetchRoomListData ~ selectedRoomListOption:',
+      type
+    );
     return res;
   };
 

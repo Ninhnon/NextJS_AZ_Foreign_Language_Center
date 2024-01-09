@@ -1,5 +1,5 @@
 import AdminHeader from '@/components/header/AdminHeader';
-import { mustBeAdmin } from '@/lib/auth';
+import { getSession, mustBeAdmin } from '@/lib/auth';
 
 export default async function DashboardLayout({
   children,
@@ -7,12 +7,11 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   await mustBeAdmin();
+  const session = getSession();
 
   return (
     <div className={`w-full h-full`}>
-      <AdminHeader
-        session={{ user: { avatar: '/teacher_1.png', name: 'ADMIN' } }}
-      />
+      <AdminHeader session={session} />
       {children}
     </div>
   );
