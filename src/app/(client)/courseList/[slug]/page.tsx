@@ -5,6 +5,7 @@ import ReviewSwiper from '@/components/swipers/ReviewSwiper';
 import { useCourse } from '@/hooks/useCourse';
 import { useEffect, useState } from 'react';
 import { CourseDetails } from '@/models';
+import { Button } from '@nextui-org/react';
 
 const page = ({ params: { slug } }: { params: { slug: string } }) => {
   const userData = [
@@ -81,6 +82,12 @@ const page = ({ params: { slug } }: { params: { slug: string } }) => {
   return (
     <div className="h-full w-full">
       <div>
+        <Button
+          className="bg-[#FF7426] h-10 text-white w-32 top-30 fixed right-50 z-50 p-2 rounded-full shadow-md hover:shadow-lg"
+          radius="sm"
+        >
+          Đăng ký
+        </Button>
         <div className="md:block hidden sticky top-10 translate-y-20">
           <div className="w-2/5 ml-auto mr-2 max-h-0">
             <RegisterForm />
