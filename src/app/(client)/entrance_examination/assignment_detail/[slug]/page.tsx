@@ -121,6 +121,16 @@ export default function page({ params }: { params: { slug: any } }) {
                     Làm bài
                   </Button>
                   {open && <AssignmentFilePickerStudent data={data} />}
+                  {data?.score && (
+                    <div className="text-2xl font-bold text-center">
+                      Điểm: {data.score}
+                    </div>
+                  )}
+                  {data?.comment && (
+                    <div className="text-2xl font-bold text-center">
+                      Đánh giá của giảng viên: {data.comment}
+                    </div>
+                  )}
                 </div>
                 //
               )}

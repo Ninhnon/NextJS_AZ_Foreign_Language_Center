@@ -158,7 +158,7 @@ const AdminHeader = ({ session }) => {
                   className="border-solid border-t-2 mt-2  gap-2"
                 >
                   <div className="">{AuthSvg.signIn()}</div>
-                  Log out
+                  Đăng xuất
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
