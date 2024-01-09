@@ -1,6 +1,6 @@
 'use client';
-import AssignmentFilter from '@/app/(authenticated)/admin/assignment/AssignmentFilter';
-import AssignmentList from '@/app/(authenticated)/admin/assignment/AssignmentList';
+import AssignmentFilter from '@/app/(authenticated)/staff/assignment/AssignmentFilter';
+import AssignmentList from '@/app/(authenticated)/staff/assignment/AssignmentList';
 import { useAssignment } from '@/hooks/useAssignment';
 import { Spinner } from '@nextui-org/react';
 import React, { useState } from 'react';
