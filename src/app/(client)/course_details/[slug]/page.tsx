@@ -101,7 +101,7 @@ const page = ({ params: { slug } }: { params: { slug: string } }) => {
             </span>
 
             <span className="text-base font-normal ml-20">
-              Khóa học IELTS Junior English Foundation dành cho học sinh đang
+              Khóa học IELTS Junior English Foundation dành cho học viên đang
               theo học cấp Trung học cơ sở có mong muốn chinh phục bài thi
               IELTS, phát triển kiến thức xã hội và tự tin sử dụng tiếng Anh.
               Chương trình được xây dựng dựa trên sự phối hợp của 4 khía cạnh:

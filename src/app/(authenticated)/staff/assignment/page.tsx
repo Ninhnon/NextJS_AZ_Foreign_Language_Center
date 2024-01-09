@@ -72,6 +72,7 @@ const page = () => {
             totalPage={totalPage}
             isLoading={isLoading}
             onSubmit={onSubmit}
+            route={`/staff/assignment/`}
           />
         ) : (
           isLoading && (

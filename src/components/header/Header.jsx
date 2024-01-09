@@ -52,7 +52,7 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
       <div className="hidden lg:flex py-5  ">
-        {user ? (
+        {user.role === 'user' ? (
           <div className="flex flex-row gap-5 items-center justify-center">
             <DropdownMenu className="bg-[#FDF8EE]">
               <DropdownMenuTrigger>
@@ -162,7 +162,7 @@ const NavigationMenuDemo = ({ session }) => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <Link href="/user/profile">Hồ sơ</Link>

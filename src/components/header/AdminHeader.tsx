@@ -20,11 +20,9 @@ import Logo from '../logo';
 import {
   FaBars,
   FaBook,
-  FaBookOpen,
   FaCalendarDays,
   FaCartShopping,
   FaClipboardList,
-  FaCommentDots,
   FaDoorClosed,
 } from 'react-icons/fa6';
 import { Button } from '../ui/button';
@@ -92,14 +90,6 @@ const AdminHeader = ({ session }) => {
                   </div>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/admin/assignment'}>
-                  <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <FaBookOpen />
-                    <div className="ml-2">Bài tập</div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
 
               <DropdownMenuItem>
                 <Link href={'/admin/tkb'}>
@@ -118,20 +108,7 @@ const AdminHeader = ({ session }) => {
                       width={15}
                       height={15}
                     />
-                    <div className="ml-2">Danh sách giảng viên</div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/staff/student_management'}>
-                  <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <Image
-                      src={'/student.png'}
-                      alt="student"
-                      width={15}
-                      height={15}
-                    />
-                    <div className="ml-2">Danh sách học sinh</div>
+                    <div className="ml-2">Danh sách giảng viên và học viên</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
@@ -144,14 +121,14 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
-                <Link href={'/admin/course-list'}>
+              {/* <DropdownMenuItem>
+                <Link href={'/admin/chat'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaCommentDots />
                     <div className="ml-2">Hỏi đáp</div>
                   </div>
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
           <Logo />
@@ -168,13 +145,14 @@ const AdminHeader = ({ session }) => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={'/admin/add-product'}>Add Product</Link>
+                  <Link href="/user/profile">Hồ sơ</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={'/' + user.role}>{user.role}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => signOut({ callbackUrl: '/auth/login' })}
                   className="border-solid border-t-2 mt-2  gap-2"

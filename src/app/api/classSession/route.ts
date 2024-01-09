@@ -38,29 +38,3 @@ export async function GET() {
     return new Response(JSON.stringify(e), { status: 500 });
   }
 }
-
-export async function POST(req, res) {
-  try {
-    const eventData = req.body; // Assuming the request contains event data
-
-    // Perform event insertion using Prisma
-    const createdEvent = await prisma.classSession.create({
-      data: {
-        courseId: 1,
-        teacherId: 1,
-        roomId: 1,
-        timeId: 1,
-        classShiftId: 1,
-        // Map the eventData fields to the respective database fields
-        // Example:
-        StartTime: eventData.StartTime,
-        // Other fields...
-      },
-    });
-
-    res.status(201).json(createdEvent);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}

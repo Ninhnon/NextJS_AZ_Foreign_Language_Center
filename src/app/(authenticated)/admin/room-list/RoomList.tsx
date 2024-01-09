@@ -52,6 +52,7 @@ const RoomList = () => {
       search,
       selectedRoomListOption
     );
+
     return roomList;
   };
 
