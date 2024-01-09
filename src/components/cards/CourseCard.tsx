@@ -4,9 +4,13 @@ import { HiUserGroup } from 'react-icons/hi';
 import { AiOutlineClockCircle, AiOutlineCalendar } from 'react-icons/ai';
 import { Button } from '@nextui-org/react';
 import React from 'react';
+import Link from 'next/link';
 const CourseCard = ({ data, onClick }) => {
   return (
-    <div className="relative rounded-xl p-4 bg-white w-fit max-w-full min-h-0 m-8 mx-auto drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words">
+    <Link
+      href={`/courseList/${data.id}`}
+      className="relative rounded-xl p-4 bg-white w-fit max-w-full min-h-0 m-8 mx-auto drop-shadow-xl overflow-visible grid-rows-2 gap-4 break-words"
+    >
       {/* Image Container */}
       <div
         className="relative rounded-xl bg-neutral-400 row-span-1"
@@ -74,7 +78,7 @@ const CourseCard = ({ data, onClick }) => {
           </Button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

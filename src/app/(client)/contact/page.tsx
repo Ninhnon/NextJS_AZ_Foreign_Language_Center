@@ -25,6 +25,10 @@ const page = () => {
             bài giảng trọng tâm dễ hiểu và đạt mục tiêu trong thời gian mong
             muốn.
           </span>
+          <span className="text-5xl font-bold ml-20 mt-20">
+            Liên hệ email: uitieltscenter@gmail.com Hoặc sđt: 0969 999 999 gặp
+            tư vấn viên Nguyễn Ngọc Tín
+          </span>
         </div>
         {/* End Text */}
 

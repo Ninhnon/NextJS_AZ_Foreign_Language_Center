@@ -4,8 +4,8 @@ import { useOrder } from '@/hooks/useOrder';
 import { Button, Pagination, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-
-const OrderList = () => {
+import { PlusIcon } from './PlusIcon';
+const OrderList = ({ onOpen }) => {
   //Set selected option button
 
   const [search, setSearch] = useState('');
@@ -76,6 +76,13 @@ const OrderList = () => {
             onClick={onFilterByUserIdNull} // Call the function to toggle the filter
           >
             {filterByUserIdNull ? 'Hủy lọc' : 'Đăng ký chưa có tài khoản'}
+          </Button>
+          <Button
+            color="primary"
+            endContent={<PlusIcon width={20} height={20} />}
+            onClick={onOpen}
+          >
+            Thêm mới
           </Button>
         </div>
       </div>

@@ -25,7 +25,7 @@ const Footer = () => {
                 Cách để đăng ký
               </div>
             </Link>
-            <Link aria-label="Products" href="/course_details">
+            <Link aria-label="Products" href="/courseList">
               <div className="font-oswald font-medium text-sm cursor-pointer">
                 Các khóa học nổi bật
               </div>

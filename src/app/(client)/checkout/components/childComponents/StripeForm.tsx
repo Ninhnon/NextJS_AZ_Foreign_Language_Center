@@ -31,7 +31,7 @@ const StripeForm = ({ callback }) => {
     } else if (paymentIntent.status === 'succeeded') {
       toast.success('Thanh toán thành công');
       callback && callback();
-      router.push('/course_details');
+      router.push('/personal_profile');
     } else {
       toast.error('Thanh toán thất bại');
     }

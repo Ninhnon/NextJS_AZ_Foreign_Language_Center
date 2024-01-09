@@ -74,15 +74,9 @@ const NavigationMenuDemo = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                <Link href="/personal_assignments">
+                <Link href="/entrance_examination">
                   <div className="">{AuthSvg.exercise()}</div>
                   Bài tập
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                <Link href="/chat">
-                  <div className="">{AuthSvg.chat()}</div>
-                  Hỏi đáp
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
@@ -116,7 +110,7 @@ const NavigationMenuDemo = ({ session }) => {
             <NavigationMenu.Item>
               <NavigationMenu.Link
                 className="NavigationMenuLink"
-                href={'/course_details'}
+                href={'/courseList'}
               >
                 Khóa học
               </NavigationMenu.Link>
