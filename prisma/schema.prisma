@@ -67,6 +67,7 @@ model Assignment_ClassSession {
   id             Int          @id @default(autoincrement())
   classSessionId Int
   assignmentId   Int
+  deadline       DateTime     @default(dbgenerated("'2025-12-12 00:00:00.000'"))
   classSession   ClassSession @relation(fields: [classSessionId], references: [id])
   assignment     Assignment   @relation(fields: [assignmentId], references: [id])
 
@@ -79,11 +80,19 @@ model Assignment_User {
   userId       Int
   assignmentId Int
   score        Float?
+  comment      String?
+  files        String?    @db.LongText
+  teacherId    Int?
+  createdAt    DateTime   @default(now())
+  courseId     Int?        @default(12)
+  course       Course?     @relation(fields: [courseId], references: [id])
   user         User       @relation(fields: [userId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 
   @@index([assignmentId])
   @@index([userId])
+  @@index([teacherId])
+  @@index([courseId])
 }
 
 model BandScore {
@@ -117,6 +126,7 @@ model ClassSession {
   @@index([roomId])
   @@index([teacherId])
   @@index([timeId])
+  @@index([skillId])
 }
 
 model ClassShift {
@@ -144,8 +154,10 @@ model Course {
   totalCost         Int
   recommendCourseId Int?
   thumbnail         String?
+  assignmentUsers   Assignment_User[]
   classsessions     ClassSession[]
   orders            Order[]
+
   @@index([BandScoreId])
   @@index([moduleId])
 }
@@ -267,18 +279,19 @@ model ClassSessionToClassShift {
   @@index([B], map: "_ClassSessionToClassShift_B_index")
   @@map("_ClassSessionToClassShift")
 }
+
 model Order {
-  id                 Int         @id @default(autoincrement())
-  orderDate          DateTime    @default(now())
+  id                 Int      @id @default(autoincrement())
+  orderDate          DateTime @default(now())
   total              Float
   userId             Int?
-  status             String      @default("Pending")
+  status             String   @default("Pending")
   anonymousUser      String?
   anonymousUserEmail String?
   anonymousUserName  String?
-  user               User?       @relation(fields: [userId], references: [id])
-  orderId            Int?        
-  orderItem         Course?       @relation(fields: [orderId], references: [id])
+  orderId            Int?
+  user               User?    @relation(fields: [userId], references: [id])
+  orderItem          Course?  @relation(fields: [orderId], references: [id])
 
   @@index([userId])
   @@index([orderId])

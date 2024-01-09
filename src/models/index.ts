@@ -19,6 +19,15 @@ export interface Assignment_User {
   id: number;
   userId: number;
   assignmentId: number;
+  score?: number | null;
+  comment?: string | null;
+  files?: string | null;
+  teacherId?: number | null;
+  createdAt: Date;
+  courseId?: number | null;
+  course?: Course | null;
+  user: User;
+  assignment: Assignment;
 }
 
 export interface BandScore {

@@ -397,7 +397,6 @@ export default function TeacherTable({
   return (
     <div className="p-4">
       <Table
-        onRowAction={(key) => alert(`Opening item ${key}...`)}
         aria-label="Example table with custom cells, pagination and sorting"
         isHeaderSticky
         bottomContent={bottomContent}

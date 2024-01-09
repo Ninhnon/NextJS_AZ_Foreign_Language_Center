@@ -1,6 +1,6 @@
 import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
-import { getSession, mustBeUser } from '@/lib/auth';
+import TeacherHeader from '@/components/header/TeacherHeader';
+import { getSession, mustBeTeacher } from '@/lib/auth';
 
 export default async function Layout({
   children,
@@ -9,10 +9,10 @@ export default async function Layout({
 }) {
   const session = await getSession();
   console.log(session);
-  await mustBeUser();
+  await mustBeTeacher();
   return (
     <div className={`w-full h-full`}>
-      <Header session={session} />
+      <TeacherHeader session={session} />
       {children}
       <Footer />
     </div>
