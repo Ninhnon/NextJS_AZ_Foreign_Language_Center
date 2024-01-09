@@ -7,10 +7,12 @@ import { useRouter } from 'next/navigation';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import { getSession } from 'next-auth/react';
 import React from 'react';
+import AssignmentFilePickerStudent from '@/components/AssignmentFilePickerStudent';
 export default function page({ params }: { params: { slug: any } }) {
   const { slug } = params;
   const router = useRouter();
-
+  const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState(null);
   //Get session (to check if user is logged in)
   const onGetUserSession = async () => {
     const session = await getSession();
@@ -19,19 +21,18 @@ export default function page({ params }: { params: { slug: any } }) {
     }
     return session;
   };
-  // const [data, setData] = React.useState(null);
-  React.useEffect(() => {
-    const session = onGetUserSession();
-    console.log('🚀 ~ file: page.tsx:25 ~ React.useEffect ~ session:', session);
-
-    // const initData = async () => {
-    //   const res = await fetch(
-    //     '/api/assignment/info?id=' + slug + 'userId=' + session?.data.id
-    //   );
-    //   setData(session);
-    // };
-    // initData();
-  }, []);
+  const onOpen = async () => {
+    const session = await onGetUserSession();
+    console.log('🚀 ~ file: page.tsx:33 ~ page ~ session:', session?.user.id);
+    const userId = session?.user.id;
+    const ret = await fetch(
+      '/api/assignment/assignment?userId=' + userId + '&assignId=' + slug
+    );
+    const data = await ret.json();
+    console.log('🚀 ~ file: page.tsx:32 ~ onOpen ~ data:', data);
+    setData(data);
+    setOpen(true);
+  };
   const { onGetAssignmentById } = useAssignment();
 
   // Define a query key and fetch function for fetching review rating data
@@ -109,8 +110,19 @@ export default function page({ params }: { params: { slug: any } }) {
             <div>
               {(assignmentData.data.skill.name === 'Writing' ||
                 assignmentData.data.skill.name === 'Speaking') && (
-                <div />
-                // <AssignmentFilePickerStudent data= {data}/>
+                <div>
+                  <Button
+                    className="font-bold text-orange flex flex-row w-fit end-4"
+                    variant="light"
+                    radius="sm"
+                    startContent={<FaCircleQuestion />}
+                    onClick={onOpen}
+                  >
+                    Làm bài
+                  </Button>
+                  {open && <AssignmentFilePickerStudent data={data} />}
+                </div>
+                //
               )}
             </div>
           </div>

@@ -90,6 +90,14 @@ export const useAssignment = () => {
 
     return res;
   };
+  const onUpdateAssignmentUp = async (data: any) => {
+    const res = await postRequest({
+      endPoint: `/api/assignment/up`,
+      isFormData: false,
+      formData: data,
+    });
+    return res;
+  };
   return {
     onGetAssignment,
     onGetAssignmentById,
@@ -98,5 +106,6 @@ export const useAssignment = () => {
     onPostMultipleChoiceQuestion,
     onPostMultipleChoiceQuestionResult,
     onGetAssignmentFromUserIdAndCourseId,
+    onUpdateAssignmentUp,
   };
 };

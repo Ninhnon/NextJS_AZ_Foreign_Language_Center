@@ -52,50 +52,48 @@ const NavigationMenuDemo = ({ session }) => {
     >
       <MobileNav />
       <div className="hidden lg:flex py-5  ">
-        {user === 'user' ? (
-          <div className="flex flex-row gap-5 items-center justify-center">
-            <DropdownMenu className="bg-[#FDF8EE]">
-              <DropdownMenuTrigger>
-                {' '}
-                <Button
-                  variant="ghost"
-                  className="mr-2 px-0 pt-0 text-base hover:bg-transparent
+        <div className="flex flex-row gap-5 items-center justify-center">
+          <DropdownMenu className="bg-[#FDF8EE]">
+            <DropdownMenuTrigger>
+              {' '}
+              <Button
+                variant="ghost"
+                className="mr-2 px-0 pt-0 text-base hover:bg-transparent
            focus-visible:bg-transparent focus-visible:ring-0 
            focus-visible:ring-offset-0"
-                >
-                  {CommonSvg.menuBurger()}
-                  <span className="sr-only">Toggle Menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                  <Link href="/personal_profile">
-                    <div className="">{AuthSvg.book()}</div>
-                    Danh sách khóa học
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                  <Link href="/personal_assignments">
-                    <div className="">{AuthSvg.exercise()}</div>
-                    Bài tập
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                  <Link href="/chat">
-                    <div className="">{AuthSvg.chat()}</div>
-                    Hỏi đáp
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
-                  <Link href="/tkb">
-                    <div className="">{AuthSvg.date()}</div>
-                    Thời khóa biểu
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ) : null}{' '}
+              >
+                {CommonSvg.menuBurger()}
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                <Link href="/personal_profile">
+                  <div className="">{AuthSvg.book()}</div>
+                  Danh sách khóa học
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="   gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                <Link href="/personal_assignments">
+                  <div className="">{AuthSvg.exercise()}</div>
+                  Bài tập
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                <Link href="/chat">
+                  <div className="">{AuthSvg.chat()}</div>
+                  Hỏi đáp
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="  gap-2 bg-[#FDF8EE] hover:text-[#FF7426]">
+                <Link href="/tkb">
+                  <div className="">{AuthSvg.date()}</div>
+                  Thời khóa biểu
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>{' '}
         <div className="m-2" />
         <Logo />
         <NavigationMenu.Root className="NavigationMenuRoot">
