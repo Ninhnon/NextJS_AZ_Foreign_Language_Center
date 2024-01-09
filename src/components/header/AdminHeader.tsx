@@ -110,7 +110,7 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/teacher_management'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <Image
                       src={'/teacher.png'}
@@ -123,7 +123,7 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={''}>
+                <Link href={'/staff/student_management'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <Image
                       src={'/student.png'}
