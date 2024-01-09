@@ -126,6 +126,7 @@ export interface User {
   birthDay: Date;
   indexSalary: number;
   level: number;
+  isDisabled: boolean;
 }
 
 export interface MultipleChoiceQuestion {

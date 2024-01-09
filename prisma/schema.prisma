@@ -21,6 +21,7 @@ model User {
   level            Int?
   salary           Int?
   phoneNumber      String            @default("0544239584")
+  isDisabled       Boolean?          @default(false)
   addresses        Address[]
   classsessions    ClassSession[]
   assignment_users Assignment_User[]

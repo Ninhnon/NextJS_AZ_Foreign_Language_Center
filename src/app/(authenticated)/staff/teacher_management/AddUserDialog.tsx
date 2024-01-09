@@ -32,7 +32,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { users } from './data';
 
 const roles = [
-  { label: 'Giáo viên', value: 'teacher' },
+  { label: 'Giảng viên', value: 'teacher' },
   { label: 'Học viên', value: 'user' },
 ];
 
@@ -220,13 +220,19 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="w-auto">
-                        <Calendar
-                          mode="single"
-                          selected={birthday}
-                          onSelect={(date) => {
-                            setValue('birthday', date); // cập nhật giá trị của trường 'birthday' khi người dùng chọn một ngày
-                            trigger('birthday'); // kích hoạt việc validate trường 'birthday' ngay lập tức
-                          }}
+                        <Controller
+                          control={control}
+                          name="birthday"
+                          render={({ field: { onChange, value } }) => (
+                            <Calendar
+                              mode="single"
+                              selected={value}
+                              onSelect={(date) => {
+                                onChange(date); // Cập nhật giá trị của trường 'birthday' khi người dùng chọn một ngày
+                                // Không cần gọi trigger nếu bạn đang sử dụng Controller, vì nó sẽ tự động validate
+                              }}
+                            />
+                          )}
                         />
                       </div>
                     </PopoverContent>

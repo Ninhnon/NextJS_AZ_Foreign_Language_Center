@@ -16,7 +16,6 @@ import {
   Chip,
   Pagination,
   Selection,
-  ChipProps,
   SortDescriptor,
   User as UserInfo,
   Spinner,
@@ -29,18 +28,30 @@ import { columns, statusOptions } from './data';
 import { capitalize } from './utils';
 import { useUser } from '@/hooks/useUser';
 import type { User } from '@/models';
+import toast from 'react-hot-toast';
 
-const statusColorMap: Record<string, ChipProps['color']> = {
+/* const statusColorMap: Record<string, ChipProps['color']> = {
   'đang hoạt động': 'success',
-  'vắng mặt': 'warning',
   'vô hiệu hóa': 'danger',
-};
+}; */
 
-const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'role', 'status', 'actions'];
+const INITIAL_VISIBLE_COLUMNS = [
+  'id',
+  'name',
+  'role',
+  'email',
+  'phoneNumber',
+  'isDisabled',
+  'actions',
+];
 
-export default function TeacherTable({ onOpen }) {
-  // const [users, setUsers] = React.useState<User[]>([]);
-  const { users, isUsersLoading, isUsersFetching } = useUser();
+export default function TeacherTable({
+  onOpen,
+  onEditOpen,
+  setSelectedUser,
+  setModalStatus,
+}) {
+  const { users, isUsersLoading, isUsersFetching, onDeleteUser } = useUser();
 
   const [filterValue, setFilterValue] = React.useState('');
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
@@ -81,7 +92,7 @@ export default function TeacherTable({ onOpen }) {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+        Array.from(statusFilter).includes(String(user.isDisabled))
       );
     }
 
@@ -107,6 +118,21 @@ export default function TeacherTable({ onOpen }) {
     });
   }, [sortDescriptor, items]);
 
+  const handleDeleteUser = (user) => {
+    if (user) {
+      onDeleteUser(user?.id);
+      toast.success('Xóa người dùng thành công', {
+        style: {
+          minWidth: '300px',
+          minHeight: '50px',
+        },
+        position: 'bottom-right',
+      });
+    } else {
+      console.error('Không thể xóa: Đối tượng người dùng không hợp lệ');
+    }
+  };
+
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
 
@@ -125,20 +151,23 @@ export default function TeacherTable({ onOpen }) {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {user.team}
-            </p>
           </div>
         );
-      case 'status':
+      case 'phoneNumber':
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-small capitalize">{cellValue}</p>
+          </div>
+        );
+      case 'isDisabled':
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[user.status]}
+            color={user.isDisabled ? 'danger' : 'success'}
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {user.isDisabled ? 'ngừng hoạt động' : 'đang hoạt động'}
           </Chip>
         );
       case 'actions':
@@ -155,9 +184,29 @@ export default function TeacherTable({ onOpen }) {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    onEditOpen();
+                    setModalStatus('view');
+                  }}
+                >
+                  Xem
+                </DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    onEditOpen();
+                    setModalStatus('edit');
+                  }}
+                >
+                  Chỉnh sửa
+                </DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    handleDeleteUser(user);
+                  }}
+                >
+                  Xóa
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -208,7 +257,7 @@ export default function TeacherTable({ onOpen }) {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
+            placeholder="Tìm theo tên ..."
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -221,7 +270,7 @@ export default function TeacherTable({ onOpen }) {
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  Status
+                  Trạng thái
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -245,7 +294,7 @@ export default function TeacherTable({ onOpen }) {
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  Columns
+                  Cột
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -276,7 +325,7 @@ export default function TeacherTable({ onOpen }) {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {users?.length} users
+            Tổng cộng {users?.length} người dùng
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -326,7 +375,7 @@ export default function TeacherTable({ onOpen }) {
             variant="flat"
             onPress={onPreviousPage}
           >
-            Previous
+            Trước
           </Button>
           <Button
             isDisabled={pages === 1}
@@ -334,16 +383,21 @@ export default function TeacherTable({ onOpen }) {
             variant="flat"
             onPress={onNextPage}
           >
-            Next
+            Sau
           </Button>
         </div>
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+  React.useEffect(() => {
+    console.log(selectedKeys, 'selectedKeys');
+  }, [selectedKeys]);
+
   return (
     <div className="p-4">
       <Table
+        onRowAction={(key) => alert(`Opening item ${key}...`)}
         aria-label="Example table with custom cells, pagination and sorting"
         isHeaderSticky
         bottomContent={bottomContent}
@@ -387,7 +441,12 @@ export default function TeacherTable({ onOpen }) {
           items={sortedItems}
         >
           {(item) => (
-            <TableRow key={item.id}>
+            <TableRow
+              key={item.id}
+              onMouseEnter={() => {
+                setSelectedUser(item);
+              }}
+            >
               {(columnKey) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}
