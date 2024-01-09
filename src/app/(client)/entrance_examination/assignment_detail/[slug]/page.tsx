@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import { getSession } from 'next-auth/react';
-
+import React from 'react';
 export default function page({ params }: { params: { slug: any } }) {
   const { slug } = params;
   const router = useRouter();
@@ -17,7 +17,21 @@ export default function page({ params }: { params: { slug: any } }) {
     if (!session) {
       router.push('/auth/login');
     }
+    return session;
   };
+  // const [data, setData] = React.useState(null);
+  React.useEffect(() => {
+    const session = onGetUserSession();
+    console.log('🚀 ~ file: page.tsx:25 ~ React.useEffect ~ session:', session);
+
+    // const initData = async () => {
+    //   const res = await fetch(
+    //     '/api/assignment/info?id=' + slug + 'userId=' + session?.data.id
+    //   );
+    //   setData(session);
+    // };
+    // initData();
+  }, []);
   const { onGetAssignmentById } = useAssignment();
 
   // Define a query key and fetch function for fetching review rating data
@@ -91,6 +105,13 @@ export default function page({ params }: { params: { slug: any } }) {
               <AssignmentFileList
                 assignmentFileList={JSON.parse(assignmentData.data.files)}
               />
+            </div>
+            <div>
+              {(assignmentData.data.skill.name === 'Writing' ||
+                assignmentData.data.skill.name === 'Speaking') && (
+                <div />
+                // <AssignmentFilePickerStudent data= {data}/>
+              )}
             </div>
           </div>
         ) : (
