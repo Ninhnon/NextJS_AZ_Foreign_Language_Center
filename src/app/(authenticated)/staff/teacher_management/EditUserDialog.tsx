@@ -21,15 +21,13 @@ import { FaCalendarAlt as CalendarIcon } from 'react-icons/fa';
 import { FaRegUser as UserIcon } from 'react-icons/fa';
 import { FaChalkboardTeacher as RoleIcon } from 'react-icons/fa';
 import { IoIosMail as MailIcon } from 'react-icons/io';
-import { format } from 'date-fns';
-import { useEmail } from '@/hooks/useEmail';
+import { format, parseISO, isValid } from 'date-fns';
 import { FaSquarePhoneFlip as PhoneIcon } from 'react-icons/fa6';
 import validator from 'validator';
-import generator from 'generate-password';
 import { useUser } from '@/hooks/useUser';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { users } from './data';
+import { vi } from 'date-fns/locale';
 
 const roles = [
   { label: 'Giảng viên', value: 'teacher' },
@@ -60,11 +58,7 @@ const formSchema = z.object({
   email: z
     .string()
     .nonempty({ message: 'Email không được để trống' })
-    .email({ message: 'Email không hợp lệ' })
-    .refine(
-      (value) => !users.some((user) => user.email === value),
-      'Email đã được sử dụng, vui lòng thử lại với email khác'
-    ),
+    .email({ message: 'Email không hợp lệ' }),
   phoneNumber: z
     .string()
     .optional()
@@ -79,10 +73,15 @@ const formSchema = z.object({
 });
 
 //validate form: zod
-const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
+const EditUserDialog = ({
+  isOpen,
+  onOpenChange,
+  onClose,
+  selectedUser,
+  modalStatus,
+}) => {
   /* Hooks */
-  const { onConfirmationEmail } = useEmail();
-  const { onAddUser, users } = useUser();
+  const { onUpdateUser, users } = useUser();
   const queryClient = useQueryClient();
   /* Start Form state */
   const {
@@ -106,21 +105,12 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
   };
 
   const onSubmit = handleSubmit(async () => {
-    const password = generator.generate({
-      length: 10,
-      numbers: true,
-      symbols: true,
-      uppercase: true,
-      lowercase: true,
-    });
-
     try {
       handleClose();
-      await onConfirmationEmail(values.fullName, values.email, password);
-      await onAddUser(values, password);
-      queryClient.invalidateQueries(['users']);
+      await onUpdateUser(selectedUser.id, values);
 
       reset();
+      queryClient.invalidateQueries(['users']);
       return Promise.resolve();
     } catch (error) {
       return Promise.reject(error);
@@ -133,15 +123,32 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
 
   React.useEffect(() => {
     console.log(
-      '🚀 ~ file: AddUserDialog.tsx:47 ~ AddUserDialog ~ values:',
+      '🚀 ~ file: EditUserDialog.tsx:47 ~ EditUserDialog ~ values:',
       values
     );
     console.log(users);
   }, [values]);
 
-  const checkUniqueEmail = () => {
-    if (users) return users.some((user) => user.email === values.email);
-  };
+  React.useEffect(() => {
+    const resetForm = async () => {
+      if (isOpen && selectedUser) {
+        const parsedDate = parseISO(selectedUser.birthDay);
+        if (!isValid(parsedDate)) {
+          console.error('Ngày sinh không hợp lệ:', parsedDate);
+        }
+
+        await reset({
+          fullName: selectedUser.name,
+          role: selectedUser.role,
+          birthday: isValid(parsedDate) ? parsedDate : null,
+          phoneNumber: selectedUser.phoneNumber,
+          email: selectedUser.email,
+        });
+      }
+    };
+
+    resetForm();
+  }, [selectedUser, isOpen, reset]);
 
   return (
     <Modal
@@ -158,31 +165,42 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
         {() => (
           <>
             <ModalHeader className="flex flex-col gap-1 items-center">
-              Thêm người dùng
+              {modalStatus === 'view' ? (
+                <div className="mt-2">Xem thông tin người dùng</div>
+              ) : (
+                <div className="mt-2">Chỉnh sửa thông tin người dùng</div>
+              )}
             </ModalHeader>
             <ModalBody>
               {/* Name */}
-              <Input
-                autoFocus
-                endContent={
-                  <UserIcon className="text-2xl text-black font-semibold pointer-events-none flex-shrink-0" />
-                }
-                label={
-                  <span className="text-base text-black font-semibold">
-                    Họ và tên{' '}
-                    <span className="text-red-500 font-semibold">(*)</span>
-                  </span>
-                }
-                placeholder="Nhập họ tên người dùng"
-                variant="bordered"
-                classNames={{
-                  inputWrapper: 'bg-old-lace',
-                }}
-                {...register('fullName')}
-                onChange={(e) => {
-                  setValue('fullName', e.target.value);
-                  trigger('fullName');
-                }}
+              <Controller
+                name="fullName"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    autoFocus
+                    endContent={
+                      <UserIcon className="text-2xl text-black font-semibold pointer-events-none flex-shrink-0" />
+                    }
+                    label={
+                      <span className="text-base text-black font-semibold">
+                        Họ và tên{' '}
+                        <span className="text-red-500 font-semibold">(*)</span>
+                      </span>
+                    }
+                    placeholder="Nhập họ tên người dùng"
+                    variant="bordered"
+                    classNames={{
+                      inputWrapper: 'bg-old-lace',
+                    }}
+                    onChange={(e) => {
+                      setValue('fullName', e.target.value);
+                      trigger('fullName');
+                    }}
+                    isDisabled={modalStatus === 'view'}
+                  />
+                )}
               />
               {errors.fullName && (
                 <p className="text-red-500 text-sm italic ml-2">
@@ -200,15 +218,16 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
                         className={`w-[240px] h-[56px] justify-start text-left font-normal ${
                           !birthday ? 'text-muted-foreground' : ''
                         }`}
+                        isDisabled={modalStatus === 'view'}
                       >
-                        <div className="flex flex-col justify-center h-full">
+                        <div className={`flex flex-col justify-center h-full`}>
                           <span className="text-sm text-black font-semibold">
                             Ngày sinh
                           </span>
                           <div className="flex items-center">
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {birthday ? (
-                              format(birthday, 'PPP')
+                              format(birthday, 'PPP', { locale: vi })
                             ) : (
                               <span className="text-slate-500">
                                 Chọn ngày tháng năm sinh
@@ -225,6 +244,7 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
                           name="birthday"
                           render={({ field: { onChange, value } }) => (
                             <Calendar
+                              locale={vi}
                               mode="single"
                               selected={value}
                               onSelect={(date) => {
@@ -244,8 +264,7 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
                   <Controller
                     name="role"
                     control={control}
-                    defaultValue=""
-                    render={({ field }) => (
+                    render={({ field: { onChange, value } }) => (
                       <Select
                         label={
                           <span className="text-base text-black font-semibold">
@@ -267,9 +286,10 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
                         startContent={
                           <RoleIcon className="text-xl text-black pointer-events-none flex-shrink-0" />
                         }
-                        {...field}
+                        isDisabled={modalStatus === 'view'}
+                        selectedKeys={[value]}
                         onChange={(value) => {
-                          field.onChange(value);
+                          onChange(value);
                           trigger('role');
                         }}
                       >
@@ -303,28 +323,37 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
               </div>
 
               {/* Email */}
-              <Input
-                endContent={
-                  <MailIcon className="text-3xl text-black font-bold pointer-events-none flex-shrink-0" />
-                }
-                label={
-                  <span className="text-base text-black font-semibold">
-                    Email{' '}
-                    <span className="text-red-500 font-semibold">(*)</span>
-                  </span>
-                }
-                placeholder="Nhập email đăng ký"
-                type="email"
-                variant="bordered"
-                classNames={{
-                  inputWrapper: 'bg-old-lace',
-                }}
-                {...register('email')}
-                onChange={(e) => {
-                  setValue('email', e.target.value);
-                  trigger('email');
-                }}
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    endContent={
+                      <MailIcon className="text-3xl text-black font-bold pointer-events-none flex-shrink-0" />
+                    }
+                    label={
+                      <span className="text-base text-black font-semibold">
+                        Email{' '}
+                        <span className="text-red-500 font-semibold">(*)</span>
+                      </span>
+                    }
+                    placeholder="Nhập email đăng ký"
+                    type="email"
+                    variant="bordered"
+                    classNames={{
+                      inputWrapper: 'bg-old-lace',
+                    }}
+                    {...register('email')}
+                    onChange={(e) => {
+                      setValue('email', e.target.value);
+                      trigger('email');
+                    }}
+                    isDisabled
+                  />
+                )}
               />
+
               {errors.email && (
                 <p className="text-red-500 text-sm italic ml-2">
                   {errors.email.message}
@@ -332,26 +361,35 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
               )}
 
               {/* Phone number */}
-              <Input
-                endContent={
-                  <PhoneIcon className="text-3xl text-black font-bold pointer-events-none flex-shrink-0" />
-                }
-                label={
-                  <span className="text-base text-black font-semibold">
-                    Số điện thoại{' '}
-                  </span>
-                }
-                placeholder="Nhập số điện thoại"
-                variant="bordered"
-                classNames={{
-                  inputWrapper: 'bg-old-lace',
-                }}
-                {...register('phoneNumber')}
-                onChange={(e) => {
-                  setValue('phoneNumber', e.target.value);
-                  trigger('phoneNumber');
-                }}
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    endContent={
+                      <PhoneIcon className="text-3xl text-black font-bold pointer-events-none flex-shrink-0" />
+                    }
+                    label={
+                      <span className="text-base text-black font-semibold">
+                        Số điện thoại{' '}
+                      </span>
+                    }
+                    placeholder="Nhập số điện thoại"
+                    variant="bordered"
+                    classNames={{
+                      inputWrapper: 'bg-old-lace',
+                    }}
+                    {...register('phoneNumber')}
+                    onChange={(e) => {
+                      setValue('phoneNumber', e.target.value);
+                      trigger('phoneNumber');
+                    }}
+                    isDisabled={modalStatus === 'view'}
+                  />
+                )}
               />
+
               {errors.phoneNumber && (
                 <p className="text-red-500 text-sm italic ml-2">
                   {errors.phoneNumber.message}
@@ -359,61 +397,48 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
               )}
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="primary"
-                onClick={async () => {
-                  // Kiểm tra email tồn tại
-                  if (checkUniqueEmail()) {
-                    toast.error(
-                      'Email đã tồn tại, vui lòng sử dụng email khác',
-                      {
-                        style: {
-                          minWidth: '300px',
-                          minHeight: '50px',
-                        },
-                        position: 'bottom-right',
-                      }
-                    );
-                    return;
-                  }
+              {modalStatus === 'view' ? null : (
+                <Button
+                  color="primary"
+                  onClick={async () => {
+                    const result = await trigger();
 
-                  const result = await trigger();
-
-                  if (result) {
-                    toast.promise(
-                      onSubmit(),
-                      {
-                        loading: 'Đang thêm người dùng ...',
-                        success: 'Thêm người dùng thành công!',
-                        error: (err) => `${err}`,
-                      },
-                      {
-                        style: {
-                          minWidth: '300px',
-                          minHeight: '50px',
-                          textAlign: 'left',
+                    if (result) {
+                      toast.promise(
+                        onSubmit(),
+                        {
+                          loading: 'Đang cập nhật thông tin người dùng ...',
+                          success: 'Cập nhật người dùng thành công!',
+                          error: (err) => `${err}`,
                         },
-                        position: 'bottom-right',
-                      }
-                    );
-                  } else if (Object.keys(errors).length > 0) {
-                    Object.values(errors).forEach((error) => {
-                      toast.error(error.message, {
-                        style: {
-                          minWidth: '300px',
-                          minHeight: '50px',
-                        },
-                        position: 'bottom-right',
+                        {
+                          style: {
+                            minWidth: '300px',
+                            minHeight: '50px',
+                            textAlign: 'left',
+                          },
+                          position: 'bottom-right',
+                        }
+                      );
+                    } else if (Object.keys(errors).length > 0) {
+                      Object.values(errors).forEach((error) => {
+                        toast.error(error.message, {
+                          style: {
+                            minWidth: '300px',
+                            minHeight: '50px',
+                          },
+                          position: 'bottom-right',
+                        });
                       });
-                    });
-                  }
-                }}
-              >
-                Sign in
-              </Button>
+                    }
+                  }}
+                >
+                  Chỉnh sửa
+                </Button>
+              )}
 
               <Button color="danger" variant="flat" onPress={handleClose}>
-                Close
+                Đóng
               </Button>
             </ModalFooter>
           </>
@@ -423,4 +448,4 @@ const AddUserDialog = ({ isOpen, onOpenChange, onClose }) => {
   );
 };
 
-export default AddUserDialog;
+export default EditUserDialog;

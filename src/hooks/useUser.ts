@@ -40,5 +40,32 @@ export const useUser = () => {
     return productDetail;
   };
 
-  return { onAddUser, users, isUsersLoading, isUsersFetching, onGetUserDetail };
+  const onUpdateUser = async (userId: any, values: any) => {
+    const res = await axios.put(`/api/staff/user_management/edit`, {
+      id: userId,
+      fullName: values?.fullName,
+      role: values?.role,
+      birthDay: values?.birthday,
+      phoneNumber: values?.phoneNumber,
+    });
+    console.log('🚀 ~ file: useUser.ts:22 ~ onUpdateUser ~ res:', res);
+    return res;
+  };
+
+  const onDeleteUser = async (userId: any) => {
+    const res = await axios.put(`/api/staff/user_management/delete`, {
+      id: userId,
+    });
+    return res;
+  };
+
+  return {
+    onGetUserDetail,
+    onAddUser,
+    onUpdateUser,
+    onDeleteUser,
+    users,
+    isUsersLoading,
+    isUsersFetching,
+  };
 };

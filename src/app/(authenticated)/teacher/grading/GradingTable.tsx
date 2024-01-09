@@ -19,42 +19,34 @@ import {
   SortDescriptor,
   User as UserInfo,
   Spinner,
+  Tooltip,
 } from '@nextui-org/react';
-import { PlusIcon } from './PlusIcon';
-import { VerticalDotsIcon } from './VerticalDotsIcon';
+import { FaEdit as EditIcon } from 'react-icons/fa';
 import { ChevronDownIcon } from './ChevronDownIcon';
 import { SearchIcon } from './SearchIcon';
 import { columns, statusOptions } from './data';
 import { capitalize } from './utils';
-import { useUser } from '@/hooks/useUser';
-import type { User } from '@/models';
-import toast from 'react-hot-toast';
-import { useQueryClient } from '@tanstack/react-query';
-
-/* const statusColorMap: Record<string, ChipProps['color']> = {
-  'đang hoạt động': 'success',
-  'vô hiệu hóa': 'danger',
-}; */
+import { useTeacher } from '@/hooks/useTeacher';
+import type { Assignment_User, User } from '@/models';
+import AssignmentCard from './AssignmentCard';
 
 const INITIAL_VISIBLE_COLUMNS = [
   'id',
-  'name',
-  'role',
-  'email',
-  'phoneNumber',
-  'isDisabled',
+  'course',
+  'exercise',
+  'student',
+  'score', // Thêm trường score
+  'files', // Thêm trường files
   'actions',
 ];
 
-export default function TeacherTable({
-  onOpen,
-  onEditOpen,
-  onEditCourseOpen,
-  setSelectedUser,
-  setModalStatus,
-}) {
-  const { users, isUsersLoading, isUsersFetching, onDeleteUser } = useUser();
-  const queryClient = useQueryClient();
+export default function GradingTable({ onOpen, setSelectedAssignment }) {
+  console.log(
+    '🚀 ~ file: GradingTable.tsx:46 ~ GradingTable ~ onOpen:',
+    onOpen
+  );
+  const { assignments, isAssignmentsFetching, isAssignmentsLoading } =
+    useTeacher();
 
   const [filterValue, setFilterValue] = React.useState('');
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
@@ -83,24 +75,26 @@ export default function TeacherTable({
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...(users ?? [])];
+    let filteredAssignments = [...(assignments ?? [])];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+      filteredAssignments = filteredAssignments.filter((assignments) =>
+        assignments.course.name
+          .toLowerCase()
+          .includes(filterValue.toLowerCase())
       );
     }
     if (
       statusFilter !== 'all' &&
       Array.from(statusFilter).length !== statusOptions.length
     ) {
-      filteredUsers = filteredUsers.filter((user) =>
+      filteredAssignments = filteredAssignments.filter((user) =>
         Array.from(statusFilter).includes(String(user.isDisabled))
       );
     }
 
-    return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+    return filteredAssignments;
+  }, [assignments, filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -121,126 +115,109 @@ export default function TeacherTable({
     });
   }, [sortDescriptor, items]);
 
-  const handleDeleteUser = (user) => {
-    if (user) {
-      toast.promise(
-        onDeleteUser(user.id).then(() =>
-          queryClient.invalidateQueries(['users'])
-        ),
-        {
-          loading: 'Đang xóa ...',
-          success: 'Xóa người dùng thành công!',
-          error: 'Không thể xóa người dùng.',
-        },
-        {
-          style: {
-            minWidth: '200px',
-            minHeight: '50px',
-          },
-          position: 'bottom-right',
+  // const handleDeleteUser = (user) => {
+  //   if (user) {
+  //     onDeleteUser(user?.id);
+  //     toast.success('Xóa người dùng thành công', {
+  //       style: {
+  //         minWidth: '300px',
+  //         minHeight: '50px',
+  //       },
+  //       position: 'bottom-right',
+  //     });
+  //   } else {
+  //     console.error('Không thể xóa: Đối tượng người dùng không hợp lệ');
+  //   }
+  // };
+
+  const renderCell = React.useCallback(
+    (assignment: Assignment_User, columnKey: React.Key) => {
+      const cellValue = assignment[columnKey as keyof Assignment_User];
+
+      switch (columnKey) {
+        case 'id':
+          return <p>{cellValue}</p>;
+        case 'course':
+          return <p>{assignment.course?.name}</p>;
+        case 'exercise':
+          return <p>{assignment.assignment?.name}</p>;
+        case 'student':
+          return (
+            <UserInfo
+              avatarProps={{ radius: 'lg', src: assignment.user.avatar }}
+              description="Học viên"
+              name={assignment.user.name}
+            >
+              {cellValue}
+            </UserInfo>
+          );
+        case 'role':
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-small capitalize">{cellValue}</p>
+            </div>
+          );
+        case 'phoneNumber':
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-small capitalize">{cellValue}</p>
+            </div>
+          );
+        case 'isDisabled':
+          return (
+            <Chip
+              className="capitalize"
+              color={user.isDisabled ? 'danger' : 'success'}
+              size="sm"
+              variant="flat"
+            >
+              {user.isDisabled ? 'ngừng hoạt động' : 'đang hoạt động'}
+            </Chip>
+          );
+        case 'score':
+          return <p>{cellValue ? `${cellValue} điểm` : 'Chưa chấm'}</p>;
+        case 'files': {
+          let fileElements = null;
+          if (assignment?.files) {
+            try {
+              // Parse chuỗi JSON để chuyển thành một mảng các đối tượng
+              const filesArray = JSON.parse(
+                assignment?.files.replace(/\\r\\n/g, '')
+              );
+              // Sử dụng FileCard để hiển thị từng file
+              fileElements = filesArray.map((file, index) => (
+                <AssignmentCard
+                  key={file.id}
+                  i={index}
+                  file={{
+                    ...file,
+                    preview: file.url, // Giả sử rằng 'url' là đường dẫn để xem trước file
+                  }}
+                  files={filesArray}
+                />
+              ));
+            } catch (error) {
+              console.error('Có lỗi khi parse JSON:', error);
+              fileElements = <p>Lỗi khi hiển thị file</p>;
+            }
+          }
+          return <div>{fileElements}</div>;
         }
-      );
-    } else {
-      console.error('Không thể xóa: Đối tượng người dùng không hợp lệ');
-      toast.error('Không thể xóa: Đối tượng người dùng không hợp lệ', {
-        style: {
-          minWidth: '200px',
-          minHeight: '50px',
-        },
-        position: 'bottom-right',
-      });
-    }
-  };
 
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
-
-    switch (columnKey) {
-      case 'name':
-        return (
-          <UserInfo
-            avatarProps={{ radius: 'lg', src: user.avatar }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </UserInfo>
-        );
-      case 'role':
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-          </div>
-        );
-      case 'phoneNumber':
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-          </div>
-        );
-      case 'isDisabled':
-        return (
-          <Chip
-            className="capitalize"
-            color={user.isDisabled ? 'danger' : 'success'}
-            size="sm"
-            variant="flat"
-          >
-            {user.isDisabled ? 'ngừng hoạt động' : 'đang hoạt động'}
-          </Chip>
-        );
-      case 'actions':
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon
-                    className="text-default-300"
-                    width={20}
-                    height={20}
-                  />
+        case 'actions':
+          return (
+            <div className="relative flex justify-end items-center gap-2">
+              <Tooltip content="Chấm điểm học viên">
+                <Button isIconOnly color="primary" onClick={onOpen}>
+                  <EditIcon width={30} height={30} />
                 </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem
-                  onClick={() => {
-                    onEditOpen();
-                    setModalStatus('view');
-                  }}
-                >
-                  Xem
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    onEditOpen();
-                    setModalStatus('edit');
-                  }}
-                >
-                  Chỉnh sửa
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    handleDeleteUser(user);
-                  }}
-                >
-                  Xóa
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    onEditCourseOpen();
-                  }}
-                >
-                  Chỉnh sửa khóa học
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+              </Tooltip>
+            </div>
+          );
+      }
+    },
+    []
+  );
 
   const onNextPage = React.useCallback(() => {
     if (page < pages) {
@@ -283,7 +260,7 @@ export default function TeacherTable({
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Tìm theo tên ..."
+            placeholder="Tìm theo tên khóa học ..."
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -338,20 +315,11 @@ export default function TeacherTable({
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <div>
-              <Button
-                color="primary"
-                endContent={<PlusIcon width={20} height={20} />}
-                onClick={onOpen}
-              >
-                Thêm mới
-              </Button>
-            </div>
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Tổng cộng {users?.length} người dùng
+            Tổng cộng {assignments?.length} bài tập
           </span>
           <label className="flex items-center text-default-400 text-small">
             Số dòng mỗi trang:
@@ -373,7 +341,7 @@ export default function TeacherTable({
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
-    users?.length,
+    assignments?.length,
     hasSearchFilter,
   ]);
 
@@ -443,7 +411,7 @@ export default function TeacherTable({
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === 'actions' ? 'center' : 'start'}
+              align="center"
               allowsSorting={column.sortable}
             >
               {column.name}
@@ -452,7 +420,7 @@ export default function TeacherTable({
         </TableHeader>
         <TableBody
           emptyContent={
-            isUsersLoading || isUsersFetching ? (
+            isAssignmentsFetching || isAssignmentsLoading ? (
               <div className="flex flex-col items-center justify-center">
                 <Spinner />
                 <p className="text-lg">
@@ -469,7 +437,7 @@ export default function TeacherTable({
             <TableRow
               key={item.id}
               onMouseEnter={() => {
-                setSelectedUser(item);
+                setSelectedAssignment(item);
               }}
             >
               {(columnKey) => (

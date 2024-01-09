@@ -88,6 +88,7 @@ model Assignment_User {
   courseId     Int?       @default(12)
   teacher      User?      @relation("TeacherRelation", fields: [teacherId], references: [id])
   user         User       @relation("UserRelation", fields: [userId], references: [id])
+  course       Course?    @relation(fields: [courseId], references: [id])
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
 
   @@index([teacherId])
@@ -143,18 +144,19 @@ model ClassShift {
 }
 
 model Course {
-  id                Int            @id @default(autoincrement())
-  moduleId          Int            @default(1)
-  BandScoreId       Int            @default(1)
-  name              String         @default("online")
-  totalSession      Int            @default(0)
+  id                Int               @id @default(autoincrement())
+  moduleId          Int               @default(1)
+  BandScoreId       Int               @default(1)
+  name              String            @default("online")
+  totalSession      Int               @default(0)
   startTime         DateTime
   endTime           DateTime
-  totalAttendance   Int            @default(0)
+  totalAttendance   Int               @default(0)
   tuitionFee        Int
   totalCost         Int
   recommendCourseId Int?
   thumbnail         String?
+  assignmentUsers   Assignment_User[]
   classsessions     ClassSession[]
   orders            Order[]
 

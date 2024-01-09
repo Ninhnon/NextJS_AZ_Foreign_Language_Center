@@ -4,14 +4,14 @@ const columns = [
   { name: 'VAI TRÒ', uid: 'role', sortable: true },
   { name: 'TEAM', uid: 'team' },
   { name: 'EMAIL', uid: 'email' },
-  { name: 'TRẠNG THÁI', uid: 'status', sortable: true },
+  { name: 'SỐ ĐIỆN THOẠI', uid: 'phoneNumber' },
+  { name: 'TRẠNG THÁI', uid: 'isDisabled', sortable: true },
   { name: 'HÀNH ĐỘNG', uid: 'actions' },
 ];
 
 const statusOptions = [
-  { name: 'đang hoạt động', uid: 'online' },
-  { name: 'vắng mặt', uid: 'offline' },
-  { name: 'vô hiệu hóa', uid: 'disabled' },
+  { name: 'đang hoạt động', uid: 'false' },
+  { name: 'vô hiệu hóa', uid: 'true' },
 ];
 
 const users = [
