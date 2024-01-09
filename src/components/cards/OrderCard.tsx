@@ -12,9 +12,9 @@ const OrderCard = ({ data }) => {
       <div className="w-full h-fit flex flex-col gap-2 text-lg">
         <span className="font-bold">ID: #{data.id}</span>
         <div className="flex flex-row gap-3">
-          <span>Email Khách hàng: </span>
+          <span>Email học viên: </span>
           <span className="font-bold">
-            {data.userId ? data.anonymousUserEmail : `Khách vãng lai`}
+            {data.userId ? data.anonymousUserEmail : `học viên mới`}
           </span>
         </div>
 
@@ -90,7 +90,7 @@ const OrderCard = ({ data }) => {
           >
             <div className="flex flex-col gap-y-6 w-full h-full px-1">
               <div className="flex flex-row justify-center items-center text-lg font-bold">
-                THÔNG TIN ĐƠN HÀNG
+                THÔNG TIN ĐĂNG KÝ
               </div>
 
               <div className="w-full h-fit flex flex-col justify-start">
@@ -101,7 +101,7 @@ const OrderCard = ({ data }) => {
                   </span>
                 </div>
                 <div className="w-full h-fit flex flex-col border-b-1 p-4 gap-3">
-                  <span className="font-bold">THÔNG TIN KHÁCH HÀNG</span>
+                  <span className="font-bold">THÔNG TIN HỌC VIÊN</span>
 
                   {data.userId ? (
                     <div className="w-full h-fit flex flex-row font-bold gap-3 items-center">
@@ -112,9 +112,9 @@ const OrderCard = ({ data }) => {
                         alt="image"
                       />
                       <div className="w-full h-fit flex flex-col font-bold">
-                        <span>ID khách hàng: {data.user.id}</span>
-                        <span>Tên khách hàng: {data.user.name}</span>
-                        <span>Email khách hàng: {data.user.email}</span>
+                        <span>ID học viên: {data.user.id}</span>
+                        <span>Tên học viên: {data.user.name}</span>
+                        <span>Email học viên: {data.user.email}</span>
                         <span className="max-w-[70ch]">
                           Địa chỉ: {data.user.address}
                         </span>
@@ -132,14 +132,14 @@ const OrderCard = ({ data }) => {
                         alt="avatar"
                       />
                       <div className="w-full h-fit flex flex-col">
-                        <span className="font-bold">Khách vãng lai</span>
+                        <span className="font-bold">Học viên mới</span>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
               <div className="w-full h-fit flex flex-col border-b-1 p-4 gap-3">
-                <span className="font-bold">CHI TIẾT ĐƠN HÀNG</span>
+                <span className="font-bold">CHI TIẾT ĐĂNG KÝ</span>
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-row gap-3 items-center">
                     <Image

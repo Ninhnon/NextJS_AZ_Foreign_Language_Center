@@ -28,7 +28,7 @@ import {
 
 const statisticType = [
   { id: 1, type: 'Doanh thu' },
-  { id: 2, type: 'Đơn hàng' },
+  { id: 2, type: 'Đăng ký' },
 ];
 const statisticRange = [
   { id: 1, range: 'Ngày' },

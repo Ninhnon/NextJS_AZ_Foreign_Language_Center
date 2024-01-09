@@ -14,7 +14,7 @@ export default function page() {
           radius="sm"
           startContent={<FaHouseChimney />}
         >
-          Danh sách đơn hàng
+          Danh sách đăng ký
         </Button>
       </div>
       <div className="w-full h-fit flex flex-col items-center">

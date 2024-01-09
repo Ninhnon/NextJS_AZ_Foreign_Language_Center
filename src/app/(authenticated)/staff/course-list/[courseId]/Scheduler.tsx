@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Loader from '@/components/Loader';
 import {
   ScheduleComponent,
   ViewsDirective,
@@ -22,21 +23,33 @@ import { Button } from '@/components/ui/button';
 import { BreadcrumbItem, Breadcrumbs, Image } from '@nextui-org/react';
 import { AiFillHome } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { useCourse } from '@/hooks/useCourse';
+// import { set } from 'date-fns';
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
-const data = {
-  id: 12,
-  name: 'IELTS 7.0',
-  thumbnail:
-    'https://utfs.io/f/02a6617a-f53c-4c30-82e2-2b18d1b5f85e-63b65s.png',
-  BandScoreId: 7,
-};
-export default function Scheduler() {
+export default function Scheduler({ courseId }) {
   const [scheduleObj, setScheduleObj] = useState();
   const [scheduleData, setScheduleData] = useState([]);
+  const { onGetCourseInfo } = useCourse();
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const getCourseDetails = async () => {
+      setIsLoading(true);
+      const res = await onGetCourseInfo(courseId);
+      const data = await res.json();
+      console.log(data, 'Du lieuuuuu');
+      setData(data);
+      setIsLoading(false);
+    };
+
+    getCourseDetails();
+  }, [courseId]);
   useEffect(() => {
     const getScheduleData = async () => {
       try {
-        const res = await fetch('/api/classSession');
+        const res = await fetch(
+          `/api/classSession/course?courseId=${courseId}`
+        );
         const data = await res.json();
         if (data && Array.isArray(data)) {
           // Transform the fetched data into the desired format
@@ -66,7 +79,7 @@ export default function Scheduler() {
       }
     };
     getScheduleData();
-  }, []);
+  }, [data]);
   const detailOptions = [
     { id: 1, text: 'Thời khóa biểu' },
     { id: 2, text: 'Danh sách học viên' },
@@ -149,156 +162,123 @@ export default function Scheduler() {
     );
   };
 
-  // const onPopupOpen = (args) => {
-  //   console.log(
-  //     '🚀 ~ file: page.tsx:27 ~ Scheduler ~ scheduleData:',
-  //     scheduleData
-  //   );
-
-  //   if (args.type === 'Editor') {
-  //     args.data.CategoryColor = '#fecaca';
-  //     console.log('🚀 ~ file: page.tsx:65 ~ onPopupOpen ~ args', args);
-  //     // Create required custom elements in initial time
-  //     if (!args.element.querySelector('.custom-field-row')) {
-  //       let row = createElement('div', { className: 'custom-field-row' });
-  //       let formElement = args.element.querySelector('.e-schedule-form');
-  //       formElement.firstChild.insertBefore(
-  //         row,
-  //         formElement.firstChild.firstChild
-  //       );
-  //       let container = createElement('div', {
-  //         className: 'custom-field-container',
-  //       });
-  //       let inputEle = createElement('input', {
-  //         className: 'e-field',
-  //         attrs: { name: 'EventType' },
-  //       });
-  //       container.appendChild(inputEle);
-  //       row.appendChild(container);
-  //       let dropDownList = new DropDownList({
-  //         dataSource: [
-  //           { text: 'Public Event', value: 'public-event' },
-  //           { text: 'Maintenance', value: 'maintenance' },
-  //           { text: 'Commercial Event', value: 'commercial-event' },
-  //           { text: 'Family Event', value: 'family-event' },
-  //         ],
-  //         fields: { text: 'text', value: 'value' },
-  //         value: args.data.EventType as string,
-  //         floatLabelType: 'Always',
-  //         placeholder: 'Event Type',
-  //       });
-  //       dropDownList.appendTo(inputEle);
-  //       inputEle.setAttribute('name', 'EventType');
-  //       args.data.CategoryColor = '#fecaca';
-  //     }
-  //   }
-  // };
-
   const router = useRouter();
   return (
-    <div className="flex flex-col w-full h-full py-6 px-32">
-      <Breadcrumbs sizes="lg" color="primary">
-        <BreadcrumbItem
-          href="/staff/course-list/${data.id}"
-          startContent={<AiFillHome />}
-        >
-          Khóa học
-        </BreadcrumbItem>
-        <BreadcrumbItem>Chi tiết khóa học</BreadcrumbItem>
-      </Breadcrumbs>
-      <div className="w-full h-32 flex flex-row items-center justify-between px-16">
-        <div className="w-full h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center">
-          <div className="w-fit h-full flex flex-row items-center">
-            <Image
-              alt="Card background"
-              className="object-cover rounded-xl"
-              src={data.thumbnail}
-              width={75}
-              height={75}
-            />
-            <div className="w-fit h-full flex flex-col justify-center ml-3">
-              <div className="font-bold">{data.name}</div>
+    <div className="w-full h-full">
+      {isLoading ? (
+        <div className="flex w-full h-full justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <div className="flex flex-col w-full h-full py-6 px-32">
+          <Breadcrumbs sizes="lg" color="primary">
+            <BreadcrumbItem
+              href="/staff/course-list/${data.id}"
+              startContent={<AiFillHome />}
+            >
+              Khóa học
+            </BreadcrumbItem>
+            <BreadcrumbItem>Chi tiết khóa học</BreadcrumbItem>
+          </Breadcrumbs>
+          <div className="w-full h-32 flex flex-row items-center justify-between px-16">
+            <div className="w-full h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center">
+              <div className="w-fit h-full flex flex-row items-center">
+                <Image
+                  alt="Card background"
+                  className="object-cover rounded-xl"
+                  src={data?.thumbnail}
+                  width={75}
+                  height={75}
+                />
+                <div className="w-fit h-full flex flex-col justify-center ml-3">
+                  <div className="font-bold">{data?.name}</div>
+                </div>
+              </div>
+              <div className="mr-8 font-bold">{data?.BandScoreId}.0</div>
             </div>
           </div>
-          <div className="mr-8 font-bold">{data.BandScoreId}.0</div>
-        </div>
-      </div>
-      <div className="w-fit h-fit pb-2 flex flex-row">
-        {detailOptions.map((button) => (
+          <div className="w-fit h-fit pb-2 flex flex-row">
+            {detailOptions.map((button) => (
+              <Button
+                key={button.id}
+                className={`${
+                  1 === button.id
+                    ? 'bg-orange text-white'
+                    : 'bg-white text-orange'
+                } border-orange w-32 mt-4 mr-4`}
+                variant="outline"
+                radius="sm"
+                onClick={() => {
+                  if (button.id === 1) {
+                    router.push(`/staff/course-list/${data?.id}/schedule`);
+                  } else if (button.id === 2) {
+                    router.push(`/staff/course-list/${data?.id}/student-list`);
+                  } else if (button.id === 3) {
+                    router.push(`/staff/course-list/${data?.id}/teacher-list`);
+                  }
+                }}
+              >
+                {button.text}
+              </Button>
+            ))}
+          </div>
           <Button
-            key={button.id}
-            className={`${
-              1 === button.id ? 'bg-orange text-white' : 'bg-white text-orange'
-            } border-orange w-32 mt-4 mr-4`}
-            variant="outline"
-            radius="sm"
-            onClick={() => {
-              if (button.id === 1) {
-                router.push(`/staff/course-list/${data.id}/schedule`);
-              } else if (button.id === 2) {
-                router.push(`/staff/course-list/${data.id}/student-list`);
-              } else if (button.id === 3) {
-                router.push(`/staff/course-list/${data.id}/teacher-list`);
-              }
-            }}
+            onClick={() =>
+              console.log(
+                '🚀 ~ file: page.tsx:28 ~ Scheduler ~ scheduleData:',
+                scheduleData
+              )
+            }
           >
-            {button.text}
+            Add
           </Button>
-        ))}
-      </div>
-      <Button
-        onClick={() =>
-          console.log(
-            '🚀 ~ file: page.tsx:28 ~ Scheduler ~ scheduleData:',
-            scheduleData
-          )
-        }
-      >
-        Add
-      </Button>
-      <ScheduleComponent
-        width="100%"
-        height="650px"
-        ref={(schedule) => setScheduleObj(schedule)}
-        selectedDate={Date.now()}
-        eventSettings={{
-          dataSource: scheduleData,
-        }}
-        dragStart={onDragStart}
-        eventRendered={onEventRendered}
-        // popupOpen={onPopupOpen}
-      >
-        <ViewsDirective>
-          <ViewDirective option="Day" />
-          <ViewDirective
-            option="Week"
-            eventTemplate={eventTemplate.bind(this)}
-          />
-          <ViewDirective
-            option="Month"
-            eventTemplate={monthEventTemplate.bind(this)}
-          />
-          <ViewDirective option="Agenda" />
-        </ViewsDirective>
-        <Inject services={[Day, Week, Month, Agenda, Resize, DragAndDrop]} />
-      </ScheduleComponent>
-      <PropertyPane>
-        <table className="w-full bg-white">
-          <tbody>
-            <tr className="h-[50px]">
-              <td className="w-full">
-                <DatePickerComponent
-                  value={Date.now()}
-                  showClearButton={false}
-                  placeholder="Current Date"
-                  floatLabelType="Always"
-                  change={change}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </PropertyPane>
+          <ScheduleComponent
+            width="100%"
+            height="650px"
+            ref={(schedule) => setScheduleObj(schedule)}
+            selectedDate={Date.now()}
+            eventSettings={{
+              dataSource: scheduleData,
+            }}
+            dragStart={onDragStart}
+            eventRendered={onEventRendered}
+            // popupOpen={onPopupOpen}
+          >
+            <ViewsDirective>
+              <ViewDirective option="Day" />
+              <ViewDirective
+                option="Week"
+                eventTemplate={eventTemplate.bind(this)}
+              />
+              <ViewDirective
+                option="Month"
+                eventTemplate={monthEventTemplate.bind(this)}
+              />
+              <ViewDirective option="Agenda" />
+            </ViewsDirective>
+            <Inject
+              services={[Day, Week, Month, Agenda, Resize, DragAndDrop]}
+            />
+          </ScheduleComponent>
+          <PropertyPane>
+            <table className="w-full bg-white">
+              <tbody>
+                <tr className="h-[50px]">
+                  <td className="w-full">
+                    <DatePickerComponent
+                      value={Date.now()}
+                      showClearButton={false}
+                      placeholder="Current Date"
+                      floatLabelType="Always"
+                      change={change}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </PropertyPane>
+        </div>
+      )}
     </div>
   );
 }

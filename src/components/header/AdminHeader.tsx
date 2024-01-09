@@ -26,7 +26,6 @@ import {
   FaClipboardList,
   FaCommentDots,
   FaDoorClosed,
-  FaSquarePlus,
 } from 'react-icons/fa6';
 import { Button } from '../ui/button';
 const AdminHeader = ({ session }) => {
@@ -70,6 +69,14 @@ const AdminHeader = ({ session }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#FDF8EE] ml-16 p-4 shadow-none font-bold text-lg">
               <DropdownMenuItem>
+                <Link href={'/admin/report'}>
+                  <div className="flex flex-row hover:text-orange justify-center items-center">
+                    <FaClipboardList />
+                    <div className="ml-2">Báo cáo</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
                 <Link href={'/admin/course-list'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
                     <FaBook />
@@ -78,10 +85,10 @@ const AdminHeader = ({ session }) => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'/admin/course-list'}>
+                <Link href={'/admin/order-list'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <FaSquarePlus />
-                    <div className="ml-2">Tạo khoá học mới</div>
+                    <FaCartShopping />
+                    <div className="ml-2">Danh sách đăng ký</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
@@ -93,14 +100,7 @@ const AdminHeader = ({ session }) => {
                   </div>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/admin/course-list'}>
-                  <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <FaCommentDots />
-                    <div className="ml-2">Hỏi đáp</div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
+
               <DropdownMenuItem>
                 <Link href={'/admin/tkb'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
@@ -145,19 +145,10 @@ const AdminHeader = ({ session }) => {
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href={'admin/order-list'}>
+                <Link href={'/admin/course-list'}>
                   <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <FaCartShopping />
-                    <div className="ml-2">Danh sách đơn hàng</div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <Link href={'admin/report'}>
-                  <div className="flex flex-row hover:text-orange justify-center items-center">
-                    <FaClipboardList />
-                    <div className="ml-2">Báo cáo</div>
+                    <FaCommentDots />
+                    <div className="ml-2">Hỏi đáp</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
