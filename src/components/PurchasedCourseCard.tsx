@@ -17,7 +17,7 @@ const PurchasedCourseCard = ({ data }) => {
     //   className="w-fit h-fit flex flex-row justify-between shadow-md rounded-md p-2 m-3 items-center"
     // >
     <Link
-      href={'/personal_profile/' + data.id}
+      href={'/personal_profile/' + 12}
       className="w-full h-fit flex flex-col justify-between shadow-md rounded-md p-2 m-3 items-center gap-4 break-words"
     >
       {/* Start Description Image */}
